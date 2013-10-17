@@ -404,6 +404,8 @@ class WSU_News_Announcements {
 		if ( 'contact_email' !== $column_name )
 			return;
 
+		if ( $contact_email = get_post_meta( $post_id, '_announcement_contact_email', true ) )
+			echo esc_html( $contact_email );
 	}
 
 	public function manage_list_table_announcement_dates_column( $column_name, $post_id ) {
