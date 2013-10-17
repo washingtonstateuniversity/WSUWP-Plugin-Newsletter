@@ -4,7 +4,7 @@ Plugin Name: WSU News - Announcements
 Plugin URI: http://news.wsu.edu/
 Description: Creates an handles an Announcements content type for WSU News
 Author: washingtonstateuniversity, jeremyfelt
-Version: 0.3
+Version: 0.4
 */
 
 class WSU_News_Announcements {
@@ -110,7 +110,7 @@ class WSU_News_Announcements {
 
 	/**
 	 * Display the contact dates associated with the announcement submission.
-	 * 
+	 *
 	 * @param WP_Post $post Post object to display meta for.
 	 */
 	function display_dates_meta_box( $post ) {
