@@ -417,6 +417,16 @@ class WSU_News_Announcements {
 		if ( 'announce_dates' !== $column_name )
 			return;
 
+		$announcement_meta = $this->_get_announcement_date_meta( $post_id );
+
+		foreach( $announcement_meta as $meta ) {
+			$date = str_replace( '_announcement_date_', '', $meta->meta_key );
+
+			if ( 8 === strlen( $date ) ) {
+				$date_display = substr( $date, 4, 2 ) . '/' . substr( $date, 6, 2 ) . '/' . substr( $date, 0, 4 );
+				echo $date_display . '<br>';
+			}
+		}
 	}
 }
 new WSU_News_Announcements();
