@@ -109,11 +109,7 @@ class WSU_News_Announcements {
 	}
 
 	function display_dates_meta_box( $post ) {
-		// @var WPDB $wpdb
-		global $wpdb;
-		$announcement_date = '_announcement_date_%';
-		$results = $wpdb->get_results( $wpdb->prepare( "SELECT meta_key FROM $wpdb->postmeta WHERE post_id = %d and meta_key LIKE %s GROUP BY meta_key", $post->ID, $announcement_date ) );
-
+		$results = $this->_get_announcement_date_meta( $post->ID );
 		?>
 		<p>This announcement will be published on the following announcement archive pages:</p>
 		<ul>
@@ -398,6 +394,15 @@ class WSU_News_Announcements {
 		$columns['date'] = 'Publish Date';
 
 		return $columns;
+	}
+
+	private function _get_announcement_date_meta( $post_id ) {
+		global $wpdb;
+
+		$announcement_date = '_announcement_date_%';
+		$results = $wpdb->get_results( $wpdb->prepare( "SELECT meta_key FROM $wpdb->postmeta WHERE post_id = %d and meta_key LIKE %s GROUP BY meta_key", $post_id, $announcement_date ) );
+
+		return $results;
 	}
 
 	public function manage_list_table_email_column( $column_name, $post_id ) {
