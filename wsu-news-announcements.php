@@ -35,6 +35,9 @@ class WSU_News_Announcements {
 		add_action( 'pre_get_posts',                      array( $this, 'modify_post_query'        ) );
 		add_action( 'add_meta_boxes',                     array( $this, 'add_meta_boxes'           ) );
 
+		add_action( 'manage_' . $this->post_type . '_posts_custom_column', array( $this, 'manage_list_table_email_column'              ), 10, 2 );
+		add_action( 'manage_' . $this->post_type . '_posts_custom_column', array( $this, 'manage_list_table_announcement_dates_column' ), 10, 2 );
+
 		add_filter( 'post_type_archive_title',                      array( $this, 'post_type_archive_title'   ), 10, 1 );
 		add_filter( 'manage_edit-' . $this->post_type . '_columns', array( $this, 'manage_list_table_columns' ), 10, 1 );
 
@@ -388,8 +391,25 @@ class WSU_News_Announcements {
 		// We may use categories and tags, but we don't need them on this screen.
 		unset( $columns['categories'] );
 		unset( $columns['tags'] );
+		unset( $columns['date'] );
+
+		$columns['contact_email'] = 'Contact Email';
+		$columns['announce_dates'] = 'Announcement Dates';
+		$columns['date'] = 'Publish Date';
 
 		return $columns;
+	}
+
+	public function manage_list_table_email_column( $column_name, $post_id ) {
+		if ( 'contact_email' !== $column_name )
+			return;
+
+	}
+
+	public function manage_list_table_announcement_dates_column( $column_name, $post_id ) {
+		if ( 'announce_dates' !== $column_name )
+			return;
+
 	}
 }
 new WSU_News_Announcements();
