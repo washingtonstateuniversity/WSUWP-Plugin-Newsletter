@@ -1,0 +1,58 @@
+/*
+ * Styles for the display of the announcement submission form.
+ */
+.announcement-form {
+	margin: 15px 0 15px 0;
+	padding-top: 10px;
+}
+
+.announcement-form label {
+	font-size: 13px;
+	line-height: 23px;
+	margin-bottom: 5px;
+	margin-top: 5px;
+}
+
+#announcement-form-title {
+	width: 475px;
+	font-size: 18px;
+	height: 20px;
+	line-height: 20px;
+	padding: 5px 10px;
+	margin: 0 0 10px 0;
+}
+
+#wp-announcement-form-text-wrap {
+	margin-bottom: 15px;
+}
+
+#announcement-form-email {
+	width: 330px;
+	font-size: 14px;
+	height: 20px;
+	line-height: 20px;
+	padding: 5px 10px;
+	margin: 0 0 10px 0;
+}
+
+/* Hide the honeypot */
+#announcement-other-wrap {
+	display: none;
+}
+
+.announcement-success {
+	width: 95%;
+	height: 25px;
+	background: #ececec;
+	display: block;
+	padding-left: 10px;
+	line-height: 25px;
+}
+
+.announcement-form-date-input {
+	width: 100px;
+	height: 20px;
+	line-height: 20px;
+	padding: 5px 10px;
+	font-size: 14px;
+}
