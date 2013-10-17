@@ -35,7 +35,8 @@ class WSU_News_Announcements {
 		add_action( 'pre_get_posts',                      array( $this, 'modify_post_query'        ) );
 		add_action( 'add_meta_boxes',                     array( $this, 'add_meta_boxes'           ) );
 
-		add_filter( 'post_type_archive_title',            array( $this, 'post_type_archive_title'  ), 10, 1 );
+		add_filter( 'post_type_archive_title',                      array( $this, 'post_type_archive_title'   ), 10, 1 );
+		add_filter( 'manage_edit-' . $this->post_type . '_columns', array( $this, 'manage_list_table_columns' ), 10, 1 );
 
 		add_shortcode( 'wsu_announcement_form',           array( $this, 'output_announcement_form' ) );
 	}
@@ -374,6 +375,21 @@ class WSU_News_Announcements {
 		else :
 			return $name;
 		endif;
+	}
+
+	/**
+	 * Modify the columns in the post type list table.
+	 *
+	 * @param array $columns Current list of columns and their names.
+	 *
+	 * @return array Modified list of columns.
+	 */
+	public function manage_list_table_columns( $columns ) {
+		// We may use categories and tags, but we don't need them on this screen.
+		unset( $columns['categories'] );
+		unset( $columns['tags'] );
+
+		return $columns;
 	}
 }
 new WSU_News_Announcements();
