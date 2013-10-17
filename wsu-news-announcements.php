@@ -108,6 +108,11 @@ class WSU_News_Announcements {
 			echo esc_html( $email );
 	}
 
+	/**
+	 * Display the contact dates associated with the announcement submission.
+	 * 
+	 * @param WP_Post $post Post object to display meta for.
+	 */
 	function display_dates_meta_box( $post ) {
 		$results = $this->_get_announcement_date_meta( $post->ID );
 		?>
@@ -389,6 +394,7 @@ class WSU_News_Announcements {
 		unset( $columns['tags'] );
 		unset( $columns['date'] );
 
+		// Add our custom columns. Move date to the end of the array after we unset it above.
 		$columns['contact_email'] = 'Contact Email';
 		$columns['announce_dates'] = 'Announcement Dates';
 		$columns['date'] = 'Publish Date';
@@ -396,6 +402,13 @@ class WSU_News_Announcements {
 		return $columns;
 	}
 
+	/**
+	 * Retrieve announcement date meta for a post.
+	 *
+	 * @param int $post_id Post ID to retrieve metadata for.
+	 *
+	 * @return mixed Results of the post meta query.
+	 */
 	private function _get_announcement_date_meta( $post_id ) {
 		global $wpdb;
 
@@ -405,6 +418,12 @@ class WSU_News_Announcements {
 		return $results;
 	}
 
+	/**
+	 * Handle output for the contact email column in the announcement list table.
+	 *
+	 * @param string $column_name Current column being displayed.
+	 * @param int    $post_id     Post ID of the current row being displayed.
+	 */
 	public function manage_list_table_email_column( $column_name, $post_id ) {
 		if ( 'contact_email' !== $column_name )
 			return;
@@ -413,6 +432,12 @@ class WSU_News_Announcements {
 			echo esc_html( $contact_email );
 	}
 
+	/**
+	 * Handle output for the announcement dates column in the announcement list table.
+	 *
+	 * @param string $column_name Current column being displayed.
+	 * @param int    $post_id     Post ID of the current row being displayed.
+	 */
 	public function manage_list_table_announcement_dates_column( $column_name, $post_id ) {
 		if ( 'announce_dates' !== $column_name )
 			return;
