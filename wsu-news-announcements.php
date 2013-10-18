@@ -664,10 +664,27 @@ class WSU_News_Announcements {
 		wp_cache_delete( $this->calendar_cache_key, $this->post_type );
 	}
 
+	/**
+	 * Generate a link to a day's announcement archives.
+	 *
+	 * @param string $year  Year to be included in the URL.
+	 * @param string $month Month to be included in the URL.
+	 * @param string $day   Day to be included in the URL.
+	 *
+	 * @return string Day's announcement URL.
+	 */
 	public function get_day_link( $year, $month, $day ) {
 		return site_url( $this->post_type_archive . '/' . $year . '/' . $month . '/' . $day );
 	}
 
+	/**
+	 * Generate a link to a month's announcement archives.
+	 *
+	 * @param string $year  Year to be included in the URL.
+	 * @param string $month Month to be included in the URL.
+	 *
+	 * @return string Month's announcement URL.
+	 */
 	public function get_month_link( $year, $month ) {
 		return site_url( $this->post_type_archive . '/' . $year . '/' . $month );
 	}
