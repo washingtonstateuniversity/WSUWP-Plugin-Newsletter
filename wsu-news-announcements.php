@@ -25,6 +25,11 @@ class WSU_News_Announcements {
 	var $post_type_archive = 'announcements';
 
 	/**
+	 * @var string Key used for storing the announcement calendar in cache.
+	 */
+	var $calendar_cache_key = 'wsu_announcement_calendar';
+
+	/**
 	 * Set up the hooks used by WSU_News_Announcements
 	 */
 	public function __construct() {
@@ -34,6 +39,7 @@ class WSU_News_Announcements {
 		add_action( 'generate_rewrite_rules',             array( $this, 'rewrite_rules'            ) );
 		add_action( 'pre_get_posts',                      array( $this, 'modify_post_query'        ) );
 		add_action( 'add_meta_boxes',                     array( $this, 'add_meta_boxes'           ) );
+		add_action( 'widgets_init',                       array( $this, 'register_widget'          ) );
 
 		add_action( 'manage_' . $this->post_type . '_posts_custom_column', array( $this, 'manage_list_table_email_column'              ), 10, 2 );
 		add_action( 'manage_' . $this->post_type . '_posts_custom_column', array( $this, 'manage_list_table_announcement_dates_column' ), 10, 2 );
@@ -42,6 +48,11 @@ class WSU_News_Announcements {
 		add_filter( 'manage_edit-' . $this->post_type . '_columns', array( $this, 'manage_list_table_columns' ), 10, 1 );
 
 		add_shortcode( 'wsu_announcement_form',           array( $this, 'output_announcement_form' ) );
+
+		add_action( 'save_post',                   array( $this, 'delete_calendar_cache' ), 20, 1 );
+		add_action( 'delete_post',                 array( $this, 'delete_calendar_cache' ), 20, 1 );
+		add_action( 'update_option_start_of_week', array( $this, 'delete_calendar_cache' ) );
+		add_action( 'update_option_gmt_offset',    array( $this, 'delete_calendar_cache' ) );
 	}
 
 	/**
@@ -214,7 +225,7 @@ class WSU_News_Announcements {
 		}
 
 		if ( isset( $query->query['day'] ) ) {
-			$query_date .= $query->query['day'];
+			$query_date .= zeroise( $query->query['day'], 2 );
 			$query->set( 'day', '' );
 			$query->set( 'posts_per_page', 50 ); // Try to fit all of one day's announcements on a screen.
 		}
@@ -453,6 +464,238 @@ class WSU_News_Announcements {
 				echo $date_display . '<br>';
 			}
 		}
+	}
+
+	/**
+	 * Displays a calendar with links to days that have announcements.
+	 *
+	 * This was originally copied from the WordPress get_calendar() function, but then
+	 * heavily modified to query against a post types post meta rather than the
+	 * wp_posts table. The HTML structure of the final calendar is vary close, if not
+	 * identical to the built in WordPress functionality.
+	 *
+	 * @param bool $initial Optional, default is true. Use initial calendar names.
+	 * @param bool $echo    Optional, default is true. Set to false for return.
+	 *
+	 * @return null|string  String when retrieving, null when displaying.
+	 */
+	public function get_calendar( $initial = true, $echo = true ) {
+		/* @global WPDB $wpdb */
+		global $wpdb, $m, $monthnum, $year, $wp_locale, $posts;
+
+		$key = md5( $m . $monthnum . $year );
+
+		if ( $cache = get_transient( $this->calendar_cache_key ) ) {
+			if ( is_array( $cache ) && isset( $cache[ $key ] ) ) {
+				if ( $echo ) {
+					echo $cache[ $key ];
+					return;
+				} else {
+					return $cache[ $key ];
+				}
+			}
+		}
+
+		if ( ! is_array( $cache ) )
+			$cache = array();
+
+		// Quick check. If we have no posts at all, abort!
+		if ( ! $posts ) {
+			$gotsome = $wpdb->get_var( $wpdb->prepare( "SELECT 1 as test FROM $wpdb->posts WHERE post_type = %s AND post_status = 'publish' LIMIT 1", $this->post_type ) );
+			if ( ! $gotsome ) {
+				$cache[ $key ] = '';
+				set_transient( $this->calendar_cache_key, $cache, 60 * 60 * 24 ); // Will likely be flushed well before then.
+				return;
+			}
+		}
+
+		if ( isset($_GET['w']) )
+			$w = '' . intval( $_GET['w'] );
+
+		// week_begins = 0 stands for Sunday
+		$week_begins = intval( get_option( 'start_of_week' ) );
+
+		// Let's figure out when we are
+		if ( ! empty( $monthnum ) && ! empty( $year ) ) {
+			$thismonth = '' . zeroise( intval( $monthnum ), 2 );
+			$thisyear  = '' . intval( $year );
+		} elseif ( ! empty( $w ) ) {
+			// We need to get the month from MySQL
+			$thisyear  = '' . intval( substr( $m, 0, 4 ) );
+			$d = ( ( $w - 1 ) * 7 ) + 6; //it seems MySQL's weeks disagree with PHP's
+			$thismonth = $wpdb->get_var( "SELECT DATE_FORMAT((DATE_ADD('{$thisyear}0101', INTERVAL $d DAY) ), '%m')" );
+		} elseif ( ! empty( $m ) ) {
+			$thisyear = '' . intval( substr( $m, 0, 4 ) );
+			if ( strlen( $m ) < 6 )
+				$thismonth = '01';
+			else
+				$thismonth = '' . zeroise( intval( substr( $m, 4, 2 ) ), 2 );
+		} else {
+			$thisyear  = gmdate( 'Y', current_time( 'timestamp' ) );
+			$thismonth = gmdate( 'm', current_time( 'timestamp' ) );
+		}
+
+		$unixmonth = mktime( 0, 0 , 0, $thismonth, 1, $thisyear );
+		$last_day  = date( 't', $unixmonth );
+
+		// @todo Get the next and previous month and year with at least one post
+		$previous = false;
+		$next     = false;
+
+		$calendar_output = '<table id="wp-calendar">
+	<caption>' . date( 'F Y ') . '</caption>
+	<thead>
+	<tr>';
+
+		$myweek = array();
+
+		for ( $wdcount=0; $wdcount<=6; $wdcount++ ) {
+			$myweek[] = $wp_locale->get_weekday( ( $wdcount + $week_begins ) % 7 );
+		}
+
+		foreach ( $myweek as $wd ) {
+			$day_name = ( true == $initial ) ? $wp_locale->get_weekday_initial( $wd ) : $wp_locale->get_weekday_abbrev( $wd );
+			$wd = esc_attr( $wd );
+			$calendar_output .= "\n\t\t<th scope=\"col\" title=\"$wd\">$day_name</th>";
+		}
+
+		$calendar_output .= '
+	</tr>
+	</thead>
+
+	<tfoot>
+	<tr>';
+
+		if ( $previous ) {
+			$calendar_output .= "\n\t\t".'<td colspan="3" id="prev"><a href="' . $this->get_month_link( $previous->year, $previous->month ) . '" title="' . esc_attr( sprintf(__('View posts for %1$s %2$s'), $wp_locale->get_month( $previous->month ), date( 'Y', mktime( 0, 0 , 0, $previous->month, 1, $previous->year ) ) ) ) . '">&laquo; ' . $wp_locale->get_month_abbrev( $wp_locale->get_month( $previous->month ) ) . '</a></td>';
+		} else {
+			$calendar_output .= "\n\t\t".'<td colspan="3" id="prev" class="pad">&nbsp;</td>';
+		}
+
+		$calendar_output .= "\n\t\t".'<td class="pad">&nbsp;</td>';
+
+		if ( $next ) {
+			$calendar_output .= "\n\t\t".'<td colspan="3" id="next"><a href="' . $this->get_month_link( $next->year, $next->month ) . '" title="' . esc_attr( sprintf(__('View posts for %1$s %2$s'), $wp_locale->get_month( $next->month ), date( 'Y', mktime( 0, 0 , 0, $next->month, 1, $next->year ) ) ) ) . '">' . $wp_locale->get_month_abbrev( $wp_locale->get_month( $next->month ) ) . ' &raquo;</a></td>';
+		} else {
+			$calendar_output .= "\n\t\t".'<td colspan="3" id="next" class="pad">&nbsp;</td>';
+		}
+
+		$calendar_output .= '
+	</tr>
+	</tfoot>
+
+	<tbody>
+	<tr>';
+
+		// Get days with announcement data for this month stored in post meta.
+		$announcement_date_key = '_announcement_date_' . $thisyear . $thismonth . '%';
+		$days_post_ids = $wpdb->get_results( $wpdb->prepare( "SELECT DISTINCT post_id FROM $wpdb->postmeta WHERE meta_key LIKE %s", $announcement_date_key ), ARRAY_N );
+		$days_post_ids = wp_list_pluck( $days_post_ids, 0 );
+		$days_post_ids = join( ',', $days_post_ids );
+
+		// Now that we have a full list of post IDs, we need to make a query for those that are published.
+		$days_post_ids = $wpdb->get_results( "SELECT ID FROM $wpdb->posts WHERE ID IN ( " . $days_post_ids . " ) AND post_status ='publish'", ARRAY_N );
+		$days_post_ids = wp_list_pluck( $days_post_ids, 0 );
+		$days_post_ids = join( ',', $days_post_ids );
+
+		// No go back and get the distinct dates on which these announcements are to be made.
+		$days_results = $wpdb->get_results( $wpdb->prepare( "SELECT DISTINCT meta_key FROM $wpdb->postmeta WHERE post_id IN ( " . $days_post_ids . " ) AND meta_key LIKE %s", $announcement_date_key ), ARRAY_N );
+
+		$current_day    = date( 'd' ); // We need this to avoid future announcements.
+		$days_with_post = array();     // Ensure at least an empty array.
+
+		if ( $days_results ) {
+			foreach( $days_results as $day_with ) {
+				$day_with = str_replace( '_announcement_date_' . $thisyear . $thismonth, '', $day_with );
+				if ( '' !== $day_with[0] && $current_day >= $day_with[0] )
+					$days_with_post[] = $day_with[0];
+			}
+		}
+
+		// See how much we should pad in the beginning
+		$pad = calendar_week_mod( date( 'w', $unixmonth ) - $week_begins );
+		if ( 0 != $pad )
+			$calendar_output .= "\n\t\t" . '<td colspan="' . esc_attr( $pad ) . '" class="pad">&nbsp;</td>';
+
+		$daysinmonth = intval( date( 't', $unixmonth ) );
+		for ( $day = 1; $day <= $daysinmonth; ++$day ) {
+			if ( isset( $newrow ) && $newrow )
+				$calendar_output .= "\n\t</tr>\n\t<tr>\n\t\t";
+			$newrow = false;
+
+			if ( $day == gmdate( 'j', current_time( 'timestamp' ) ) && $thismonth == gmdate( 'm', current_time( 'timestamp' ) ) && $thisyear == gmdate( 'Y', current_time( 'timestamp' ) ) )
+				$calendar_output .= '<td id="today">';
+			else
+				$calendar_output .= '<td>';
+
+			if ( in_array( $day, $days_with_post ) ) // any posts today?
+				$calendar_output .= '<a href="' . $this->get_day_link( $thisyear, $thismonth, $day ) . '" title="' . esc_attr( 'Announcements for ' . $thismonth . '/' . $day . '/' . $thisyear ) . " \">$day</a>";
+			else
+				$calendar_output .= $day;
+			$calendar_output .= '</td>';
+
+			if ( 6 == calendar_week_mod( date( 'w', mktime( 0, 0 , 0, $thismonth, $day, $thisyear ) ) - $week_begins ) )
+				$newrow = true;
+		}
+
+		$pad = 7 - calendar_week_mod( date( 'w', mktime( 0, 0 , 0, $thismonth, $day, $thisyear ) ) - $week_begins );
+		if ( $pad != 0 && $pad != 7 )
+			$calendar_output .= "\n\t\t" . '<td class="pad" colspan="' . esc_attr( $pad ) . '">&nbsp;</td>';
+
+		$calendar_output .= "\n\t</tr>\n\t</tbody>\n\t</table>";
+
+		$cache[ $key ] = $calendar_output;
+		set_transient( $this->calendar_cache_key, $cache, 60 * 60 * 24 ); // Will likely be flushed well before this.
+
+		if ( $echo )
+			echo $calendar_output;
+		else
+			return $calendar_output;
+
+		return null;
+	}
+
+	/**
+	 * Purge cached announcement calendar data when an announcement is saved or deleted.
+	 *
+	 * @param int $post_id Current post being acted on.
+	 */
+	public function delete_calendar_cache( $post_id ) {
+		if ( $this->post_type === get_post_type( $post_id ) )
+			delete_transient( $this->calendar_cache_key );
+	}
+
+	/**
+	 * Generate a link to a day's announcement archives.
+	 *
+	 * @param string $year  Year to be included in the URL.
+	 * @param string $month Month to be included in the URL.
+	 * @param string $day   Day to be included in the URL.
+	 *
+	 * @return string Day's announcement URL.
+	 */
+	public function get_day_link( $year, $month, $day ) {
+		return site_url( $this->post_type_archive . '/' . $year . '/' . $month . '/' . $day );
+	}
+
+	/**
+	 * Generate a link to a month's announcement archives.
+	 *
+	 * @param string $year  Year to be included in the URL.
+	 * @param string $month Month to be included in the URL.
+	 *
+	 * @return string Month's announcement URL.
+	 */
+	public function get_month_link( $year, $month ) {
+		return site_url( $this->post_type_archive . '/' . $year . '/' . $month );
+	}
+
+	/**
+	 * Register widgets used by announcements.
+	 */
+	public function register_widget() {
+		include __DIR__ . '/includes/wsu-news-announcement-calendar-widget.php';
+		register_widget( 'WSU_News_Announcement_Calendar_Widget' );
 	}
 }
 $wsu_news_announcements = new WSU_News_Announcements();
