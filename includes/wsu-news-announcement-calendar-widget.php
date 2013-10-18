@@ -3,7 +3,7 @@
 class WSU_News_Announcement_Calendar_Widget extends WP_Widget {
 
 	function __construct() {
-		$widget_ops = array( 'classname' => 'widget_calendar', 'description' => 'A calendar of announcements' );
+		$widget_ops = array( 'classname' => 'widget_calendar wsu_widget_calendar', 'description' => 'A calendar of announcements' );
 		parent::__construct( 'wsu_calendar', 'Announcement Calendar', $widget_ops );
 	}
 
