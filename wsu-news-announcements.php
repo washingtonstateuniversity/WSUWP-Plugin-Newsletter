@@ -33,13 +33,17 @@ class WSU_News_Announcements {
 	 * Set up the hooks used by WSU_News_Announcements
 	 */
 	public function __construct() {
-		add_action( 'init',                               array( $this, 'register_post_type'       ) );
-		add_action( 'wp_ajax_submit_announcement',        array( $this, 'ajax_callback'            ) );
-		add_action( 'wp_ajax_nopriv_submit_announcement', array( $this, 'ajax_callback'            ) );
-		add_action( 'generate_rewrite_rules',             array( $this, 'rewrite_rules'            ) );
-		add_action( 'pre_get_posts',                      array( $this, 'modify_post_query'        ) );
-		add_action( 'add_meta_boxes',                     array( $this, 'add_meta_boxes'           ) );
-		add_action( 'widgets_init',                       array( $this, 'register_widget'          ) );
+		add_action( 'init',                               array( $this, 'register_post_type'       )        );
+		add_action( 'wp_ajax_submit_announcement',        array( $this, 'ajax_callback'            )        );
+		add_action( 'wp_ajax_nopriv_submit_announcement', array( $this, 'ajax_callback'            )        );
+		add_action( 'generate_rewrite_rules',             array( $this, 'rewrite_rules'            )        );
+		add_action( 'pre_get_posts',                      array( $this, 'modify_post_query'        )        );
+		add_action( 'add_meta_boxes',                     array( $this, 'add_meta_boxes'           )        );
+		add_action( 'widgets_init',                       array( $this, 'register_widget'          )        );
+		add_action( 'save_post',                          array( $this, 'delete_calendar_cache'    ), 20, 1 );
+		add_action( 'delete_post',                        array( $this, 'delete_calendar_cache'    ), 20, 1 );
+		add_action( 'update_option_start_of_week',        array( $this, 'delete_calendar_cache'    )        );
+		add_action( 'update_option_gmt_offset',           array( $this, 'delete_calendar_cache'    )        );
 
 		add_action( 'manage_' . $this->post_type . '_posts_custom_column', array( $this, 'manage_list_table_email_column'              ), 10, 2 );
 		add_action( 'manage_' . $this->post_type . '_posts_custom_column', array( $this, 'manage_list_table_announcement_dates_column' ), 10, 2 );
@@ -48,11 +52,6 @@ class WSU_News_Announcements {
 		add_filter( 'manage_edit-' . $this->post_type . '_columns', array( $this, 'manage_list_table_columns' ), 10, 1 );
 
 		add_shortcode( 'wsu_announcement_form',           array( $this, 'output_announcement_form' ) );
-
-		add_action( 'save_post',                   array( $this, 'delete_calendar_cache' ), 20, 1 );
-		add_action( 'delete_post',                 array( $this, 'delete_calendar_cache' ), 20, 1 );
-		add_action( 'update_option_start_of_week', array( $this, 'delete_calendar_cache' ) );
-		add_action( 'update_option_gmt_offset',    array( $this, 'delete_calendar_cache' ) );
 	}
 
 	/**
