@@ -599,9 +599,19 @@ class WSU_News_Announcements {
 	<tbody>
 	<tr>';
 
-		// Get days with announcements.
+		// Get days with announcement data for this month stored in post meta.
 		$announcement_date_key = '_announcement_date_' . $thisyear . $thismonth . '%';
-		$days_results = $wpdb->get_results( $wpdb->prepare( "SELECT DISTINCT meta_key FROM $wpdb->postmeta WHERE meta_key LIKE %s", $announcement_date_key ), ARRAY_N );
+		$days_post_ids = $wpdb->get_results( $wpdb->prepare( "SELECT DISTINCT post_id FROM $wpdb->postmeta WHERE meta_key LIKE %s", $announcement_date_key ), ARRAY_N );
+		$days_post_ids = wp_list_pluck( $days_post_ids, 0 );
+		$days_post_ids = join( ',', $days_post_ids );
+
+		// Now that we have a full list of post IDs, we need to make a query for those that are published.
+		$days_post_ids = $wpdb->get_results( "SELECT ID FROM $wpdb->posts WHERE ID IN ( " . $days_post_ids . " ) AND post_status IN ( 'publish', 'private' )", ARRAY_N );
+		$days_post_ids = wp_list_pluck( $days_post_ids, 0 );
+		$days_post_ids = join( ',', $days_post_ids );
+
+		// No go back and get the distinct dates on which these announcements are to be made.
+		$days_results = $wpdb->get_results( $wpdb->prepare( "SELECT DISTINCT meta_key FROM $wpdb->postmeta WHERE post_id IN ( " . $days_post_ids . " ) AND meta_key LIKE %s", $announcement_date_key ), ARRAY_N );
 
 		$days_with_post = array(); // Ensure at least an empty array.
 		if ( $days_results ) {
