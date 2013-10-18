@@ -602,11 +602,13 @@ class WSU_News_Announcements {
 		// No go back and get the distinct dates on which these announcements are to be made.
 		$days_results = $wpdb->get_results( $wpdb->prepare( "SELECT DISTINCT meta_key FROM $wpdb->postmeta WHERE post_id IN ( " . $days_post_ids . " ) AND meta_key LIKE %s", $announcement_date_key ), ARRAY_N );
 
-		$days_with_post = array(); // Ensure at least an empty array.
+		$current_day    = date( 'd' ); // We need this to avoid future announcements.
+		$days_with_post = array();     // Ensure at least an empty array.
+
 		if ( $days_results ) {
 			foreach( $days_results as $day_with ) {
 				$day_with = str_replace( '_announcement_date_' . $thisyear . $thismonth, '', $day_with );
-				if ( '' !== $day_with[0] )
+				if ( '' !== $day_with[0] && $current_day >= $day_with[0] )
 					$days_with_post[] = $day_with[0];
 			}
 		}
