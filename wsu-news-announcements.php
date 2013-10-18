@@ -612,32 +612,6 @@ class WSU_News_Announcements {
 			}
 		}
 
-		if ( strpos( $_SERVER['HTTP_USER_AGENT'], 'MSIE' ) !== false || stripos( $_SERVER['HTTP_USER_AGENT' ], 'camino') !== false || stripos( $_SERVER['HTTP_USER_AGENT'], 'safari' ) !== false )
-			$ak_title_separator = "\n";
-		else
-			$ak_title_separator = ', ';
-
-		$ak_titles_for_day = array();
-		$ak_post_titles = $wpdb->get_results( $wpdb->prepare( "SELECT ID, post_title, DAYOFMONTH(post_date) as dom "
-			."FROM $wpdb->posts "
-			."WHERE post_date >= '{$thisyear}-{$thismonth}-01 00:00:00' "
-			."AND post_date <= '{$thisyear}-{$thismonth}-{$last_day} 23:59:59' "
-			."AND post_type = %s AND post_status = 'publish'", $this->post_type ) );
-
-		if ( $ak_post_titles ) {
-			foreach ( (array) $ak_post_titles as $ak_post_title ) {
-
-				$post_title = esc_attr( apply_filters( 'the_title', $ak_post_title->post_title, $ak_post_title->ID ) );
-
-				if ( empty( $ak_titles_for_day[ 'day_' . $ak_post_title->dom ] ) )
-					$ak_titles_for_day[ 'day_' . $ak_post_title->dom ] = '';
-				if ( empty( $ak_titles_for_day[ "$ak_post_title->dom" ] ) ) // first one
-					$ak_titles_for_day[ "$ak_post_title->dom" ] = $post_title;
-				else
-					$ak_titles_for_day[ "$ak_post_title->dom" ] .= $ak_title_separator . $post_title;
-			}
-		}
-
 		// See how much we should pad in the beginning
 		$pad = calendar_week_mod( date( 'w', $unixmonth ) - $week_begins );
 		if ( 0 != $pad )
