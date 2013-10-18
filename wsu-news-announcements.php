@@ -39,6 +39,7 @@ class WSU_News_Announcements {
 		add_action( 'generate_rewrite_rules',             array( $this, 'rewrite_rules'            ) );
 		add_action( 'pre_get_posts',                      array( $this, 'modify_post_query'        ) );
 		add_action( 'add_meta_boxes',                     array( $this, 'add_meta_boxes'           ) );
+		add_action( 'widgets_init',                       array( $this, 'register_widget'          ) );
 
 		add_action( 'manage_' . $this->post_type . '_posts_custom_column', array( $this, 'manage_list_table_email_column'              ), 10, 2 );
 		add_action( 'manage_' . $this->post_type . '_posts_custom_column', array( $this, 'manage_list_table_announcement_dates_column' ), 10, 2 );
@@ -687,6 +688,14 @@ class WSU_News_Announcements {
 	 */
 	public function get_month_link( $year, $month ) {
 		return site_url( $this->post_type_archive . '/' . $year . '/' . $month );
+	}
+
+	/**
+	 * Register widgets used by announcements.
+	 */
+	public function register_widget() {
+		include __DIR__ . '/includes/wsu-news-announcement-calendar-widget.php';
+		register_widget( 'WSU_News_Announcement_Calendar_Widget' );
 	}
 }
 $wsu_news_announcements = new WSU_News_Announcements();
