@@ -629,7 +629,7 @@ class WSU_News_Announcements {
 				$calendar_output .= '<td>';
 
 			if ( in_array( $day, $days_with_post ) ) // any posts today?
-				$calendar_output .= '<a href="' . get_day_link( $thisyear, $thismonth, $day ) . '" title="' . esc_attr( 'replacement title' ) . "\">$day</a>";
+				$calendar_output .= '<a href="' . $this->get_day_link( $thisyear, $thismonth, $day ) . '" title="' . esc_attr( 'replacement title' ) . "\">$day</a>";
 			else
 				$calendar_output .= $day;
 			$calendar_output .= '</td>';
@@ -663,6 +663,10 @@ class WSU_News_Announcements {
 	 */
 	public function delete_calendar_cache() {
 		wp_cache_delete( $this->calendar_cache_key, $this->post_type );
+	}
+
+	public function get_day_link( $year, $month, $day ) {
+		return site_url( $this->post_type_archive . '/' . $year . '/' . $month . '/' . $day );
 	}
 }
 $wsu_news_announcements = new WSU_News_Announcements();
