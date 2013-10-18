@@ -541,10 +541,8 @@ class WSU_News_Announcements {
 		$previous = false;
 		$next     = false;
 
-		/* translators: Calendar caption: 1: month name, 2: 4-digit year */
-		$calendar_caption = _x( '%1$s %2$s', 'calendar caption' );
 		$calendar_output = '<table id="wp-calendar">
-	<caption>' . sprintf( $calendar_caption, $wp_locale->get_month( $thismonth ), date( 'Y', $unixmonth ) ) . '</caption>
+	<caption>' . date( 'F Y ') . '</caption>
 	<thead>
 	<tr>';
 
