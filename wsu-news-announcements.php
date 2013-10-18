@@ -599,18 +599,17 @@ class WSU_News_Announcements {
 	<tbody>
 	<tr>';
 
-		// Get days with posts
-		$dayswithposts = $wpdb->get_results( $wpdb->prepare( "SELECT DISTINCT DAYOFMONTH(post_date)
-		FROM $wpdb->posts WHERE post_date >= '{$thisyear}-{$thismonth}-01 00:00:00'
-		AND post_type = %s AND post_status = 'publish'
-		AND post_date <= '{$thisyear}-{$thismonth}-{$last_day} 23:59:59'", $this->post_type ), ARRAY_N );
+		// Get days with announcements.
+		$announcement_date_key = '_announcement_date_' . $thisyear . $thismonth . '%';
+		$days_results = $wpdb->get_results( $wpdb->prepare( "SELECT DISTINCT meta_key FROM $wpdb->postmeta WHERE meta_key LIKE %s", $announcement_date_key ), ARRAY_N );
 
-		if ( $dayswithposts ) {
-			foreach ( (array) $dayswithposts as $daywith ) {
-				$daywithpost[] = $daywith[0];
+		$days_with_post = array(); // Ensure at least an empty array.
+		if ( $days_results ) {
+			foreach( $days_results as $day_with ) {
+				$day_with = str_replace( '_announcement_date_' . $thisyear . $thismonth, '', $day_with );
+				if ( '' !== $day_with[0] )
+					$days_with_post[] = $day_with[0];
 			}
-		} else {
-			$daywithpost = array();
 		}
 
 		if ( strpos( $_SERVER['HTTP_USER_AGENT'], 'MSIE' ) !== false || stripos( $_SERVER['HTTP_USER_AGENT' ], 'camino') !== false || stripos( $_SERVER['HTTP_USER_AGENT'], 'safari' ) !== false )
@@ -655,8 +654,8 @@ class WSU_News_Announcements {
 			else
 				$calendar_output .= '<td>';
 
-			if ( in_array( $day, $daywithpost ) ) // any posts today?
-			$calendar_output .= '<a href="' . get_day_link( $thisyear, $thismonth, $day ) . '" title="' . esc_attr( $ak_titles_for_day[ $day ] ) . "\">$day</a>";
+			if ( in_array( $day, $days_with_post ) ) // any posts today?
+				$calendar_output .= '<a href="' . get_day_link( $thisyear, $thismonth, $day ) . '" title="' . esc_attr( 'replacement title' ) . "\">$day</a>";
 			else
 				$calendar_output .= $day;
 			$calendar_output .= '</td>';
