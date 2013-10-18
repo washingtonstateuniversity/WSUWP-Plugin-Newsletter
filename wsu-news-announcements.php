@@ -381,15 +381,19 @@ class WSU_News_Announcements {
 		if ( 'Announcements' !== $name )
 			return $name;
 
-		if ( is_day() ) :
-			return get_the_date( 'F jS, Y ' ) . $name;
-		elseif ( is_month() ) :
-			return get_the_date( 'F Y ' ) . $name;
-		elseif ( is_year() ) :
-			return get_the_date( 'Y ' ) . $name;
-		else :
+		// Get the date from our URL because we've tricked the query until now.
+		$url_dates = explode( '/', trim( $_SERVER['REQUEST_URI'], '/' ) );
+		array_shift( $url_dates );
+
+		if ( isset( $url_dates[2] ) )
+			return date( 'F jS, Y ', strtotime( $url_dates[0] . '-' . $url_dates[1] . '-' . $url_dates[2] . ' 00:00:00' ) ) . $name;
+		elseif ( isset( $url_dates[1] ) )
+			return date( 'F Y ', strtotime( $url_dates[0] . '-' .  $url_dates[1] . '-01 00:00:00' ) ) . $name;
+		elseif ( isset( $url_dates[0] ) )
+			return date( 'Y ', strtotime( $url_dates[0] . '-01-01 00:00:00' ) ) . $name;
+		else
 			return $name;
-		endif;
+
 	}
 
 	/**
