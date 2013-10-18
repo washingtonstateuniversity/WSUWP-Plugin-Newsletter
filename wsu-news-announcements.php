@@ -49,10 +49,10 @@ class WSU_News_Announcements {
 
 		add_shortcode( 'wsu_announcement_form',           array( $this, 'output_announcement_form' ) );
 
-		add_action( 'save_post',                   'delete_calendar_cache' ); // @todo hook for post type
-		add_action( 'delete_post',                 'delete_calendar_cache' ); // @todo hook for post type
-		add_action( 'update_option_start_of_week', 'delete_calendar_cache' );
-		add_action( 'update_option_gmt_offset',    'delete_calendar_cache' );
+		add_action( 'save_post',                   array( $this, 'delete_calendar_cache' ) ); // @todo hook for post type
+		add_action( 'delete_post',                 array( $this, 'delete_calendar_cache' ) ); // @todo hook for post type
+		add_action( 'update_option_start_of_week', array( $this, 'delete_calendar_cache' ) );
+		add_action( 'update_option_gmt_offset',    array( $this, 'delete_calendar_cache' ) );
 	}
 
 	/**
@@ -485,7 +485,7 @@ class WSU_News_Announcements {
 
 		$key = md5( $m . $monthnum . $year );
 
-		if ( $cache = wp_cache_get( $this->calendar_cache_key, $this->post_type ) ) {
+		if ( $cache = get_transient( $this->calendar_cache_key ) ) {
 			if ( is_array( $cache ) && isset( $cache[ $key ] ) ) {
 				if ( $echo ) {
 					echo $cache[ $key ];
@@ -504,7 +504,7 @@ class WSU_News_Announcements {
 			$gotsome = $wpdb->get_var( $wpdb->prepare( "SELECT 1 as test FROM $wpdb->posts WHERE post_type = %s AND post_status = 'publish' LIMIT 1", $this->post_type ) );
 			if ( ! $gotsome ) {
 				$cache[ $key ] = '';
-				wp_cache_set( $this->calendar_cache_key, $cache, $this->post_type );
+				set_transient( $this->calendar_cache_key, $cache, 60 * 60 * 24 ); // Will likely be flushed well before then.
 				return;
 			}
 		}
@@ -645,7 +645,7 @@ class WSU_News_Announcements {
 		$calendar_output .= "\n\t</tr>\n\t</tbody>\n\t</table>";
 
 		$cache[ $key ] = $calendar_output;
-		wp_cache_set( $this->calendar_cache_key, $cache, $this->post_type );
+		set_transient( $this->calendar_cache_key, $cache, 60 * 60 * 24 ); // Will likely be flushed well before this.
 
 		if ( $echo )
 			echo $calendar_output;
@@ -662,7 +662,7 @@ class WSU_News_Announcements {
 	 * @since 2.1.0
 	 */
 	public function delete_calendar_cache() {
-		wp_cache_delete( $this->calendar_cache_key, $this->post_type );
+		delete_transient( $this->calendar_cache_key );
 	}
 
 	/**
