@@ -466,17 +466,17 @@ class WSU_News_Announcements {
 	}
 
 	/**
-	 * Display calendar with days that have posts as links.
+	 * Displays a calendar with links to days that have announcements.
 	 *
-	 * The calendar is cached, which will be retrieved, if it exists. If there are
-	 * no posts for the month, then it will not be displayed.
-	 *
-	 * @since 1.0.0
-	 * @uses calendar_week_mod()
+	 * This was originally copied from the WordPress get_calendar() function, but then
+	 * heavily modified to query against a post types post meta rather than the
+	 * wp_posts table. The HTML structure of the final calendar is vary close, if not
+	 * identical to the built in WordPress functionality.
 	 *
 	 * @param bool $initial Optional, default is true. Use initial calendar names.
-	 * @param bool $echo Optional, default is true. Set to false for return.
-	 * @return string|null String when retrieving, null when displaying.
+	 * @param bool $echo    Optional, default is true. Set to false for return.
+	 *
+	 * @return null|string  String when retrieving, null when displaying.
 	 */
 	public function get_calendar( $initial = true, $echo = true ) {
 		/* @global WPDB $wpdb */
