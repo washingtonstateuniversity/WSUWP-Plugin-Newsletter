@@ -454,4 +454,4 @@ class WSU_News_Announcements {
 		}
 	}
 }
-new WSU_News_Announcements();
+$wsu_news_announcements = new WSU_News_Announcements();
