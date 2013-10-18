@@ -49,8 +49,8 @@ class WSU_News_Announcements {
 
 		add_shortcode( 'wsu_announcement_form',           array( $this, 'output_announcement_form' ) );
 
-		add_action( 'save_post',                   array( $this, 'delete_calendar_cache' ) ); // @todo hook for post type
-		add_action( 'delete_post',                 array( $this, 'delete_calendar_cache' ) ); // @todo hook for post type
+		add_action( 'save_post',                   array( $this, 'delete_calendar_cache' ), 20, 1 );
+		add_action( 'delete_post',                 array( $this, 'delete_calendar_cache' ), 20, 1 );
 		add_action( 'update_option_start_of_week', array( $this, 'delete_calendar_cache' ) );
 		add_action( 'update_option_gmt_offset',    array( $this, 'delete_calendar_cache' ) );
 	}
@@ -656,13 +656,13 @@ class WSU_News_Announcements {
 	}
 
 	/**
-	 * Purge the cached results of get_calendar.
+	 * Purge cached announcement calendar data when an announcement is saved or deleted.
 	 *
-	 * @see get_calendar
-	 * @since 2.1.0
+	 * @param int $post_id Current post being acted on.
 	 */
-	public function delete_calendar_cache() {
-		delete_transient( $this->calendar_cache_key );
+	public function delete_calendar_cache( $post_id ) {
+		if ( $this->post_type === get_post_type( $post_id ) )
+			delete_transient( $this->calendar_cache_key );
 	}
 
 	/**
