@@ -325,7 +325,7 @@ class WSU_News_Announcements {
 
 		$post_data = array(
 			'comment_status' => 'closed',
-			'pint_status'    => 'closed',
+			'ping_status'    => 'closed',
 			'post_author'    => $user_id,
 			'post_content'   => $text,    // Sanitized with wp_kses_post(), probably overly so.
 			'post_title'     => $title,   // Sanitized in wp_insert_post().
