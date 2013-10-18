@@ -606,7 +606,7 @@ class WSU_News_Announcements {
 		$days_post_ids = join( ',', $days_post_ids );
 
 		// Now that we have a full list of post IDs, we need to make a query for those that are published.
-		$days_post_ids = $wpdb->get_results( "SELECT ID FROM $wpdb->posts WHERE ID IN ( " . $days_post_ids . " ) AND post_status IN ( 'publish', 'private' )", ARRAY_N );
+		$days_post_ids = $wpdb->get_results( "SELECT ID FROM $wpdb->posts WHERE ID IN ( " . $days_post_ids . " ) AND post_status ='publish'", ARRAY_N );
 		$days_post_ids = wp_list_pluck( $days_post_ids, 0 );
 		$days_post_ids = join( ',', $days_post_ids );
 
