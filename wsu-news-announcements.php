@@ -216,6 +216,7 @@ class WSU_News_Announcements {
 		if ( isset( $query->query['day'] ) ) {
 			$query_date .= $query->query['day'];
 			$query->set( 'day', '' );
+			$query->set( 'posts_per_page', 50 ); // Try to fit all of one day's announcements on a screen.
 		}
 
 		$query->set( 'meta_query', array(
