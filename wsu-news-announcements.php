@@ -639,7 +639,7 @@ class WSU_News_Announcements {
 				$calendar_output .= '<td>';
 
 			if ( in_array( $day, $days_with_post ) ) // any posts today?
-				$calendar_output .= '<a href="' . $this->get_day_link( $thisyear, $thismonth, $day ) . '" title="' . esc_attr( 'replacement title' ) . "\">$day</a>";
+				$calendar_output .= '<a href="' . $this->get_day_link( $thisyear, $thismonth, $day ) . '" title="' . esc_attr( 'Announcements for ' . $thismonth . '/' . $day . '/' . $thisyear ) . " \">$day</a>";
 			else
 				$calendar_output .= $day;
 			$calendar_output .= '</td>';
