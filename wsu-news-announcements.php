@@ -690,7 +690,7 @@ class WSU_News_Announcements {
 	 * @return string Month's announcement URL.
 	 */
 	public function get_month_link( $year, $month ) {
-		return site_url( $this->post_type_archive . '/' . $year . '/' . $month );
+		return site_url( $this->post_type_archive . '/' . $year . '/' . $month . '/' );
 	}
 
 	/**
