@@ -678,7 +678,7 @@ class WSU_News_Announcements {
 	 * @return string Day's announcement URL.
 	 */
 	public function get_day_link( $year, $month, $day ) {
-		return site_url( $this->post_type_archive . '/' . $year . '/' . $month . '/' . $day );
+		return site_url( $this->post_type_archive . '/' . $year . '/' . $month . '/' . $day . '/' );
 	}
 
 	/**
