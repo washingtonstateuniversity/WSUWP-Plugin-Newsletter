@@ -546,7 +546,7 @@ class WSU_News_Announcements {
 		$next     = false;
 
 		$calendar_output = '<table id="wp-calendar">
-	<caption>' . date( 'F Y ') . '</caption>
+	<caption><a href="' . esc_url( $this->get_month_link( $thisyear, $thismonth ) ) . '" title="Announcements for ' . $thismonth . '/' . $thisyear . '">' . date( 'F Y ') . '</a></caption>
 	<thead>
 	<tr>';
 
