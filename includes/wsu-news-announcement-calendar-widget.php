@@ -25,17 +25,18 @@ class WSU_News_Announcement_Calendar_Widget extends WP_Widget {
 		/* @var WSU_News_Announcements $wsu_news_announcements */
 		global $wsu_news_announcements;
 
-		extract($args);
+		$title = '';
+		if ( isset( $instance['title'] ) )
+			$title = $instance['title'];
 
-		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title'], $instance, $this->id_base);
-
-		echo $before_widget;
+		echo $args['before_widget'];
 		if ( $title )
-			echo $before_title . $title . $after_title;
+			echo $args['before_title'] . $title . $args['after_title'];
+
 		echo '<div id="calendar_wrap">';
 		$wsu_news_announcements->get_calendar();
 		echo '</div>';
-		echo $after_widget;
+		echo $args['after_widget'];
 	}
 
 	/**
