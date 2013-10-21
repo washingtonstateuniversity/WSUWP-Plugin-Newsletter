@@ -697,7 +697,7 @@ class WSU_News_Announcements {
 	 * Register widgets used by announcements.
 	 */
 	public function register_widget() {
-		include __DIR__ . '/includes/wsu-news-announcement-calendar-widget.php';
+		include( dirname( __FILE__ ) . '/includes/wsu-news-announcement-calendar-widget.php' );
 		register_widget( 'WSU_News_Announcement_Calendar_Widget' );
 	}
 }
