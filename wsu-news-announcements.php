@@ -386,7 +386,7 @@ class WSU_News_Announcements {
 		array_shift( $url_dates );
 
 		if ( isset( $url_dates[2] ) )
-			return date( 'F jS, Y ', strtotime( $url_dates[0] . '-' . $url_dates[1] . '-' . $url_dates[2] . ' 00:00:00' ) ) . $name;
+			return date( 'F j, Y ', strtotime( $url_dates[0] . '-' . $url_dates[1] . '-' . $url_dates[2] . ' 00:00:00' ) ) . $name;
 		elseif ( isset( $url_dates[1] ) && 0 !== absint( $url_dates[0] ) )
 			return date( 'F Y ', strtotime( $url_dates[0] . '-' .  $url_dates[1] . '-01 00:00:00' ) ) . $name;
 		elseif ( isset( $url_dates[0] ) && 0 !== absint( $url_dates[0] ) )
