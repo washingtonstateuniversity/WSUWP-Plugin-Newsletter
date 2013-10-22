@@ -20,6 +20,11 @@ class WSU_News_Announcements {
 	var $post_type_slug = 'announcement';
 
 	/**
+	 * @var string The general name used for the post type.
+	 */
+	var $post_type_name = 'Announcements';
+
+	/**
 	 * @var string The slug to use for announcement archives.
 	 */
 	var $post_type_archive = 'announcements';
@@ -48,8 +53,9 @@ class WSU_News_Announcements {
 		add_action( 'manage_' . $this->post_type . '_posts_custom_column', array( $this, 'manage_list_table_email_column'              ), 10, 2 );
 		add_action( 'manage_' . $this->post_type . '_posts_custom_column', array( $this, 'manage_list_table_announcement_dates_column' ), 10, 2 );
 
-		add_filter( 'post_type_archive_title',                      array( $this, 'post_type_archive_title'   ), 10, 1 );
-		add_filter( 'manage_edit-' . $this->post_type . '_columns', array( $this, 'manage_list_table_columns' ), 10, 1 );
+		add_filter( 'wpseo_title',                                  array( $this, 'post_type_archive_wpseo_title'), 10, 1 );
+		add_filter( 'post_type_archive_title',                      array( $this, 'post_type_archive_title'   ),    10, 1 );
+		add_filter( 'manage_edit-' . $this->post_type . '_columns', array( $this, 'manage_list_table_columns' ),    10, 1 );
 
 		add_shortcode( 'wsu_announcement_form',           array( $this, 'output_announcement_form' ) );
 	}
@@ -62,7 +68,7 @@ class WSU_News_Announcements {
 	 */
 	function register_post_type() {
 		$labels = array(
-			'name'               => 'Announcements',
+			'name'               => $this->post_type_name,
 			'singular_name'      => 'Announcement',
 			'add_new'            => 'Add New',
 			'add_new_item'       => 'Add New Announcement',
@@ -394,6 +400,20 @@ class WSU_News_Announcements {
 		else
 			return $name;
 
+	}
+
+	/**
+	 * Filter the WordPress SEO generate post type archive title for Announcements.
+	 * 
+	 * @param string $title Title as previously modified by WordPress SEO
+	 *
+	 * @return string Our replacement version of the title.
+	 */
+	public function post_type_archive_wpseo_title( $title ) {
+		if ( is_post_type_archive( $this->post_type ) )
+			return post_type_archive_title( $this->post_type_name );
+
+		return $title;
 	}
 
 	/**
