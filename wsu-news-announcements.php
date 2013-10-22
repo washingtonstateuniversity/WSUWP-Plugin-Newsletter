@@ -404,14 +404,14 @@ class WSU_News_Announcements {
 
 	/**
 	 * Filter the WordPress SEO generate post type archive title for Announcements.
-	 * 
+	 *
 	 * @param string $title Title as previously modified by WordPress SEO
 	 *
 	 * @return string Our replacement version of the title.
 	 */
 	public function post_type_archive_wpseo_title( $title ) {
 		if ( is_post_type_archive( $this->post_type ) )
-			return post_type_archive_title( $this->post_type_name );
+			return $this->post_type_archive_title( $this->post_type_name );
 
 		return $title;
 	}
