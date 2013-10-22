@@ -54,8 +54,8 @@ class WSU_News_Announcements {
 		add_action( 'manage_' . $this->post_type . '_posts_custom_column', array( $this, 'manage_list_table_announcement_dates_column' ), 10, 2 );
 
 		add_filter( 'wpseo_title',                                  array( $this, 'post_type_archive_wpseo_title'), 10, 1 );
-		add_filter( 'post_type_archive_title',                      array( $this, 'post_type_archive_title'   ),    10, 1 );
-		add_filter( 'manage_edit-' . $this->post_type . '_columns', array( $this, 'manage_list_table_columns' ),    10, 1 );
+		add_filter( 'post_type_archive_title',                      array( $this, 'post_type_archive_title'      ), 10, 1 );
+		add_filter( 'manage_edit-' . $this->post_type . '_columns', array( $this, 'manage_list_table_columns'    ), 10, 1 );
 
 		add_shortcode( 'wsu_announcement_form',           array( $this, 'output_announcement_form' ) );
 	}
@@ -411,7 +411,7 @@ class WSU_News_Announcements {
 	 */
 	public function post_type_archive_wpseo_title( $title ) {
 		if ( is_post_type_archive( $this->post_type ) )
-			return $this->post_type_archive_title( $this->post_type_name );
+			return $this->post_type_archive_title( $this->post_type_name ) . ' |';
 
 		return $title;
 	}
