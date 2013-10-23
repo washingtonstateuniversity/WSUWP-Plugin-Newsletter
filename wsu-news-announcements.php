@@ -445,6 +445,7 @@ class WSU_News_Announcements {
 	 * @return mixed Results of the post meta query.
 	 */
 	private function _get_announcement_date_meta( $post_id ) {
+		/* @global WPDB $wpdb */
 		global $wpdb;
 
 		$announcement_date = '_announcement_date_%';
@@ -503,7 +504,10 @@ class WSU_News_Announcements {
 	 * @return null|string  String when retrieving, null when displaying.
 	 */
 	public function get_calendar( $initial = true, $echo = true ) {
-		/* @global WPDB $wpdb */
+		/**
+		 * @global WPDB      $wpdb
+		 * @global WP_Locale $wp_locale
+		 */
 		global $wpdb, $m, $monthnum, $year, $wp_locale, $posts;
 
 		$key = md5( $m . $monthnum . $year );
