@@ -31,6 +31,14 @@
 			font-family: 'Lucida Grande', 'Lucida Sans Unicode', arial, helvetica, sans-serif;
 			font-size: 26px;
 		}
+
+		#background-message {
+			margin: 0;
+			padding: 0;
+			background: #fff;
+			font-family: 'Lucida Grande', 'Lucida Sans Unicode', arial, helvetica, sans-serif;
+			font-size: 12px;
+		}
 		/* End reset */
 
 		/* Some sensible defaults for images
@@ -155,17 +163,33 @@
 <table cellpadding="0" cellspacing="0" border="0" id="background-full">
 	<tr>
 		<td valign="top">
+			<!-- Establish a header section at the top and center the title in a specific area -->
 			<table cellpadding="0" cellspacing="0" border="0" align="center" id="background-header">
 				<tr>
-					<td width="600" valign="top">WSU News</td>
+					<td>
+						<table align="center">
+							<tr>
+								<td width="600" valign="top">WSU News</td>
+							</tr>
+						</table>
+					</td>
 				</tr>
 			</table>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top">
 			<!-- Tables are the most common way to format your email consistently. Set your table widths inside cells and in most cases reset cellpadding, cellspacing, and border to zero. Use nested tables as a way to space effectively in your message. -->
 			<table cellpadding="0" cellspacing="0" border="0" align="center">
+				<tr><td>&nbsp;</td></tr>
 				<tr>
-					<td width="200" valign="top"></td>
-					<td width="200" valign="top"></td>
-					<td width="200" valign="top"></td>
+					<td>
+						<table cellpadding="0" cellspacing="0" border="0" align="center" id="background-message">
+							<tr>
+								<td width="600" valign="top">ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
+							</tr>
+						</table>
+					</td>
 				</tr>
 			</table>
 			<!-- End example table -->
