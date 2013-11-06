@@ -82,7 +82,13 @@ class WSU_Content_Type_Newsletter {
 	}
 
 	public function display_newsletter_items_meta_box() {
+		// Add Subheads
 
+		// Add Posts - from category, date range, text search
+
+		// Add Announcements - from date range
+
+		// Add text blurb, specifically for the bottom
 	}
 }
 $wsu_content_type_newsletter = new WSU_Content_Type_Newsletter();
