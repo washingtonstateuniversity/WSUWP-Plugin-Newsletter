@@ -20,6 +20,17 @@
 			line-height: 100% !important;
 			background: #5e6a71;
 		}
+
+		#background-header {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			line-height: 36px;
+			background: #981e32;
+			color: #fff;
+			font-family: 'Lucida Grande', 'Lucida Sans Unicode', arial, helvetica, sans-serif;
+			font-size: 26px;
+		}
 		/* End reset */
 
 		/* Some sensible defaults for images
@@ -144,6 +155,11 @@
 <table cellpadding="0" cellspacing="0" border="0" id="backgroundTable">
 	<tr>
 		<td valign="top">
+			<table cellpadding="0" cellspacing="0" border="0" align="center" id="background-header">
+				<tr>
+					<td width="600" valign="top">WSU News</td>
+				</tr>
+			</table>
 			<!-- Tables are the most common way to format your email consistently. Set your table widths inside cells and in most cases reset cellpadding, cellspacing, and border to zero. Use nested tables as a way to space effectively in your message. -->
 			<table cellpadding="0" cellspacing="0" border="0" align="center">
 				<tr>
