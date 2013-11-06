@@ -16,6 +16,8 @@ class WSU_Content_Type_Newsletter {
 		add_action( 'init',           array( $this, 'register_post_type'                ) );
 		add_action( 'init',           array( $this, 'register_newsletter_type_taxonomy' ) );
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes'                    ) );
+
+		add_filter( 'single_template', array( $this, 'single_template' ), 10, 1 );
 	}
 
 	public function register_post_type() {
@@ -74,7 +76,6 @@ class WSU_Content_Type_Newsletter {
 		);
 
 		register_taxonomy( $this->tax_newsletter_type, array( $this->post_type ), $args );
-
 	}
 
 	public function add_meta_boxes() {
@@ -89,6 +90,15 @@ class WSU_Content_Type_Newsletter {
 		// Add Announcements - from date range
 
 		// Add text blurb, specifically for the bottom
+	}
+
+	public function single_template( $template ) {
+		$current_object = get_queried_object();
+
+		if ( isset( $current_object->post_type ) && $this->post_type === $current_object->post_type )
+			return dirname( dirname( __FILE__ ) ) . '/templates/single-' . $this->post_type . '.php';
+		else
+			return $template;
 	}
 }
 $wsu_content_type_newsletter = new WSU_Content_Type_Newsletter();
