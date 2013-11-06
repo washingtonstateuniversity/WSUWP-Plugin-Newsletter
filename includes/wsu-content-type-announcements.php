@@ -2,9 +2,9 @@
 /**
  * Provide a content type to handle announcements separately from news
  *
- * Class WSU_News_Announcements
+ * Class WSU_Content_Type_Announcement
  */
-class WSU_News_Announcements {
+class WSU_Content_Type_Announcement {
 
 	/**
 	 * @var string The slug to register the announcement post type under.
@@ -32,7 +32,7 @@ class WSU_News_Announcements {
 	var $calendar_cache_key = 'wsu_announcement_calendar';
 
 	/**
-	 * Set up the hooks used by WSU_News_Announcements
+	 * Set up the hooks used by WSU_Content_Type_Announcement
 	 */
 	public function __construct() {
 		add_action( 'init',                               array( $this, 'register_post_type'       )        );
@@ -721,4 +721,4 @@ class WSU_News_Announcements {
 		register_widget( 'WSU_News_Announcement_Calendar_Widget' );
 	}
 }
-$wsu_news_announcements = new WSU_News_Announcements();
+$wsu_content_type_announcement = new WSU_Content_Type_Announcement();
