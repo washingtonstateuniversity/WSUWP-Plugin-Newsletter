@@ -10,8 +10,11 @@ class WSU_Content_Type_Newsletter {
 
 	var $post_type_archive = 'newsletters';
 
+	var $tax_newsletter_type = 'wsu_newsletter_type';
+
 	public function __construct() {
-		add_action( 'init', array( $this, 'register_post_type' ) );
+		add_action( 'init', array( $this, 'register_post_type'                ) );
+		add_action( 'init', array( $this, 'register_newsletter_type_taxonomy' ) );
 	}
 
 	public function register_post_type() {
@@ -48,6 +51,29 @@ class WSU_Content_Type_Newsletter {
 		);
 
 		register_post_type( $this->post_type, $args );
+	}
+
+	public function register_newsletter_type_taxonomy() {
+		$labels = array(
+			'name' => 'Newsletter Types',
+			'singular_name' => 'Newsletter Type',
+			'parent_item' => 'Parent Newsletter Type',
+			'edit_item' => 'Edit Newsletter Type',
+			'update_item' => 'Update Newsletter Type',
+			'add_new_item' => 'Add Newsletter Type',
+			'new_item_name' => 'New Newsletter Type',
+		);
+
+		$args = array(
+			'hierarchical'          => true,
+			'labels'                => $labels,
+			'show_ui'               => true,
+			'show_admin_column'     => true,
+			'query_var'             => true,
+		);
+
+		register_taxonomy( $this->tax_newsletter_type, array( $this->post_type ), $args );
+
 	}
 }
 $wsu_content_type_newsletter = new WSU_Content_Type_Newsletter();
