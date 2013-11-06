@@ -13,7 +13,7 @@
 		.ExternalClass {width:100%;} /* Force Hotmail to display emails at full width */
 		.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;}
 		/* Forces Hotmail to display normal line spacing.  More on that: http://www.emailonacid.com/forum/viewthread/43/ */
-		#backgroundTable {
+		#background-full {
 			margin:0;
 			padding:0;
 			width:100% !important;
@@ -152,7 +152,7 @@
 </head>
 <body>
 <!-- Wrapper/Container Table: Use a wrapper table to control the width and the background color consistently of your email. Use this approach instead of setting attributes on the body tag. -->
-<table cellpadding="0" cellspacing="0" border="0" id="backgroundTable">
+<table cellpadding="0" cellspacing="0" border="0" id="background-full">
 	<tr>
 		<td valign="top">
 			<table cellpadding="0" cellspacing="0" border="0" align="center" id="background-header">
