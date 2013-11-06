@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: WSU News - Announcements
+Plugin Name: WSU News & Announcements
 Plugin URI: http://news.wsu.edu/
-Description: Creates an handles an Announcements content type for WSU News
+Description: Handles functionality for WSU News and Announcements
 Author: washingtonstateuniversity, jeremyfelt
 Version: 0.9
 */
