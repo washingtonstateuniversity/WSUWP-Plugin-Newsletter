@@ -13,7 +13,13 @@
 		.ExternalClass {width:100%;} /* Force Hotmail to display emails at full width */
 		.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;}
 		/* Forces Hotmail to display normal line spacing.  More on that: http://www.emailonacid.com/forum/viewthread/43/ */
-		#backgroundTable {margin:0; padding:0; width:100% !important; line-height: 100% !important;}
+		#backgroundTable {
+			margin:0;
+			padding:0;
+			width:100% !important;
+			line-height: 100% !important;
+			background: #5e6a71;
+		}
 		/* End reset */
 
 		/* Some sensible defaults for images
