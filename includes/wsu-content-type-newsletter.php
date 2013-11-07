@@ -84,10 +84,11 @@ class WSU_Content_Type_Newsletter {
 
 	public function display_newsletter_items_meta_box() {
 		// Select Newsletter Type
-		?>
-		<input type="button" value="Announcements" id="announcements" class="button button-large button-secondary newsletter-type" />
-		<input type="button" value="News"          id="news"          class="button button-large button-secondary newsletter-type" />
-		<?php
+		$newsletter_types = get_terms( $this->tax_newsletter_type );
+		foreach ( $newsletter_types as $newsletter_type ) {
+			echo '<input type="button" value="' . esc_html( $newsletter_type->name ) . '" id="' . esc_attr( $newsletter_type->slug ) . '" class="button button-large button-secondary newsletter-type" /> ';
+		}
+
 		// Add Subheads
 
 		// Add Posts - from category, date range, text search
