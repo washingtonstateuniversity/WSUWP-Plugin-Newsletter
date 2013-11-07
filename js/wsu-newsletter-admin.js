@@ -20,7 +20,7 @@
 
 			// Append the results to the existing build of newsletter items.
 			$.each( response_data, function( index, val ) {
-				data = '<div class="newsletter-item">' +
+				data = '<div id="newsletter-item-' + val.id + '" class="newsletter-item">' +
 					     '<h3>' + val.title + '</h3>' +
 					     '<p>' + val.excerpt + '</p>' +
 					   '</div>';

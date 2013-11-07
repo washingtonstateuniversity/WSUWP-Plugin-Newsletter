@@ -142,6 +142,7 @@ class WSU_Content_Type_Newsletter {
 			while ( $announcements_query->have_posts() ) {
 				$announcements_query->the_post();
 				$items[] = array(
+					'id'        => get_the_ID(),
 					'title'     => get_the_title(),
 					'excerpt'   => get_the_excerpt(),
 					'permalink' => get_permalink(),
