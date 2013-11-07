@@ -15,8 +15,9 @@
 
 		// Make the ajax call
 		$.post( window.ajaxurl, data, function( response ) {
-			// Use this data to setup the remainder.
-			console.log( response );
+
+			// Append the results to the existing build of newsletter items.
+			$('#newsletter-build').append( response );
 		});
 	});
 }( jQuery, window ) );

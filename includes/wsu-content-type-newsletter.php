@@ -99,6 +99,11 @@ class WSU_Content_Type_Newsletter {
 		// Add Announcements - from date range
 
 		// Add text blurb, specifically for the bottom
+
+		// Display Items
+		?>
+		<div id="newsletter-build"></div>
+		<?php
 	}
 
 	/**
