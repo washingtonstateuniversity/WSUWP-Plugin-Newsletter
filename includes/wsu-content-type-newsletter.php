@@ -118,7 +118,33 @@ class WSU_Content_Type_Newsletter {
 	}
 
 	private function _build_announcements_newsletter_response() {
-		return '';
+		// @global WSU_Content_Type_Announcement $wsu_content_type_announcement
+		global $wsu_content_type_announcement;
+
+		$query_date = date( 'Ymd' );
+
+		$query_args = array(
+			'post_type'       => $wsu_content_type_announcement->post_type,
+			'posts_per_page'  => 100,
+			'meta_query'      => array(
+				array(
+					'key'     => '_announcement_date_' . $query_date,
+					'value'   => 1,
+					'compare' => '=',
+					'type'    => 'numeric',
+				)
+			),
+		);
+
+		$announcements_query = new WP_Query( $query_args );
+		$titles = array();
+		if ( $announcements_query->have_posts() ) {
+			while ( $announcements_query->have_posts() ) {
+				$announcements_query->the_post();
+				$titles[] = get_the_title();
+			}
+		}
+		return json_encode( $titles );
 	}
 
 	public function ajax_callback() {
