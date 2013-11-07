@@ -13,12 +13,14 @@ class WSU_Content_Type_Newsletter {
 	var $tax_newsletter_type = 'wsu_newsletter_type';
 
 	public function __construct() {
-		add_action( 'init',                  array( $this, 'register_post_type'                ), 10    );
-		add_action( 'init',                  array( $this, 'register_newsletter_type_taxonomy' ), 10    );
-		add_action( 'add_meta_boxes',        array( $this, 'add_meta_boxes'                    ), 10    );
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts'             ), 10    );
+		add_action( 'init',                               array( $this, 'register_post_type'                ), 10    );
+		add_action( 'init',                               array( $this, 'register_newsletter_type_taxonomy' ), 10    );
+		add_action( 'add_meta_boxes',                     array( $this, 'add_meta_boxes'                    ), 10    );
+		add_action( 'admin_enqueue_scripts',              array( $this, 'admin_enqueue_scripts'             ), 10    );
+		add_action( 'wp_ajax_set_newsletter_type',        array( $this, 'ajax_callback'                     ), 10    );
+		add_action( 'wp_ajax_nopriv_set_newsletter_type', array( $this, 'ajax_callback'                     ), 10    );
 
-		add_filter( 'single_template',       array( $this, 'single_template'                   ), 10, 1 );
+		add_filter( 'single_template',                    array( $this, 'single_template'                   ), 10, 1 );
 	}
 
 	public function register_post_type() {
@@ -108,6 +110,14 @@ class WSU_Content_Type_Newsletter {
 
 		if ( $this->post_type === get_current_screen()->id )
 			wp_enqueue_script( 'wsu-newsletter-admin', plugins_url( 'js/wsu-newsletter-admin.js', dirname( __FILE__ ) ), false, false, true );
+	}
+
+	public function ajax_callback() {
+		if ( ! DOING_AJAX || ! isset( $_POST['action'] ) || 'set_newsletter_type' !== $_POST['action'] )
+			die();
+
+		echo esc_js( $_POST['newsletter_type'] );
+		exit(); // close the
 	}
 
 	public function single_template( $template ) {
