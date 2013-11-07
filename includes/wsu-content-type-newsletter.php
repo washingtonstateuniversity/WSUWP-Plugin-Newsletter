@@ -13,11 +13,12 @@ class WSU_Content_Type_Newsletter {
 	var $tax_newsletter_type = 'wsu_newsletter_type';
 
 	public function __construct() {
-		add_action( 'init',           array( $this, 'register_post_type'                ) );
-		add_action( 'init',           array( $this, 'register_newsletter_type_taxonomy' ) );
-		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes'                    ) );
+		add_action( 'init',                  array( $this, 'register_post_type'                ), 10    );
+		add_action( 'init',                  array( $this, 'register_newsletter_type_taxonomy' ), 10    );
+		add_action( 'add_meta_boxes',        array( $this, 'add_meta_boxes'                    ), 10    );
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts'             ), 10    );
 
-		add_filter( 'single_template', array( $this, 'single_template' ), 10, 1 );
+		add_filter( 'single_template',       array( $this, 'single_template'                   ), 10, 1 );
 	}
 
 	public function register_post_type() {
@@ -96,6 +97,17 @@ class WSU_Content_Type_Newsletter {
 		// Add Announcements - from date range
 
 		// Add text blurb, specifically for the bottom
+	}
+
+	/**
+	 * Enqueue the scripts used in the WordPress admin for managing newsletter creation.
+	 */
+	public function admin_enqueue_scripts( $hook ) {
+		if ( ! in_array( $hook, array( 'post.php', 'post-new.php' ) ) )
+			return;
+
+		if ( $this->post_type === get_current_screen()->id )
+			wp_enqueue_script( 'wsu-newsletter-admin', plugins_url( 'js/wsu-newsletter-admin.js', dirname( __FILE__ ) ) );
 	}
 
 	public function single_template( $template ) {
