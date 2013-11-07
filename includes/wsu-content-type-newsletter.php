@@ -113,8 +113,10 @@ class WSU_Content_Type_Newsletter {
 		if ( ! in_array( $hook, array( 'post.php', 'post-new.php' ) ) )
 			return;
 
-		if ( $this->post_type === get_current_screen()->id )
-			wp_enqueue_script( 'wsu-newsletter-admin', plugins_url( 'js/wsu-newsletter-admin.js', dirname( __FILE__ ) ), false, false, true );
+		if ( $this->post_type === get_current_screen()->id ) {
+			wp_enqueue_script( 'wsu-newsletter-admin', plugins_url( 'js/wsu-newsletter-admin.js',   dirname( __FILE__ ) ), false, false, true );
+			wp_enqueue_style(  'wsu-newsletter-admin', plugins_url( 'css/wsu-newsletter-admin.css', dirname( __FILE__ ) ) );
+		}
 	}
 
 	private function _build_announcements_newsletter_response() {

@@ -1,0 +1,13 @@
+#newsletter-build {
+	width: 600px;
+	background: #fff;
+	margin: 10px;
+	border: 1px solid #777;
+	min-height: 100px;
+}
+.newsletter-item h3 {
+	margin: 0;
+	padding: 0;
+	background: none;
+	border: 0;
+}
