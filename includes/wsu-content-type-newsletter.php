@@ -83,6 +83,11 @@ class WSU_Content_Type_Newsletter {
 	}
 
 	public function display_newsletter_items_meta_box() {
+		// Select Newsletter Type
+		?>
+		<input type="button" value="Announcements" id="announcements" class="button button-large button-secondary newsletter-type" />
+		<input type="button" value="News"          id="news"          class="button button-large button-secondary newsletter-type" />
+		<?php
 		// Add Subheads
 
 		// Add Posts - from category, date range, text search
