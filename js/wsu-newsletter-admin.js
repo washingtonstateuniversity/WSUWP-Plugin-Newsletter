@@ -15,9 +15,19 @@
 
 		// Make the ajax call
 		$.post( window.ajaxurl, data, function( response ) {
+			var data = '',
+				response_data = $.parseJSON( response );
 
 			// Append the results to the existing build of newsletter items.
-			$('#newsletter-build').append( response );
+			$.each( response_data, function( index, val ) {
+				data = '<div class="newsletter-item">' +
+					     '<h3>' + val.title + '</h3>' +
+					     '<p>' + val.excerpt + '</p>' +
+					   '</div>';
+
+				$('#newsletter-build').append( data );
+				data = '';
+			});
 		});
 	});
 }( jQuery, window ) );
