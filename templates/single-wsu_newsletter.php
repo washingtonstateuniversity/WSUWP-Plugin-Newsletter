@@ -53,7 +53,12 @@
 
 		/* Hotmail header color reset
 		Bring inline: Yes. */
-		h1, h2, h3, h4, h5, h6 {color: black !important;}
+		h1 {
+			color: white !important;
+			font-size: 26px;
+		}
+
+		h2, h3, h4, h5, h6 {color: black !important;}
 
 		h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {color: blue !important;}
 
