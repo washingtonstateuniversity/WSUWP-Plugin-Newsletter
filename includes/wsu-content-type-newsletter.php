@@ -137,14 +137,18 @@ class WSU_Content_Type_Newsletter {
 		);
 
 		$announcements_query = new WP_Query( $query_args );
-		$titles = array();
+		$items = array();
 		if ( $announcements_query->have_posts() ) {
 			while ( $announcements_query->have_posts() ) {
 				$announcements_query->the_post();
-				$titles[] = get_the_title();
+				$items[] = array(
+					'title'     => get_the_title(),
+					'excerpt'   => get_the_excerpt(),
+					'permalink' => get_permalink(),
+				);
 			}
 		}
-		return json_encode( $titles );
+		return json_encode( $items );
 	}
 
 	public function ajax_callback() {
