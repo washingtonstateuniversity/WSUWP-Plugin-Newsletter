@@ -3,13 +3,14 @@
  */
 ( function( $, window ) {
 
+	var $newsletter_build = $('#newsletter-build');
+
 	$( '.newsletter-type').on( 'click', function( e ) {
 		// Don't do anything rash.
 		e.preventDefault();
 
 		// Cache the newsletter build area for future use.
-		var $newsletter_build = $('#newsletter-build'),
-			data = {
+		var data = {
 				action: 'set_newsletter_type',
 				newsletter_type: this.id
 			};
