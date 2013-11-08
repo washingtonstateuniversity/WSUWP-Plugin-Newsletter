@@ -11,6 +11,12 @@
 	background-repeat: no-repeat;
 }
 
+.newsletter-build-tip {
+	font-style: italic;
+	font-size: 15px;
+	margin: 50px;
+}
+
 .newsletter-item {
 	margin: 10px 25px 15px 10px;
 	cursor: move;
