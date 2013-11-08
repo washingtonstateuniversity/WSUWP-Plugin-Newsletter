@@ -7,6 +7,9 @@
 		// Don't do anything rash.
 		e.preventDefault();
 
+		// Cache the newsletter build area for future use.
+		var $newsletter_build = $('#newsletter-build');
+
 		// Pass this.id to window.ajaxurl
 		var data = {
 			action: 'set_newsletter_type',
@@ -25,11 +28,13 @@
 					     '<p>' + val.excerpt + ' <a href="' + val.permalink + '" >Continue reading&hellip;</a></p>' +
 					   '</div>';
 
-				$('#newsletter-build').append( data );
+				$newsletter_build.append( data );
 				data = '';
 			});
-			$('#newsletter-build').sortable();
-			$('#newsletter-build').disableSelect();
+
+			// Use jQuery UI Sortable to add sorting functionality to newsletter items.
+			$newsletter_build.sortable();
+			$newsletter_build.disableSelect();
 		});
 	});
 }( jQuery, window ) );
