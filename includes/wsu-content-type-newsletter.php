@@ -82,8 +82,12 @@ class WSU_Content_Type_Newsletter {
 		register_taxonomy( $this->tax_newsletter_type, array( $this->post_type ), $args );
 	}
 
+	/**
+	 * Add the meta boxes used by the WSU newsletter content type.
+	 */
 	public function add_meta_boxes() {
 		add_meta_box( 'wsu_newsletter_items', 'Newsletter Items', array( $this, 'display_newsletter_items_meta_box' ), $this->post_type, 'normal' );
+		add_meta_box( 'wsu_newsletter_send',  'Send Newsletter',  array( $this, 'display_newsletter_send_meta_box'  ), $this->post_type, 'side'   );
 	}
 
 	public function display_newsletter_items_meta_box( $post ) {
@@ -125,6 +129,15 @@ class WSU_Content_Type_Newsletter {
 		</div>
 		<input type="hidden" id="newsletter-item-order" name="newsletter_item_order" value="" />
 		<?php
+	}
+
+	/**
+	 * Display a meta box to allow the sending of a newsletter to an email address.
+	 *
+	 * @param WP_Post $post Post object for the post currently being edited.
+	 */
+	public function display_newsletter_send_meta_box( $post ) {
+
 	}
 
 	/**
