@@ -6,6 +6,9 @@
 	margin: 10px;
 	border: 1px solid #777;
 	min-height: 100px;
+	padding-top: 123px;
+	background-image: url( '../images/wsu-announcements-banner.png' );
+	background-repeat: no-repeat;
 }
 
 .newsletter-item {
