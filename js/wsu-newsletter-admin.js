@@ -26,7 +26,7 @@
 					     '<p>' + val.excerpt + ' <a href="' + val.permalink + '" >Continue reading&hellip;</a></p>' +
 					   '</div>';
 
-				$newsletter_build.append( data );
+				$newsletter_build.prepend( data );
 				data = '';
 			});
 

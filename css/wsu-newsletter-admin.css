@@ -11,6 +11,13 @@
 .newsletter-item {
 	margin: 10px 25px 15px 10px;
 	cursor: move;
+	float: left;
+}
+
+.newsletter-item:hover {
+	border: 1px dashed #ccc;
+	padding: 5px;
+	margin: 4px 19px 9px 4px;
 }
 
 #newsletter-build .newsletter-item h3 {

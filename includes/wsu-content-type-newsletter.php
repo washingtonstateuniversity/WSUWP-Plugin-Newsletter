@@ -102,7 +102,7 @@ class WSU_Content_Type_Newsletter {
 
 		// Display Items
 		?>
-		<div id="newsletter-build"></div>
+		<div id="newsletter-build"><div style="clear:left;"> </div></div>
 		<?php
 	}
 
