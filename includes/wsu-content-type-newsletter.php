@@ -137,7 +137,7 @@ class WSU_Content_Type_Newsletter {
 		}
 	}
 
-	private function _build_announcements_newsletter_response() {
+	private function _build_announcements_newsletter_response( $post_ids = array() ) {
 		// @global WSU_Content_Type_Announcement $wsu_content_type_announcement
 		global $wsu_content_type_announcement;
 
@@ -155,6 +155,10 @@ class WSU_Content_Type_Newsletter {
 				)
 			),
 		);
+
+		// If an array of post IDs has been passed, use only those.
+		if ( ! empty( $post_ids ) )
+			$query_args['post__in'] = $post_ids;
 
 		$announcements_query = new WP_Query( $query_args );
 		$items = array();
