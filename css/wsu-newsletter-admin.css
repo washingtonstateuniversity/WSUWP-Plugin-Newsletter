@@ -1,4 +1,5 @@
 #newsletter-build {
+	position: relative;
 	font-family: 'Lucida Grande', 'Lucida Sans Unicode', Arial, sans-serif;
 	font-size: 100%;
 	max-width: 600px;
@@ -49,4 +50,14 @@
 #newsletter-build .newsletter-item p a {
 	color: #981e32;
 	text-decoration: underline;
+}
+
+.newsletter-date {
+	font-family: "Lucide Grande", Helvetica, arial, sans-serif;
+	font-size: 18px;
+	font-weight: 200;
+	position: absolute;
+	top: 30px;
+	right: 12px;
+	color: #777;
 }
