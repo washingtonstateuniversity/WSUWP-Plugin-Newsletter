@@ -28,6 +28,8 @@
 				$('#newsletter-build').append( data );
 				data = '';
 			});
+			$('#newsletter-build').sortable();
+			$('#newsletter-build').disableSelect();
 		});
 	});
 }( jQuery, window ) );

@@ -10,6 +10,7 @@
 
 .newsletter-item {
 	margin: 10px 25px 15px 10px;
+	cursor: move;
 }
 
 #newsletter-build .newsletter-item h3 {

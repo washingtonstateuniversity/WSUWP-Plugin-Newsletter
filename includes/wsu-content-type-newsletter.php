@@ -114,7 +114,7 @@ class WSU_Content_Type_Newsletter {
 			return;
 
 		if ( $this->post_type === get_current_screen()->id ) {
-			wp_enqueue_script( 'wsu-newsletter-admin', plugins_url( 'js/wsu-newsletter-admin.js',   dirname( __FILE__ ) ), false, false, true );
+			wp_enqueue_script( 'wsu-newsletter-admin', plugins_url( 'js/wsu-newsletter-admin.js',   dirname( __FILE__ ) ), array( 'jquery', 'jquery-ui-sortable' ), false, true );
 			wp_enqueue_style(  'wsu-newsletter-admin', plugins_url( 'css/wsu-newsletter-admin.css', dirname( __FILE__ ) ) );
 		}
 	}
