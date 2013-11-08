@@ -123,7 +123,7 @@ class WSU_Content_Type_Newsletter {
 		// @global WSU_Content_Type_Announcement $wsu_content_type_announcement
 		global $wsu_content_type_announcement;
 
-		$query_date = date( 'Ymd' );
+		$query_date = date( 'Ymd', current_time( 'timestamp' ) );
 
 		$query_args = array(
 			'post_type'       => $wsu_content_type_announcement->post_type,
