@@ -12,8 +12,9 @@
 
 		// Cache the newsletter build area for future use.
 		var data = {
-				action: 'set_newsletter_type',
-				newsletter_type: this.id
+				action:          'set_newsletter_type',
+				newsletter_type: this.id,
+				post_id:         window.wsu_newsletter.post_id
 			};
 
 		// Make the ajax call
