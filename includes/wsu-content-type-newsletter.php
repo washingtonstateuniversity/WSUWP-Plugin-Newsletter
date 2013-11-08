@@ -15,6 +15,7 @@ class WSU_Content_Type_Newsletter {
 	public function __construct() {
 		add_action( 'init',                               array( $this, 'register_post_type'                ), 10    );
 		add_action( 'init',                               array( $this, 'register_newsletter_type_taxonomy' ), 10    );
+		add_action( 'save_post_' . $this->post_type,      array( $this, 'save_post'                         ), 10, 2 );
 		add_action( 'add_meta_boxes',                     array( $this, 'add_meta_boxes'                    ), 10    );
 		add_action( 'admin_enqueue_scripts',              array( $this, 'admin_enqueue_scripts'             ), 10    );
 		add_action( 'wp_ajax_set_newsletter_type',        array( $this, 'ajax_callback'                     ), 10    );
@@ -181,6 +182,24 @@ class WSU_Content_Type_Newsletter {
 			echo 'news';
 
 		exit(); // close the callback
+	}
+
+	/**
+	 * Capture the order of newsletter items on save and store as post meta.
+	 *
+	 * @param int     $post_id ID of the current post being saved.
+	 * @param WP_Post $post    Object of the current post being saved.
+	 */
+	public function save_post( $post_id, $post ) {
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+			return;
+
+		if ( 'auto-draft' === $post->post_status || empty( $_POST['newsletter_item_order'] ) )
+			return;
+
+		$newsletter_item_order = explode( ',', $_POST['newsletter_item_order'] );
+		$newsletter_item_order = array_map( 'absint', $newsletter_item_order );
+		update_post_meta( $post_id, '_newsletter_item_order', $newsletter_item_order );
 	}
 
 	public function single_template( $template ) {
