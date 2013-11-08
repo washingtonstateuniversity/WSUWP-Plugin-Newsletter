@@ -9,7 +9,7 @@
 }
 
 .newsletter-item {
-	margin: 10px 0 0 10px;
+	margin: 10px 25px 15px 10px;
 }
 
 #newsletter-build .newsletter-item h3 {
@@ -30,6 +30,10 @@
 
 #newsletter-build .newsletter-item h3 a:hover {
 	color: #ac0404;
+}
+
+#newsletter-build .newsletter-item p {
+	margin: 10px 0 0 0;
 }
 
 #newsletter-build .newsletter-item p a {
