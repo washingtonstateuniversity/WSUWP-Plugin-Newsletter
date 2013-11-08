@@ -24,14 +24,13 @@
 
 			// Append the results to the existing build of newsletter items.
 			$.each( response_data, function( index, val ) {
-				data = '<div id="newsletter-item-' + val.id + '" class="newsletter-item">' +
+				data += '<div id="newsletter-item-' + val.id + '" class="newsletter-item">' +
 					     '<h3><a href="' + val.permalink + '">' + val.title + '</a></h3>' +
 					     '<p>' + val.excerpt + ' <a href="' + val.permalink + '" >Continue reading&hellip;</a></p>' +
 					   '</div>';
-
-				$newsletter_build.prepend( data );
-				data = '';
 			});
+
+			$newsletter_build.html( data );
 
 			// Use jQuery UI Sortable to add sorting functionality to newsletter items.
 			$newsletter_build.sortable( { axis: "y", opacity: 0.6, items: ".newsletter-item" } );
