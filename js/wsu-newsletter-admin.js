@@ -34,6 +34,8 @@
 
 			// Use jQuery UI Sortable to add sorting functionality to newsletter items.
 			$newsletter_build.sortable( { axis: "y", opacity: 0.6, items: ".newsletter-item" } );
+			sorted_data = $newsletter_build.sortable( 'toArray' );
+			$('#newsletter-item-order').val( sorted_data );
 		});
 	});
 
@@ -41,5 +43,6 @@
 	$newsletter_build.on( "sortupdate", function( event, ui ) {
 		// Store the existing sorted newsletter items as an array.
 		sorted_data = $newsletter_build.sortable( 'toArray' );
+		$('#newsletter-item-order').val( sorted_data );
 	} );
 }( jQuery, window ) );

@@ -119,6 +119,7 @@ class WSU_Content_Type_Newsletter {
 			</div>
 			<div style="clear:left;"> </div>
 		</div>
+		<input type="hidden" id="newsletter-item-order" name="newsletter_item_order" value="" />
 		<?php
 	}
 
