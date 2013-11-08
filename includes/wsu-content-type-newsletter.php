@@ -102,7 +102,11 @@ class WSU_Content_Type_Newsletter {
 
 		// Display Items
 		?>
-		<div id="newsletter-build"><div style="clear:left;"> </div></div>
+		<div id="newsletter-build">
+			<div class="newsletter-date"><?php echo date( 'l, F j, Y', current_time( 'timestamp' ) ); ?></div>
+			<div id="newsletter-build-items"></div>
+			<div style="clear:left;"> </div>
+		</div>
 		<?php
 	}
 

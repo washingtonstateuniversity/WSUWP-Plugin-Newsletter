@@ -3,7 +3,7 @@
  */
 ( function( $, window ) {
 
-	var $newsletter_build = $('#newsletter-build'),
+	var $newsletter_build = $('#newsletter-build-items'),
 		sorted_data = [];
 
 	$( '.newsletter-type').on( 'click', function( e ) {
