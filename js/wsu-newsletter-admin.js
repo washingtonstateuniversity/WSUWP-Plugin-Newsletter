@@ -31,7 +31,7 @@
 			});
 
 			// Use jQuery UI Sortable to add sorting functionality to newsletter items.
-			$newsletter_build.sortable( { axis: "y" } );
+			$newsletter_build.sortable( { axis: "y", opacity: 0.6 } );
 			$newsletter_build.disableSelect();
 		});
 	});
