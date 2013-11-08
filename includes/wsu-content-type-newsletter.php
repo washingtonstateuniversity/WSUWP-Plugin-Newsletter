@@ -169,7 +169,7 @@ class WSU_Content_Type_Newsletter {
 				);
 			}
 		}
-		return json_encode( $items );
+		return $items;
 	}
 
 	public function ajax_callback() {
@@ -177,7 +177,7 @@ class WSU_Content_Type_Newsletter {
 			die();
 
 		if ( 'announcements' === $_POST['newsletter_type'] )
-			echo $this->_build_announcements_newsletter_response();
+			echo json_encode( $this->_build_announcements_newsletter_response() );
 		elseif ( 'news' === $_POST['newsletter_type'] )
 			echo 'news';
 
