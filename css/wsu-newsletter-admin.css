@@ -1,13 +1,38 @@
 #newsletter-build {
-	width: 600px;
+	font-family: 'Lucida Grande', 'Lucida Sans Unicode', Arial, sans-serif;
+	font-size: 100%;
+	max-width: 600px;
 	background: #fff;
 	margin: 10px;
 	border: 1px solid #777;
 	min-height: 100px;
 }
-.newsletter-item h3 {
+
+.newsletter-item {
+	margin: 10px 0 0 10px;
+}
+
+#newsletter-build .newsletter-item h3 {
 	margin: 0;
 	padding: 0;
-	background: none;
 	border: 0;
+	background: none;
+	color: #262a2d;
+	cursor: auto;
+	font-family: 'Open Sans Condensed', 'Lucida Grande', 'Lucida Sans Unicode', arial, sans-serif;
+	font-weight: 700;
+}
+
+#newsletter-build .newsletter-item h3 a {
+	color: #262a2d;
+	text-decoration: none;
+}
+
+#newsletter-build .newsletter-item h3 a:hover {
+	color: #ac0404;
+}
+
+#newsletter-build .newsletter-item p a {
+	color: #981e32;
+	text-decoration: underline;
 }
