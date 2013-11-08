@@ -89,6 +89,9 @@ class WSU_Content_Type_Newsletter {
 	public function display_newsletter_items_meta_box( $post ) {
 		wp_localize_script( 'wsu-newsletter-admin', 'wsu_newsletter', array( 'post_id' => $post->ID ) );
 
+		if ( $post_ids = get_post_meta( $post->ID, '_newsletter_item_order', true ) )
+			wp_localize_script( 'wsu-newsletter-admin', 'wsu_newsletter', array( 'items' => $this->_build_announcements_newsletter_response( $post_ids ) ) );
+
 		// Select Newsletter Type
 		$newsletter_types = get_terms( $this->tax_newsletter_type );
 		foreach ( $newsletter_types as $newsletter_type ) {
