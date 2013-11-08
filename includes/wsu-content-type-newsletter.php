@@ -52,7 +52,7 @@ class WSU_Content_Type_Newsletter {
 			'has_archive'        => $this->post_type_archive,
 			'hierarchical'       => false,
 			'menu_position'      => 5,
-			'supports'           => array( 'title' ),
+			'supports'           => array( '' ),
 			'taxonomies'         => array(),
 		);
 
