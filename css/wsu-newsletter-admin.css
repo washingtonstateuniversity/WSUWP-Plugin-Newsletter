@@ -64,11 +64,15 @@
 
 .newsletter-footer {
 	clear: left;
-	padding-top: 0px;
+	padding-top: 0;
 	border-top: 1px dashed #ccc;
 }
 
 .newsletter-footer p {
 	font-style: italic;
 	margin: 10px 20px 10px 10px;
+}
+
+.newsletter-head p {
+	margin: 0 20px 10px 10px;
 }

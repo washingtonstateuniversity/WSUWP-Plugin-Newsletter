@@ -104,6 +104,9 @@ class WSU_Content_Type_Newsletter {
 		?>
 		<div id="newsletter-build">
 			<div class="newsletter-date"><?php echo date( 'l, F j, Y', current_time( 'timestamp' ) ); ?></div>
+			<div class="newsletter-head">
+				<p>Submit announcements online at <a href="http://news.wsu.edu/announcements/">http://news.wsu.edu/announcements</a></p>
+			</div>
 			<div id="newsletter-build-items"></div>
 			<div class="newsletter-footer">
 				<p>The Announcement newsletter will continue to be sent once a day at 10 a.m. Submissions made after 9 a.m.
