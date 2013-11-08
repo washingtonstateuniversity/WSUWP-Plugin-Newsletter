@@ -6,6 +6,24 @@
 	var $newsletter_build = $('#newsletter-build-items'),
 		sorted_data = [];
 
+	/**
+	 * As newsletter items are sorted in the newsletter build container, process
+	 * the associated post IDs into something that we can pass to the back end.
+	 */
+	function process_sorted_data() {
+		var new_val = '';
+
+		sorted_data = $newsletter_build.sortable( 'toArray' );
+
+		// Strip `newsletter-item-` from the beginning of each newsletter item ID
+		$.each( sorted_data, function( index, val ) {
+			new_val = val.replace(/newsletter-item-/g, '');
+			sorted_data[index] = new_val;
+		});
+
+		$('#newsletter-item-order').val( sorted_data );
+	}
+
 	$( '.newsletter-type').on( 'click', function( e ) {
 		// Don't do anything rash.
 		e.preventDefault();
@@ -34,15 +52,10 @@
 
 			// Use jQuery UI Sortable to add sorting functionality to newsletter items.
 			$newsletter_build.sortable( { axis: "y", opacity: 0.6, items: ".newsletter-item" } );
-			sorted_data = $newsletter_build.sortable( 'toArray' );
-			$('#newsletter-item-order').val( sorted_data );
+			process_sorted_data();
 		});
 	});
 
 	// Fire an event any time sorting has stopped after a move.
-	$newsletter_build.on( "sortupdate", function( event, ui ) {
-		// Store the existing sorted newsletter items as an array.
-		sorted_data = $newsletter_build.sortable( 'toArray' );
-		$('#newsletter-item-order').val( sorted_data );
-	} );
+	$newsletter_build.on( "sortupdate", process_sorted_data );
 }( jQuery, window ) );
