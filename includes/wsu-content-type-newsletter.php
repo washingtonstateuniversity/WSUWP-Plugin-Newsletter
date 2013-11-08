@@ -160,8 +160,10 @@ class WSU_Content_Type_Newsletter {
 		);
 
 		// If an array of post IDs has been passed, use only those.
-		if ( ! empty( $post_ids ) )
+		if ( ! empty( $post_ids ) ) {
 			$query_args['post__in'] = $post_ids;
+			$query_args['orderby']  = 'post__in';
+		}
 
 		$announcements_query = new WP_Query( $query_args );
 		$items = array();
