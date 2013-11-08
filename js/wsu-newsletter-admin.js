@@ -3,7 +3,8 @@
  */
 ( function( $, window ) {
 
-	var $newsletter_build = $('#newsletter-build');
+	var $newsletter_build = $('#newsletter-build'),
+		sorted_data = [];
 
 	$( '.newsletter-type').on( 'click', function( e ) {
 		// Don't do anything rash.
@@ -35,4 +36,10 @@
 			$newsletter_build.sortable( { axis: "y", opacity: 0.6 } );
 		});
 	});
+
+	// Fire an event any time sorting has stopped after a move.
+	$newsletter_build.on( "sortupdate", function( event, ui ) {
+		// Store the existing sorted newsletter items as an array.
+		sorted_data = $newsletter_build.sortable( 'toArray' );
+	} );
 }( jQuery, window ) );
