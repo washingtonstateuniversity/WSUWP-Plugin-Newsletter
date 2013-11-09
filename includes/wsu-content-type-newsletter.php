@@ -109,11 +109,13 @@ class WSU_Content_Type_Newsletter {
 	 * @param WP_Post $post Object for the post currently being edited.
 	 */
 	public function display_newsletter_items_meta_box( $post ) {
-		wp_localize_script( 'wsu-newsletter-admin', 'wsu_newsletter', array( 'post_id' => $post->ID ) );
+		$localized_data = array( 'post_id' => $post->ID );
 
 		// If this newsletter has items assigned already, we want to make them available to our JS
 		if ( $post_ids = get_post_meta( $post->ID, '_newsletter_item_order', true ) )
-			wp_localize_script( 'wsu-newsletter-admin', 'wsu_newsletter', array( 'items' => $this->_build_announcements_newsletter_response( $post_ids ) ) );
+			$localized_data['items'] = $this->_build_announcements_newsletter_response( $post_ids );
+
+		wp_localize_script( 'wsu-newsletter-admin', 'wsu_newsletter', $localized_data );
 
 		// Select Newsletter Type
 		$newsletter_types = get_terms( $this->tax_newsletter_type );
