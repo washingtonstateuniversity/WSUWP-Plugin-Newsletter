@@ -90,9 +90,19 @@ class WSU_Content_Type_Newsletter {
 		add_meta_box( 'wsu_newsletter_send',  'Send Newsletter',  array( $this, 'display_newsletter_send_meta_box'  ), $this->post_type, 'side'   );
 	}
 
+	/**
+	 * Display a newsletter form that allows for the automatic creation and drag/drop editing
+	 * of an email newsletter.
+	 *
+	 * @todo NEWS - add subheads, posts, text blurbs
+	 * @todo ANNOUNCEMENTS - options for ad-hoc adding of announcements and text blurbs
+	 *
+	 * @param WP_Post $post Object for the post currently being edited.
+	 */
 	public function display_newsletter_items_meta_box( $post ) {
 		wp_localize_script( 'wsu-newsletter-admin', 'wsu_newsletter', array( 'post_id' => $post->ID ) );
 
+		// If this newsletter has items assigned already, we want to make them available to our JS
 		if ( $post_ids = get_post_meta( $post->ID, '_newsletter_item_order', true ) )
 			wp_localize_script( 'wsu-newsletter-admin', 'wsu_newsletter', array( 'items' => $this->_build_announcements_newsletter_response( $post_ids ) ) );
 
@@ -102,15 +112,6 @@ class WSU_Content_Type_Newsletter {
 			echo '<input type="button" value="' . esc_html( $newsletter_type->name ) . '" id="' . esc_attr( $newsletter_type->slug ) . '" class="button button-large button-secondary newsletter-type" /> ';
 		}
 
-		// Add Subheads
-
-		// Add Posts - from category, date range, text search
-
-		// Add Announcements - from date range
-
-		// Add text blurb, specifically for the bottom
-
-		// Display Items
 		?>
 		<div id="newsletter-build">
 			<div class="newsletter-date"><?php echo date( 'l, F j, Y', current_time( 'timestamp' ) ); ?></div>
