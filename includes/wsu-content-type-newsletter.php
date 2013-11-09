@@ -23,7 +23,7 @@ class WSU_Content_Type_Newsletter {
 		add_action( 'admin_enqueue_scripts',              array( $this, 'admin_enqueue_scripts'             ), 10    );
 		add_action( 'wp_ajax_set_newsletter_type',        array( $this, 'ajax_callback'                     ), 10    );
 		add_action( 'wp_ajax_nopriv_set_newsletter_type', array( $this, 'ajax_callback'                     ), 10    );
-
+		add_action( 'wp_ajax_send_newsletter',            array( $this, 'ajax_send_newsletter'              ), 10    );
 		add_filter( 'single_template',                    array( $this, 'single_template'                   ), 10, 1 );
 	}
 
@@ -153,6 +153,8 @@ class WSU_Content_Type_Newsletter {
 		<label for="newsletter-email">Email Address:</label>
 		<input type="text" name="newsletter_email" id="newsletter-email" value="" placeholder="email..." />
 		<input type="button" id="newsletter-send" value="Send" class="button button-primary" />
+		<br>
+		<span id="newsletter-send-response"></span>
 		<?php
 	}
 
@@ -220,6 +222,18 @@ class WSU_Content_Type_Newsletter {
 			echo 'news';
 
 		exit(); // close the callback
+	}
+
+	public function ajax_send_newsletter() {
+		if ( ! DOING_AJAX || ! isset( $_POST['action'] ) || 'send_newsletter' !== $_POST['action'] )
+			die();
+
+		$post_id = absint( $_POST['post_id'] );
+
+		if ( ! $post_ids = get_post_meta( $post_id, '_newsletter_item_order', true ) ) {
+			echo $post_id . 'No items to send...';
+			exit;
+		}
 	}
 
 	/**

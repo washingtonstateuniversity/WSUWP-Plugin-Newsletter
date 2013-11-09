@@ -66,6 +66,19 @@
 		});
 	});
 
+	$( '#newsletter-send').on( 'click', function( e ) {
+		// Not entirely sure this button has a default, but if it does...
+		e.preventDefault();
+
+		var data = {
+			action: 'send_newsletter',
+			post_id: window.wsu_newsletter.post_id
+		};
+
+		$.post( window.ajaxurl, data, function( response ) {
+			$('#newsletter-send-response').html( response );
+		})
+	});
 	// Fire an event any time sorting has stopped after a move.
 	$newsletter_build.on( "sortupdate", process_sorted_data );
 }( jQuery, window ) );
