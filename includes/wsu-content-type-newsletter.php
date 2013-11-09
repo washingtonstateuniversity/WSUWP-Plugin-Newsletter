@@ -12,6 +12,9 @@ class WSU_Content_Type_Newsletter {
 
 	var $tax_newsletter_type = 'wsu_newsletter_type';
 
+	/**
+	 * Add the hooks that we'll make use of.
+	 */
 	public function __construct() {
 		add_action( 'init',                               array( $this, 'register_post_type'                ), 10    );
 		add_action( 'init',                               array( $this, 'register_newsletter_type_taxonomy' ), 10    );
@@ -24,6 +27,9 @@ class WSU_Content_Type_Newsletter {
 		add_filter( 'single_template',                    array( $this, 'single_template'                   ), 10, 1 );
 	}
 
+	/**
+	 * Register a content type specifically for the newsletter.
+	 */
 	public function register_post_type() {
 		$labels = array(
 			'name'               => $this->post_type_name,
@@ -60,6 +66,9 @@ class WSU_Content_Type_Newsletter {
 		register_post_type( $this->post_type, $args );
 	}
 
+	/**
+	 * Register a taxonomy for newsletter type.
+	 */
 	public function register_newsletter_type_taxonomy() {
 		$labels = array(
 			'name' => 'Newsletter Types',
