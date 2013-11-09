@@ -137,7 +137,11 @@ class WSU_Content_Type_Newsletter {
 	 * @param WP_Post $post Post object for the post currently being edited.
 	 */
 	public function display_newsletter_send_meta_box( $post ) {
-
+		?>
+		<label for="newsletter-email">Email Address:</label>
+		<input type="text" name="newsletter_email" id="newsletter-email" value="" placeholder="email..." />
+		<input type="button" id="newsletter-send" value="Send" class="button button-primary" />
+		<?php
 	}
 
 	/**
