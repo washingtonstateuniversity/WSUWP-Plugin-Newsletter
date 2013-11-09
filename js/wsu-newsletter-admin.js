@@ -71,8 +71,9 @@
 		e.preventDefault();
 
 		var data = {
-			action: 'send_newsletter',
-			post_id: window.wsu_newsletter.post_id
+			action:  'send_newsletter',
+			post_id: window.wsu_newsletter.post_id,
+			email:   $('#newsletter-email').val()
 		};
 
 		$.post( window.ajaxurl, data, function( response ) {

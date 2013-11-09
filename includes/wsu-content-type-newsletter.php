@@ -224,6 +224,15 @@ class WSU_Content_Type_Newsletter {
 		exit(); // close the callback
 	}
 
+	/**
+	 * Modify the default content type for email used by WordPress.
+	 *
+	 * @return string The content type to use with the email.
+	 */
+	public function set_mail_content_type() {
+			return 'text/html';
+	}
+
 	public function ajax_send_newsletter() {
 		if ( ! DOING_AJAX || ! isset( $_POST['action'] ) || 'send_newsletter' !== $_POST['action'] )
 			die();
@@ -234,6 +243,14 @@ class WSU_Content_Type_Newsletter {
 			echo $post_id . 'No items to send...';
 			exit;
 		}
+
+		$email_html = '<html><head><title>Newsletter</title></head><body></body></html>';
+		add_filter( 'wp_mail_content_type', array( $this, 'set_mail_content_type' ) );
+		wp_mail( $_POST['email'], 'Announcements Newsletter', $email_html );
+		remove_filter( 'wp_mail_content_type', array( $this, 'set_mail_content_type' ) );
+
+		echo 'Emailed ' . esc_html( $_POST['email'] ) . '...';
+		exit;
 	}
 
 	/**
