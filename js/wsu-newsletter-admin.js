@@ -18,6 +18,7 @@
 			data += '<div id="newsletter-item-' + val.id + '" class="newsletter-item">' +
 				'<h3><a href="' + val.permalink + '">' + val.title + '</a></h3>' +
 				'<p>' + val.excerpt + ' <a href="' + val.permalink + '" >Continue reading&hellip;</a></p>' +
+				'<span class="newsletter-item-remove">Remove</span>' +
 				'</div>';
 		});
 
