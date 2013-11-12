@@ -230,7 +230,15 @@ class WSU_Content_Type_Newsletter {
 	 * @return string The content type to use with the email.
 	 */
 	public function set_mail_content_type() {
-			return 'text/html';
+		return 'text/html';
+	}
+
+	public function set_mail_from() {
+		return 'wordpress@ur-web1.wsu.edu';
+	}
+
+	public function set_mail_from_name() {
+		return 'WSU Announcements';
 	}
 
 	public function ajax_send_newsletter() {
@@ -245,13 +253,18 @@ class WSU_Content_Type_Newsletter {
 		}
 
 		$email_html = $this->generate_html_email( $post_id, $post_ids );
-		$headers = 'From: "WSU Announcements" <jeremy.felt@wsu.edu>\r\n';
-		$headers .= 'MIME-Version: 1.0' . "\r\n";
+		$headers = 'MIME-Version: 1.0' . "\r\n";
 		$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
 
+		add_filter( 'wp_mail_from_name',    array( $this, 'set_mail_from_name'    ) );
+		add_filter( 'wp_mail_from',         array( $this, 'set_mail_from'         ) );
 		add_filter( 'wp_mail_content_type', array( $this, 'set_mail_content_type' ) );
-		wp_mail( $_POST['email'], 'Announcements Newsletter', $email_html, $headers );
+
+		wp_mail( $_POST['email'], 'WSU Announcements for Tuesday, November 12, 2013', $email_html, $headers );
+
 		remove_filter( 'wp_mail_content_type', array( $this, 'set_mail_content_type' ) );
+		remove_filter( 'wp_mail_from',         array( $this, 'set_mail_from'         ) );
+		remove_filter( 'wp_mail_from_name',    array( $this, 'set_mail_from_name'    ) );
 
 		echo 'Emailed ' . esc_html( $_POST['email'] ) . '...';
 		exit;
