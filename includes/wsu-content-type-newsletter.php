@@ -333,75 +333,6 @@ class WSU_Content_Type_Newsletter {
     <title>$email_title</title>
   </head>
   <body style="width: 100% !important; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; color: #222222; display: block; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; background: #fff; margin: 0; padding: 0;" bgcolor="#fff"><style type="text/css">
-.button:hover table td {
-background: #2795b6 !important;
-}
-.tiny-button:hover table td {
-background: #2795b6 !important;
-}
-.small-button:hover table td {
-background: #2795b6 !important;
-}
-.medium-button:hover table td {
-background: #2795b6 !important;
-}
-.large-button:hover table td {
-background: #2795b6 !important;
-}
-.button:hover {
-color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
-}
-.button:active {
-color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
-}
-.button:visited {
-color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
-}
-.tiny-button:hover {
-color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
-}
-.tiny-button:active {
-color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
-}
-.tiny-button:visited {
-color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
-}
-.small-button:hover {
-color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
-}
-.small-button:active {
-color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
-}
-.small-button:visited {
-color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
-}
-.medium-button:hover {
-color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
-}
-.medium-button:active {
-color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
-}
-.medium-button:visited {
-color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
-}
-.large-button:hover {
-color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
-}
-.large-button:active {
-color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
-}
-.large-button:visited {
-color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
-}
-.secondary:hover table td {
-background: #d0d0d0 !important;
-}
-.success:hover table td {
-background: #457a1a !important;
-}
-.alert:hover table td {
-background: #970b0e !important;
-}
 a:hover {
 color: #ac0404 !important;
 }
@@ -478,56 +409,11 @@ color: #ac0404 !important;
   table[class="body"] table.column td {
     width: 100%;
   }
-  table[class="body"] td.offset-by-one {
-    padding-left: 0 !important;
-  }
-  table[class="body"] td.offset-by-two {
-    padding-left: 0 !important;
-  }
-  table[class="body"] td.offset-by-three {
-    padding-left: 0 !important;
-  }
-  table[class="body"] td.offset-by-four {
-    padding-left: 0 !important;
-  }
-  table[class="body"] td.offset-by-five {
-    padding-left: 0 !important;
-  }
-  table[class="body"] td.offset-by-six {
-    padding-left: 0 !important;
-  }
-  table[class="body"] td.offset-by-seven {
-    padding-left: 0 !important;
-  }
-  table[class="body"] td.offset-by-eight {
-    padding-left: 0 !important;
-  }
-  table[class="body"] td.offset-by-nine {
-    padding-left: 0 !important;
-  }
-  table[class="body"] td.offset-by-ten {
-    padding-left: 0 !important;
-  }
-  table[class="body"] td.offset-by-eleven {
-    padding-left: 0 !important;
-  }
   table[class="body"] .expander {
     width: 9999px !important;
   }
   table[class="body"] center {
     min-width: 0 !important;
-  }
-  table[class="body"] .hide-for-small {
-    display: none !important;
-  }
-  table[class="body"] .show-for-desktop {
-    display: none !important;
-  }
-  table[class="body"] .show-for-small {
-    display: inherit !important;
-  }
-  table[class="body"] .hide-for-desktop {
-    display: inherit !important;
   }
   .container h3 {
     font-size: 18px !important;
