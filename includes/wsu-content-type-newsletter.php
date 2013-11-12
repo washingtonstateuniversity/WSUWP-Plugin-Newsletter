@@ -71,12 +71,12 @@ class WSU_Content_Type_Newsletter {
 	 */
 	public function register_newsletter_type_taxonomy() {
 		$labels = array(
-			'name' => 'Newsletter Types',
+			'name'          => 'Newsletter Types',
 			'singular_name' => 'Newsletter Type',
-			'parent_item' => 'Parent Newsletter Type',
-			'edit_item' => 'Edit Newsletter Type',
-			'update_item' => 'Update Newsletter Type',
-			'add_new_item' => 'Add Newsletter Type',
+			'parent_item'   => 'Parent Newsletter Type',
+			'edit_item'     => 'Edit Newsletter Type',
+			'update_item'   => 'Update Newsletter Type',
+			'add_new_item'  => 'Add Newsletter Type',
 			'new_item_name' => 'New Newsletter Type',
 		);
 
