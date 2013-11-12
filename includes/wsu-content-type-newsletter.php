@@ -234,10 +234,20 @@ class WSU_Content_Type_Newsletter {
 		return 'text/html';
 	}
 
+	/**
+	 * Modify the default email address for email sent by WordPress.
+	 *
+	 * @return string The email address to use with the email.
+	 */
 	public function set_mail_from() {
 		return 'wordpress@ur-web1.wsu.edu';
 	}
 
+	/**
+	 * Modify the default email from name for email sent by WordPress.
+	 *
+	 * @return string The from name used in the email.
+	 */
 	public function set_mail_from_name() {
 		return 'WSU Announcements';
 	}
@@ -251,6 +261,9 @@ class WSU_Content_Type_Newsletter {
 		return 'utf-8';
 	}
 
+	/**
+	 * Receive and process an ajax request to send an email for an individual newsletter.
+	 */
 	public function ajax_send_newsletter() {
 		if ( ! DOING_AJAX || ! isset( $_POST['action'] ) || 'send_newsletter' !== $_POST['action'] )
 			die();
