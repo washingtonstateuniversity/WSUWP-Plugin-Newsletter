@@ -118,10 +118,11 @@ class WSU_Content_Type_Newsletter {
 		wp_localize_script( 'wsu-newsletter-admin', 'wsu_newsletter', $localized_data );
 
 		// Select Newsletter Type
-		$newsletter_types = get_terms( $this->tax_newsletter_type );
+		/*$newsletter_types = get_terms( $this->tax_newsletter_type );
 		foreach ( $newsletter_types as $newsletter_type ) {
 			echo '<input type="button" value="' . esc_html( $newsletter_type->name ) . '" id="' . esc_attr( $newsletter_type->slug ) . '" class="button button-large button-secondary newsletter-type" /> ';
-		}
+		}*/
+		echo '<input type="button" value="Announcements" id="announcements" class="button button-large button-secondary newsletter-type" /> ';
 
 		?>
 		<div id="newsletter-build">
