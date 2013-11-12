@@ -242,6 +242,15 @@ class WSU_Content_Type_Newsletter {
 		return 'WSU Announcements';
 	}
 
+	/**
+	 * Modify the default charset for email sent by WordPress.
+	 *
+	 * @return string The charset to use with the email.
+	 */
+	public function set_mail_charset() {
+		return 'utf-8';
+	}
+
 	public function ajax_send_newsletter() {
 		if ( ! DOING_AJAX || ! isset( $_POST['action'] ) || 'send_newsletter' !== $_POST['action'] )
 			die();
@@ -254,15 +263,15 @@ class WSU_Content_Type_Newsletter {
 		}
 
 		$email_html = $this->generate_html_email( $post_id, $post_ids );
-		$headers = 'MIME-Version: 1.0' . "\r\n";
-		$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
 
 		add_filter( 'wp_mail_from_name',    array( $this, 'set_mail_from_name'    ) );
 		add_filter( 'wp_mail_from',         array( $this, 'set_mail_from'         ) );
 		add_filter( 'wp_mail_content_type', array( $this, 'set_mail_content_type' ) );
+		add_filter( 'wp_mail_charset',      array( $this, 'set_mail_charset'      ) );
 
-		wp_mail( $_POST['email'], 'WSU Announcements for Tuesday, November 12, 2013', $email_html, $headers );
+		wp_mail( $_POST['email'], 'WSU Announcements for Tuesday, November 12, 2013', $email_html );
 
+		remove_filter( 'wp_mail_charset',      array( $this, 'set_mail_charset'      ) );
 		remove_filter( 'wp_mail_content_type', array( $this, 'set_mail_content_type' ) );
 		remove_filter( 'wp_mail_from',         array( $this, 'set_mail_from'         ) );
 		remove_filter( 'wp_mail_from_name',    array( $this, 'set_mail_from_name'    ) );
