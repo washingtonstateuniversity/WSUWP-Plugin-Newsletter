@@ -245,7 +245,7 @@ class WSU_Content_Type_Newsletter {
 		}
 
 		$email_html = $this->generate_html_email( $post_id, $post_ids );
-		$headers = "From: WSU Announcements\r\n";
+		$headers = 'From: "WSU Announcements" <jeremy.felt@wsu.edu>\r\n';
 		$headers .= 'MIME-Version: 1.0' . "\r\n";
 		$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
 
@@ -290,220 +290,264 @@ class WSU_Content_Type_Newsletter {
 
 		$html_email = <<<EMAIL
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	<title>$email_title</title>
-	<style type="text/css">
-		/* Based on The MailChimp Reset INLINE: Yes. */
-		/* Client-specific Styles */
-		#outlook a {padding:0;} /* Force Outlook to provide a "view in browser" menu link. */
-		body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0;}
-		/* Prevent Webkit and Windows Mobile platforms from changing default font sizes.*/
-		.ExternalClass {width:100%;} /* Force Hotmail to display emails at full width */
-		.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;}
-		/* Forces Hotmail to display normal line spacing.  More on that: http://www.emailonacid.com/forum/viewthread/43/ */
-		#background-full {
-			margin:0;
-			padding:0;
-			width:100% !important;
-			line-height: 100% !important;
-			background: #5e6a71;
-		}
-
-		#background-header {
-			margin: 0;
-			padding: 0;
-			width: 100%;
-			line-height: 36px;
-			background: #981e32;
-			color: #fff;
-			font-family: 'Lucida Grande', 'Lucida Sans Unicode', arial, helvetica, sans-serif;
-			font-size: 26px;
-		}
-
-		#background-message {
-			margin: 0;
-			padding: 0;
-			background: #fff;
-			font-family: 'Lucida Grande', 'Lucida Sans Unicode', arial, helvetica, sans-serif;
-			font-size: 12px;
-		}
-		/* End reset */
-
-		/* Some sensible defaults for images
-		Bring inline: Yes. */
-		img {outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;}
-		a img {border:none;}
-		.image_fix {display:block;}
-
-		/* Yahoo paragraph fix
-		Bring inline: Yes. */
-		p {margin: 1em 0;}
-
-		/* Hotmail header color reset
-		Bring inline: Yes. */
-		h1 {
-			color: white !important;
-			font-size: 26px;
-		}
-
-		h2, h3, h4, h5, h6 {color: black !important;}
-
-		h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {color: blue !important;}
-
-		h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {
-			color: red !important; /* Preferably not the same color as the normal header link color.  There is limited support for psuedo classes in email clients, this was added just for good measure. */
-		}
-
-		h1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {
-			color: purple !important; /* Preferably not the same color as the normal header link color. There is limited support for psuedo classes in email clients, this was added just for good measure. */
-		}
-
-		/* Outlook 07, 10 Padding issue fix
-		Bring inline: No.*/
-		table td {border-collapse: collapse;}
-
-		/* Remove spacing around Outlook 07, 10 tables
-		Bring inline: Yes */
-		table { border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; }
-
-		/* Styling your links has become much simpler with the new Yahoo.  In fact, it falls in line with the main credo of styling in email and make sure to bring your styles inline.  Your link colors will be uniform across clients when brought inline.
-		Bring inline: Yes. */
-		a {color: orange;}
-
-
-		/***************************************************
-		****************************************************
-		MOBILE TARGETING
-		****************************************************
-		***************************************************/
-		@media only screen and (max-device-width: 480px) {
-			/* Part one of controlling phone number linking for mobile. */
-			a[href^="tel"], a[href^="sms"] {
-				text-decoration: none;
-				color: blue; /* or whatever your want */
-				pointer-events: none;
-				cursor: default;
-			}
-
-			.mobile_link a[href^="tel"], .mobile_link a[href^="sms"] {
-				text-decoration: default;
-				color: orange !important;
-				pointer-events: auto;
-				cursor: default;
-			}
-
-		}
-
-		/* More Specific Targeting */
-
-		@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
-			/* You guessed it, ipad (tablets, smaller screens, etc) */
-			/* repeating for the ipad */
-			a[href^="tel"], a[href^="sms"] {
-				text-decoration: none;
-				color: blue; /* or whatever your want */
-				pointer-events: none;
-				cursor: default;
-			}
-
-			.mobile_link a[href^="tel"], .mobile_link a[href^="sms"] {
-				text-decoration: default;
-				color: orange !important;
-				pointer-events: auto;
-				cursor: default;
-			}
-		}
-
-		@media only screen and (-webkit-min-device-pixel-ratio: 2) {
-			/* Put your iPhone 4g styles in here */
-		}
-
-		/* Android targeting */
-		@media only screen and (-webkit-device-pixel-ratio:.75){
-			/* Put CSS for low density (ldpi) Android layouts in here */
-		}
-		@media only screen and (-webkit-device-pixel-ratio:1){
-			/* Put CSS for medium density (mdpi) Android layouts in here */
-		}
-		@media only screen and (-webkit-device-pixel-ratio:1.5){
-			/* Put CSS for high density (hdpi) Android layouts in here */
-		}
-		/* end Android targeting */
-
-	</style>
-
-	<!-- Targeting Windows Mobile -->
-	<!--[if IEMobile 7]>
-	<style type="text/css">
-
-	</style>
-	<![endif]-->
-
-	<!-- ***********************************************
-	****************************************************
-	END MOBILE TARGETING
-	****************************************************
-	************************************************ -->
-
-	<!--[if gte mso 9]>
-	<style>
-		/* Target Outlook 2007 and 2010 */
-	</style>
-	<![endif]-->
-</head>
-<body>
-<table cellpadding="0" cellspacing="0" border="0" id="background-full">
-	<tr>
-		<td valign="top">
-			<!-- Establish a header section at the top and center the title in a specific area -->
-			<table cellpadding="0" cellspacing="0" border="0" align="center" id="background-header">
-				<tr>
-					<td>
-						<table align="center">
-							<tr>
-								<td width="600" valign="top"><h1><?php the_title(); ?></h1></td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-	<tr>
-		<td valign="top">
-			<table cellpadding="0" cellspacing="0" border="0" align="center">
-				<tr><td>&nbsp;</td></tr>
-				<tr>
-					<td>
-						<table cellpadding="0" cellspacing="0" border="0" align="center" id="background-message">
-							<tr>
-								<td width="600" valign="top">
-								<p>Submit announcements online at <a href="http://news.wsu.edu/announcements/">http://news.wsu.edu/announcements</a></p>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>$email_title</title>
+  </head>
+  <body style="width: 100% !important; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; color: #222222; display: block; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; background: #fff; margin: 0; padding: 0;" bgcolor="#fff"><style type="text/css">
+.button:hover table td {
+background: #2795b6 !important;
+}
+.tiny-button:hover table td {
+background: #2795b6 !important;
+}
+.small-button:hover table td {
+background: #2795b6 !important;
+}
+.medium-button:hover table td {
+background: #2795b6 !important;
+}
+.large-button:hover table td {
+background: #2795b6 !important;
+}
+.button:hover {
+color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
+}
+.button:active {
+color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
+}
+.button:visited {
+color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
+}
+.tiny-button:hover {
+color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
+}
+.tiny-button:active {
+color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
+}
+.tiny-button:visited {
+color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
+}
+.small-button:hover {
+color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
+}
+.small-button:active {
+color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
+}
+.small-button:visited {
+color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
+}
+.medium-button:hover {
+color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
+}
+.medium-button:active {
+color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
+}
+.medium-button:visited {
+color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
+}
+.large-button:hover {
+color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
+}
+.large-button:active {
+color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
+}
+.large-button:visited {
+color: #ffffff !important; font-family: Helvetica, Arial, sans-serif; text-decoration: none;
+}
+.secondary:hover table td {
+background: #d0d0d0 !important;
+}
+.success:hover table td {
+background: #457a1a !important;
+}
+.alert:hover table td {
+background: #970b0e !important;
+}
+a:hover {
+color: #ac0404 !important;
+}
+a:active {
+color: #ac0404 !important;
+}
+a:visited {
+color: #ac0404 !important;
+}
+h1 a:active {
+color: #ac0404 !important;
+}
+h2 a:active {
+color: #ac0404 !important;
+}
+h3 a:active {
+color: #ac0404 !important;
+}
+h4 a:active {
+color: #ac0404 !important;
+}
+h5 a:active {
+color: #ac0404 !important;
+}
+h6 a:active {
+color: #ac0404 !important;
+}
+h1 a:visited {
+color: #ac0404 !important;
+}
+h2 a:visited {
+color: #ac0404 !important;
+}
+h3 a:visited {
+color: #ac0404 !important;
+}
+h4 a:visited {
+color: #ac0404 !important;
+}
+h5 a:visited {
+color: #ac0404 !important;
+}
+h6 a:visited {
+color: #ac0404 !important;
+}
+@media only screen and (max-width: 600px) {
+  table[class="body"] img {
+    width: auto !important; height: auto !important;
+  }
+  table[class="body"] .container {
+    width: 95% !important;
+  }
+  table[class="body"] .row {
+    width: 100% !important; display: block !important;
+  }
+  table[class="body"] .wrapper {
+    display: block !important; padding-right: 0 !important;
+  }
+  table[class="body"] .columns {
+    table-layout: fixed !important; float: none !important; width: 100% !important; padding-right: 0px !important; padding-left: 0px !important; display: block !important;
+  }
+  table[class="body"] .column {
+    table-layout: fixed !important; float: none !important; width: 100% !important; padding-right: 0px !important; padding-left: 0px !important; display: block !important;
+  }
+  table[class="body"] .wrapper.first .columns {
+    display: table !important;
+  }
+  table[class="body"] .wrapper.first .column {
+    display: table !important;
+  }
+  table[class="body"] table.columns td {
+    width: 100%;
+  }
+  table[class="body"] table.column td {
+    width: 100%;
+  }
+  table[class="body"] td.offset-by-one {
+    padding-left: 0 !important;
+  }
+  table[class="body"] td.offset-by-two {
+    padding-left: 0 !important;
+  }
+  table[class="body"] td.offset-by-three {
+    padding-left: 0 !important;
+  }
+  table[class="body"] td.offset-by-four {
+    padding-left: 0 !important;
+  }
+  table[class="body"] td.offset-by-five {
+    padding-left: 0 !important;
+  }
+  table[class="body"] td.offset-by-six {
+    padding-left: 0 !important;
+  }
+  table[class="body"] td.offset-by-seven {
+    padding-left: 0 !important;
+  }
+  table[class="body"] td.offset-by-eight {
+    padding-left: 0 !important;
+  }
+  table[class="body"] td.offset-by-nine {
+    padding-left: 0 !important;
+  }
+  table[class="body"] td.offset-by-ten {
+    padding-left: 0 !important;
+  }
+  table[class="body"] td.offset-by-eleven {
+    padding-left: 0 !important;
+  }
+  table[class="body"] .expander {
+    width: 9999px !important;
+  }
+  table[class="body"] center {
+    min-width: 0 !important;
+  }
+  table[class="body"] .hide-for-small {
+    display: none !important;
+  }
+  table[class="body"] .show-for-desktop {
+    display: none !important;
+  }
+  table[class="body"] .show-for-small {
+    display: inherit !important;
+  }
+  table[class="body"] .hide-for-desktop {
+    display: inherit !important;
+  }
+  .container h3 {
+    font-size: 18px !important;
+  }
+  .container p {
+    font-size: 14px !important;
+  }
+}
+</style>
+	<table class="body" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; height: 100%; width: 100%; background: #fff; padding: 0;" bgcolor="#fff"><tr style="vertical-align: top; text-align: left; padding: 0;" align="left"><td class="center" align="center" valign="top" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: center; padding: 0;">
+				<center style="width: 100%; min-width: 580px;">
+					<table class="row header" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; padding: 0px;"><tr style="vertical-align: top; text-align: left; padding: 0;" align="left"><td class="center" align="center" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: center; padding: 0;" valign="top">
+								<center style="width: 100%; min-width: 580px;">
+									<table class="container" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: inherit; width: 580px; background: #fff; margin: 0 auto; padding: 0;" bgcolor="#fff"><tr style="vertical-align: top; text-align: left; padding: 0;" align="left"><td class="wrapper last" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; padding: 10px 0px 0px;" align="left" valign="top">
+												<table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;"><tr style="vertical-align: top; text-align: left; padding: 0;" align="left"><td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; padding: 0px 0px 10px;" align="left" valign="top"><img src="https://raw.github.com/washingtonstateuniversity/WSU-News-Announcements/master/images/wsu-announcements-banner.png" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: auto; max-width: 100%; float: left; clear: both; display: block;" align="left" /></td>
+													</tr></table></td>
+										</tr></table></center>
+							</td>
+						</tr></table><table class="container" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: inherit; width: 580px; background: #fff; margin: 0 auto; padding: 0;" bgcolor="#fff"><tr style="vertical-align: top; text-align: left; padding: 0;" align="left"><td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; padding: 0;" align="left" valign="top">
+								<table class="row" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;"><tr style="vertical-align: top; text-align: left; padding: 0;" align="left"><td class="wrapper last" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; padding: 10px 0px 0px;" align="left" valign="top">
+											<table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;"><tr style="vertical-align: top; text-align: left; padding: 0;" align="left"><td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; padding: 0px 0px 10px;" align="left" valign="top"><p style="color: #222222; display: block; font-style: italic; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Arial, sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: .9em; margin: 10px 0 25px; padding: 0;" align="left">Submit announcements online at <a href="http://news.wsu.edu/announcements/" style="color: blue; text-decoration: none !important;">http://news.wsu.edu/announcements</a></p></td>
+													<td class="expander" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; padding: 0;" align="left" valign="top"></td>
+												</tr></table></td>
+									</tr></table><table class="row callout" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;"><tr style="vertical-align: top; text-align: left; padding: 0;" align="left"><td class="wrapper last" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; padding: 10px 0px 0px;" align="left" valign="top">
+											<table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;"><tr style="vertical-align: top; text-align: left; padding: 0;" align="left"><td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; padding: 0px 0px 10px;" align="left" valign="top">
 EMAIL;
 
 		foreach ( $newsletter_items as $item ) {
-			$html_email .= '<h3><a href="' . esc_url( $item['permalink'] ) . '">' . esc_html( $item['title'] ) . '</a></h3>';
-			$html_email .= '<p>' . esc_html( $item['excerpt'] ) . ' <a href="' . esc_url( $item['permalink'] ) . '">Continue reading&hellip;</a></p>';
+			$excerpt = $item['excerpt'];
+			$permalink = $item['permalink'];
+			$title = $item['title'];
+			$html_email .= <<<EMAIL
+<h3 style="color: #222222; display: block; font-family: 'Open Sans Condensed', 'Lucida Grande', 'Lucida Sans Unicode', arial, sans-serif; font-weight: 700; text-align: left; line-height: 1.3; word-break: normal; font-size: 15px; margin: 0; padding: 0;"
+    align="left"><a href="$permalink" style="color: #ac0404 !important; text-decoration: none !important;">$title</a></h3>
+<p style="color: #222222; display: block; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Arial, sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 12px; margin: 10px 0 25px 0; padding: 0 25px 0 0;"
+    align="left">$excerpt <a href="$permalink"
+    style="color: #ac0404; text-decoration: none !important;">Continue reading&hellip;</a></p>
+EMAIL;
+
 		}
 
 		$html_email .= <<<EMAIL
-									<p>The Announcement newsletter will continue to be sent once a day at 10 a.m. Submissions made after 9 a.m. each day will appear in the next days’ newsletter. Any edits will be still be made by Brenda Campbell at <a href="mailto:bcampbell@wsu.edu">bcampbell@wsu.edu</a>.</p>
-									<p>If you are having difficulty reading the announcements, try unsubscribing and then resubscribe. Click <a href="http://lists.wsu.edu/leave.php">here</a> to unsubscribe and <a href="http://lists.wsu.edu/join.php">here</a> to subscribe</p>
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-				<tr><td>&nbsp;</td></tr>
-			</table>
-		</td>
-	</tr>
-</table>
-<!-- End of wrapper table -->
-</body>
+													</td>
+													<td class="expander" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; padding: 0;" align="left" valign="top"></td>
+												</tr></table></td>
+									</tr></table><table class="row footer" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;"><tr style="vertical-align: top; text-align: left; padding: 0;" align="left"><td class="wrapper" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; padding: 10px 20px 0px 0px;" align="left" valign="top">
+											<table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;"><tr style="vertical-align: top; text-align: left; padding: 0;" align="left"><td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; padding: 0px 0px 10px;" align="left" valign="top">
+														<p style="color: #222222; display: block; font-style: italic; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Arial, sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: .9em; margin: 10px 0 25px; padding: 0;" align="left">The Announcement newsletter will continue to be sent once a day at 10 a.m. Submissions made after 9 a.m. each day will appear in the next days’ newsletter. Any edits will be still be made by Brenda Campbell at <a style="color: blue; text-decoration: none !important;" href="mailto:bcampbell@wsu.edu">bcampbell@wsu.edu</a>.</p>
+														<p style="color: #222222; display: block; font-style: italic; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Arial, sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: .9em; margin: 10px 0 25px; padding: 0;" align="left">If you are having difficulty reading the announcements, try unsubscribing and then resubscribe. Click <a style="color: blue; text-decoration: none !important;" href="http://lists.wsu.edu/leave.php">here</a> to unsubscribe and <a style="color: blue; text-decoration: none !important;" href="http://lists.wsu.edu/join.php">here</a> to subscribe</p>
+													</td>
+													<td class="expander" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; padding: 0;" align="left" valign="top"></td>
+												</tr></table></td>
+									</tr></table><!-- container end below --></td>
+						</tr></table></center>
+			</td>
+		</tr></table></body>
 </html>
 EMAIL;
 		return $html_email;
