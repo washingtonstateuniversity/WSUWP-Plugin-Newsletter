@@ -1,11 +1,24 @@
 <?php
-
+/**
+ * Class WSU_Content_Type_Newsletter
+ *
+ * Provides functionality to create and send email newsletters for WSU announcements.
+ */
 class WSU_Content_Type_Newsletter {
 
+	/**
+	 * @var string The slug used for the newsletter content type.
+	 */
 	var $post_type = 'wsu_newsletter';
 
+	/**
+	 * @var string The official name of the newsletter content type.
+	 */
 	var $post_type_name = 'Newsletters';
 
+	/**
+	 * @var string The slug for the newsletter taxonomy type.
+	 */
 	var $tax_newsletter_type = 'wsu_newsletter_type';
 
 	/**
@@ -177,6 +190,14 @@ class WSU_Content_Type_Newsletter {
 		}
 	}
 
+	/**
+	 * Build the list of items that should be included in a newsletter.
+	 *
+	 * @param array        $post_ids  List of specific post IDs to include. Defaults to an empty array.
+	 * @param null|string  $post_date Post date to assign to the newsletter. A null default indicates the current date.
+	 *
+	 * @return array Containing information on each newsletter item.
+	 */
 	private function _build_announcements_newsletter_response( $post_ids = array(), $post_date = null ) {
 		// @global WSU_Content_Type_Announcement $wsu_content_type_announcement
 		global $wsu_content_type_announcement;
@@ -219,6 +240,9 @@ class WSU_Content_Type_Newsletter {
 		return $items;
 	}
 
+	/**
+	 * Handle the ajax callback too push a list of newsletter items to a newsletter.
+	 */
 	public function ajax_callback() {
 		if ( ! DOING_AJAX || ! isset( $_POST['action'] ) || 'set_newsletter_type' !== $_POST['action'] )
 			die();
@@ -386,6 +410,14 @@ class WSU_Content_Type_Newsletter {
 		}
 	}
 
+	/**
+	 * Build the HTML email to be sent out for a newsletter.
+	 *
+	 * @param int   $post_id  Post ID of the newsletter.
+	 * @param array $post_ids List of post IDs to be used in the newsletter.
+	 *
+	 * @return string The full HTML email to be sent.
+	 */
 	private function generate_html_email( $post_id, $post_ids ) {
 		$email_title = esc_html( get_the_title( $post_id ) );
 		$newsletter_items = $this->_build_announcements_newsletter_response( $post_ids );
