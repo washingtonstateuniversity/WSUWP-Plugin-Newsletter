@@ -24,7 +24,7 @@ class WSU_Content_Type_Newsletter {
 		add_action( 'wp_ajax_set_newsletter_type',        array( $this, 'ajax_callback'                     ), 10    );
 		add_action( 'wp_ajax_nopriv_set_newsletter_type', array( $this, 'ajax_callback'                     ), 10    );
 		add_action( 'wp_ajax_send_newsletter',            array( $this, 'ajax_send_newsletter'              ), 10    );
-		add_filter( 'single_template',                    array( $this, 'single_template'                   ), 10, 1 );
+
 		add_filter( 'wp_insert_post_data',                array( $this, 'wp_insert_post_data'               ), 10, 1 );
 	}
 
@@ -389,15 +389,6 @@ class WSU_Content_Type_Newsletter {
 
 			update_post_meta( $post_id, '_newsletter_date', $newsletter_date );
 		}
-	}
-
-	public function single_template( $template ) {
-		$current_object = get_queried_object();
-
-		if ( isset( $current_object->post_type ) && $this->post_type === $current_object->post_type )
-			return dirname( dirname( __FILE__ ) ) . '/templates/single-' . $this->post_type . '.php';
-		else
-			return $template;
 	}
 
 	private function generate_html_email( $post_id, $post_ids ) {
