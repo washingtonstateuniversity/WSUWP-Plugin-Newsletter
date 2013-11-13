@@ -324,7 +324,7 @@ class WSU_Content_Type_Newsletter {
 			exit;
 		}
 
-		$email_html = $this->generate_html_email( $post_id, $post_ids );
+		$email_html = $this->_generate_html_email( $post_id, $post_ids );
 
 		add_filter( 'wp_mail_from_name',    array( $this, 'set_mail_from_name'    ) );
 		add_filter( 'wp_mail_from',         array( $this, 'set_mail_from'         ) );
@@ -418,7 +418,7 @@ class WSU_Content_Type_Newsletter {
 	 *
 	 * @return string The full HTML email to be sent.
 	 */
-	private function generate_html_email( $post_id, $post_ids ) {
+	private function _generate_html_email( $post_id, $post_ids ) {
 		$email_title = esc_html( get_the_title( $post_id ) );
 		$newsletter_items = $this->_build_announcements_newsletter_response( $post_ids );
 
