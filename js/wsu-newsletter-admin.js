@@ -85,7 +85,7 @@
 		})
 	});
 
-	$( '.newsletter-item-remove').on('click', function( e ) {
+	$newsletter_build.on( 'click', '.newsletter-item-remove', function( e ) {
 		// Doesn't hurt.
 		e.preventDefault();
 
