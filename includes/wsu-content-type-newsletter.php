@@ -123,9 +123,17 @@ class WSU_Content_Type_Newsletter {
 			echo '<input type="button" value="' . esc_html( $newsletter_type->name ) . '" id="' . esc_attr( $newsletter_type->slug ) . '" class="button button-large button-secondary newsletter-type" /> ';
 		}*/
 
+		if ( $newsletter_date = get_post_meta( $post->ID, '_newsletter_date', true ) ) {
+			$n_year  = substr( $newsletter_date, 0, 4 );
+			$n_month = substr( $newsletter_date, 4, 2 );
+			$n_day   = substr( $newsletter_date, 6, 2 );
+			$newsletter_date = $n_month . '/' . $n_day . '/' . $n_year;
+		} else {
+			$newsletter_date = date( 'm/d/Y', current_time( 'timestamp' ) );
+		}
 		?>
 		<label for="newsletter-date">Newsletter Date:</label>
-		<input type="text" id="newsletter-date" name="newsletter_date" value="" />
+		<input type="text" id="newsletter-date" name="newsletter_date" value="<?php echo $newsletter_date; ?>" />
 		<input type="button" value="Announcements" id="announcements" class="button button-large button-secondary newsletter-type" />
 		<div id="newsletter-build">
 			<div class="newsletter-date"><?php echo date( 'l, F j, Y', current_time( 'timestamp' ) ); ?></div>
@@ -306,12 +314,29 @@ class WSU_Content_Type_Newsletter {
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 			return;
 
-		if ( 'auto-draft' === $post->post_status || empty( $_POST['newsletter_item_order'] ) )
+		if ( 'auto-draft' === $post->post_status )
 			return;
 
-		$newsletter_item_order = explode( ',', $_POST['newsletter_item_order'] );
-		$newsletter_item_order = array_map( 'absint', $newsletter_item_order );
-		update_post_meta( $post_id, '_newsletter_item_order', $newsletter_item_order );
+		if ( empty( $_POST['newsletter_item_order'] ) && empty( $_POST['newsletter_date'] ) )
+			return;
+
+		if ( ! empty( $_POST['newsletter_item_order'] ) ) {
+			$newsletter_item_order = explode( ',', $_POST['newsletter_item_order'] );
+			$newsletter_item_order = array_map( 'absint', $newsletter_item_order );
+			update_post_meta( $post_id, '_newsletter_item_order', $newsletter_item_order );
+		}
+
+		if ( ! empty( $_POST['newsletter_date'] ) ) {
+			$newsletter_date = explode( '/', $_POST['newsletter_date'] );
+			$newsletter_date = array_map( 'absint', $newsletter_date );
+
+			if ( 3 === count( $newsletter_date ) )
+				$newsletter_date = $newsletter_date[2] . zeroise( $newsletter_date[0], 2 ) . zeroise( $newsletter_date[1], 2 );
+			else
+				$newsletter_date = date( 'Ymd', current_time( 'timestamp' ) );
+
+			update_post_meta( $post_id, '_newsletter_date', $newsletter_date );
+		}
 	}
 
 	public function single_template( $template ) {
