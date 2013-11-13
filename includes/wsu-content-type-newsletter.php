@@ -156,10 +156,8 @@ class WSU_Content_Type_Newsletter {
 
 	/**
 	 * Display a meta box to allow the sending of a newsletter to an email address.
-	 *
-	 * @param WP_Post $post Post object for the post currently being edited.
 	 */
-	public function display_newsletter_send_meta_box( $post ) {
+	public function display_newsletter_send_meta_box() {
 		?>
 		<label for="newsletter-email">Email Address:</label>
 		<input type="text" name="newsletter_email" id="newsletter-email" value="" placeholder="email..." />
