@@ -89,6 +89,9 @@
 		$(this).parent().remove();
 		process_sorted_data();
 	});
+
+	$('#newsletter-date').datepicker();
+
 	// Fire an event any time sorting has stopped after a move.
 	$newsletter_build.on( "sortupdate", process_sorted_data );
 }( jQuery, window ) );

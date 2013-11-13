@@ -122,9 +122,11 @@ class WSU_Content_Type_Newsletter {
 		foreach ( $newsletter_types as $newsletter_type ) {
 			echo '<input type="button" value="' . esc_html( $newsletter_type->name ) . '" id="' . esc_attr( $newsletter_type->slug ) . '" class="button button-large button-secondary newsletter-type" /> ';
 		}*/
-		echo '<input type="button" value="Announcements" id="announcements" class="button button-large button-secondary newsletter-type" /> ';
 
 		?>
+		<label for="newsletter-date">Newsletter Date:</label>
+		<input type="text" id="newsletter-date" name="newsletter_date" value="" />
+		<input type="button" value="Announcements" id="announcements" class="button button-large button-secondary newsletter-type" />
 		<div id="newsletter-build">
 			<div class="newsletter-date"><?php echo date( 'l, F j, Y', current_time( 'timestamp' ) ); ?></div>
 			<div class="newsletter-head">
@@ -167,7 +169,7 @@ class WSU_Content_Type_Newsletter {
 			return;
 
 		if ( $this->post_type === get_current_screen()->id ) {
-			wp_enqueue_script( 'wsu-newsletter-admin', plugins_url( 'js/wsu-newsletter-admin.js',   dirname( __FILE__ ) ), array( 'jquery', 'jquery-ui-sortable' ), false, true );
+			wp_enqueue_script( 'wsu-newsletter-admin', plugins_url( 'js/wsu-newsletter-admin.js',   dirname( __FILE__ ) ), array( 'jquery', 'jquery-ui-sortable', 'jquery-ui-datepicker' ), false, true );
 			wp_enqueue_style(  'wsu-newsletter-admin', plugins_url( 'css/wsu-newsletter-admin.css', dirname( __FILE__ ) ) );
 		}
 	}
