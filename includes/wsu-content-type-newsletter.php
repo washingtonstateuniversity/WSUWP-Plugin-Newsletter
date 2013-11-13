@@ -323,6 +323,14 @@ class WSU_Content_Type_Newsletter {
 		exit;
 	}
 
+	/**
+	 * Alter the data being passed for a newsletter save. We specifically want to make sure
+	 * that a proper title is being assigned.
+	 *
+	 * @param array $post_data Current data being processed for a post save.
+	 *
+	 * @return array Modified data for the post save.
+	 */
 	public function wp_insert_post_data( $post_data ) {
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 			return $post_data;
