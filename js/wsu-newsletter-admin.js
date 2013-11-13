@@ -1,9 +1,9 @@
 /**
  * Handle various features required in creation of newsletters in the admin.
  */
-( function( $, window ) {
+(function( $, window ) {
 
-	var $newsletter_build = $('#newsletter-build-items'),
+	var $newsletter_build = $( '#newsletter-build-items' ),
 		sorted_data = [];
 
 	if ( window.wsu_newsletter.items instanceof Array ) {
@@ -20,7 +20,7 @@
 				'<p>' + val.excerpt + ' <a href="' + val.permalink + '" >Continue reading&hellip;</a></p>' +
 				'<span class="newsletter-item-remove">Remove</span>' +
 				'</div>';
-		});
+		} );
 
 		$newsletter_build.html( data );
 
@@ -39,26 +39,26 @@
 
 		// Strip `newsletter-item-` from the beginning of each newsletter item ID
 		$.each( sorted_data, function( index, val ) {
-			new_val = val.replace(/newsletter-item-/g, '');
+			new_val = val.replace( /newsletter-item-/g, '' );
 			sorted_data[index] = new_val;
-		});
+		} );
 
-		$('#newsletter-item-order').val( sorted_data );
+		$( '#newsletter-item-order' ).val( sorted_data );
 	}
 
-	$( '.newsletter-type').on( 'click', function( e ) {
+	$( '.newsletter-type' ).on( 'click', function( e ) {
 		// Don't do anything rash.
 		e.preventDefault();
 
-		var post_date = $('#newsletter-date').val();
+		var post_date = $( '#newsletter-date' ).val();
 
 		// Cache the newsletter build area for future use.
 		var data = {
-				action:          'set_newsletter_type',
-				newsletter_type: this.id,
-				post_id:         window.wsu_newsletter.post_id,
-				post_date:       post_date
-			};
+			action: 'set_newsletter_type',
+			newsletter_type: this.id,
+			post_id: window.wsu_newsletter.post_id,
+			post_date: post_date
+		};
 
 		// Make the ajax call
 		$.post( window.ajaxurl, data, function( response ) {
@@ -67,34 +67,34 @@
 
 			load_newsletter_items( response_data );
 			process_sorted_data();
-		});
-	});
+		} );
+	} );
 
-	$( '#newsletter-send').on( 'click', function( e ) {
+	$( '#newsletter-send' ).on( 'click', function( e ) {
 		// Not entirely sure this button has a default, but if it does...
 		e.preventDefault();
 
 		var data = {
-			action:  'send_newsletter',
+			action: 'send_newsletter',
 			post_id: window.wsu_newsletter.post_id,
-			email:   $('#newsletter-email').val()
+			email: $( '#newsletter-email' ).val()
 		};
 
 		$.post( window.ajaxurl, data, function( response ) {
-			$('#newsletter-send-response').html( response );
-		})
-	});
+			$( '#newsletter-send-response' ).html( response );
+		} )
+	} );
 
 	$newsletter_build.on( 'click', '.newsletter-item-remove', function( e ) {
 		// Doesn't hurt.
 		e.preventDefault();
 
-		$(this).parent().remove();
+		$( this ).parent().remove();
 		process_sorted_data();
-	});
+	} );
 
-	$('#newsletter-date').datepicker();
+	$( '#newsletter-date' ).datepicker();
 
 	// Fire an event any time sorting has stopped after a move.
 	$newsletter_build.on( "sortupdate", process_sorted_data );
-}( jQuery, window ) );
+}( jQuery, window ));
