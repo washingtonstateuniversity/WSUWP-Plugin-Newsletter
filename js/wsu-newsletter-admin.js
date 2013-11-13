@@ -3,13 +3,32 @@
  */
 (function( $, window ) {
 
-	var $newsletter_build = $( '#newsletter-build-items' ),
-		sorted_data = [];
+	/**
+	 * Selector cache of the container holding all of the items for an
+	 * individual newsletter.
+	 *
+	 * @type {*|HTMLElement}
+	 */
+	var $newsletter_build = $( '#newsletter-build-items' );
+
+	/**
+	 * Holds the current IDs and order of the newsletter items for an
+	 * individual newsletter.
+	 *
+	 * @type {Array}
+	 */
+	var sorted_data = [];
 
 	if ( window.wsu_newsletter.items instanceof Array ) {
 		load_newsletter_items( window.wsu_newsletter.items );
 	}
 
+	/**
+	 * Process an existing list of newsletter items and add them to the front end
+	 * view of the newsletter build.
+	 *
+	 * @param raw_data
+	 */
 	function load_newsletter_items( raw_data ) {
 		var data = '';
 
