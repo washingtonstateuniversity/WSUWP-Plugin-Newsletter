@@ -312,7 +312,7 @@ class WSU_Content_Type_Newsletter {
 		add_filter( 'wp_mail_content_type', array( $this, 'set_mail_content_type' ) );
 		add_filter( 'wp_mail_charset',      array( $this, 'set_mail_charset'      ) );
 
-		wp_mail( $_POST['email'], 'WSU Announcements for Tuesday, November 12, 2013', $email_html );
+		wp_mail( $_POST['email'], get_the_title( $post_id ), $email_html );
 
 		remove_filter( 'wp_mail_charset',      array( $this, 'set_mail_charset'      ) );
 		remove_filter( 'wp_mail_content_type', array( $this, 'set_mail_content_type' ) );
