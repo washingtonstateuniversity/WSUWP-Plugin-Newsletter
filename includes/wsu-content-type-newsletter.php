@@ -6,10 +6,6 @@ class WSU_Content_Type_Newsletter {
 
 	var $post_type_name = 'Newsletters';
 
-	var $post_type_slug = 'newsletter';
-
-	var $post_type_archive = 'newsletters';
-
 	var $tax_newsletter_type = 'wsu_newsletter_type';
 
 	/**
@@ -50,14 +46,13 @@ class WSU_Content_Type_Newsletter {
 
 		$args = array(
 			'labels'             => $labels,
-			'public'             => true,
-			'publicly_queryable' => true,
+			'public'             => false,
+			'publicly_queryable' => false,
 			'show_ui'            => true,
 			'show_in_menu'       => true,
 			'query_var'          => true,
-			'rewrite'            => array( 'slug' => $this->post_type_slug ),
+			'rewrite'            => false,
 			'capability_type'    => 'post',
-			'has_archive'        => $this->post_type_archive,
 			'hierarchical'       => false,
 			'menu_position'      => 5,
 			'supports'           => array( '' ),
