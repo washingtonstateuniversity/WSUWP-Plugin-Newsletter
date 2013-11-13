@@ -22,8 +22,8 @@ class WSU_News_Announcement_Calendar_Widget extends WP_Widget {
 	 * @param array $instance Arguments specific to this instance of the widget.
 	 */
 	function widget( $args, $instance ) {
-		/* @var WSU_News_Announcements $wsu_news_announcements */
-		global $wsu_news_announcements;
+		/* @var WSU_Content_Type_Announcement $wsu_news_announcements */
+		global $wsu_content_type_announcement;
 
 		$title = '';
 		if ( isset( $instance['title'] ) )
@@ -34,7 +34,7 @@ class WSU_News_Announcement_Calendar_Widget extends WP_Widget {
 			echo $args['before_title'] . $title . $args['after_title'];
 
 		echo '<div id="calendar_wrap">';
-		$wsu_news_announcements->get_calendar();
+		$wsu_content_type_announcement->get_calendar();
 		echo '</div>';
 		echo $args['after_widget'];
 	}
