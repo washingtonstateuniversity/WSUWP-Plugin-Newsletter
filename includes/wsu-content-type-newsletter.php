@@ -420,10 +420,12 @@ class WSU_Content_Type_Newsletter {
 	 */
 	private function _generate_html_email( $post_id, $post_ids ) {
 		$email_title = esc_html( get_the_title( $post_id ) );
-		$newsletter_items = $this->_build_announcements_newsletter_response( $post_ids );
-		$header_image = esc_url_raw( plugins_url( '/wsu-news-announcements/images/wsu-announcements-banner.png' ) );
+		$email_date = str_replace( 'WSU Announcements for ', '', $email_title ); // *cough* hack *cough
 
-		$standard_font_properties = "color: #222222; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; font-size: 12px; line-height: 19px;";
+		$newsletter_items = $this->_build_announcements_newsletter_response( $post_ids );
+		$header_image = esc_url_raw( plugins_url( '/wsu-news-announcements/images/wsu-announcements-banner-580x119.png' ) );
+
+		$standard_font_properties = "color: #222222; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; font-size: 0.9em; line-height: 19px;";
 
 		$html_email = <<<EMAIL
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -433,7 +435,7 @@ class WSU_Content_Type_Newsletter {
     <meta name="viewport" content="width=device-width" />
     <title>$email_title</title>
   </head>
-  <body style="width: 100% !important; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; display: block; $standard_font_properties background: #fff; margin: 0; padding: 0;" bgcolor="#fff"><style type="text/css">
+  <body style="width: 100% !important; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; display: block; font-size:100%; background: #fff; margin: 0; padding: 0;" bgcolor="#fff"><style type="text/css">
 a:hover {
 color: #ac0404 !important;
 }
@@ -522,26 +524,22 @@ color: #ac0404 !important;
 	<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
 		<td class="center" align="center" valign="top" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: center; padding: 0;">
 			<center style="width: 100%; min-width: 580px;">
-				<table class="row header" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; padding: 0px;">
-					<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
-						<td class="center" align="center" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: center; padding: 0;" valign="top">
-							<center style="width: 100%; min-width: 580px;">
-								<table class="container" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: inherit; width: 580px; background: #fff; margin: 0 auto; padding: 0;" bgcolor="#fff">
-									<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
-										<td class="wrapper last" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; padding: 10px 0px 0px;" align="left" valign="top">
-											<table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;">
-												<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
-													<td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; padding: 0px 0px 10px;" align="left" valign="top"><img src="$header_image" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: auto; max-width: 100%; float: left; clear: both; display: block;" align="left" /></td>
-												</tr>
-											</table>
-										</td>
-									</tr>
-								</table>
-							</center>
+				<table class="container">
+					<tr>
+						<td>
+							<table class="row header" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; padding: 0px;">
+								<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
+									<td class="wrapper last" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; padding: 10px 0px 0px;" align="left" valign="top">
+										<table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;">
+											<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
+												<td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: right; width: 580px; height: 119px; line-height: 60px; font-size: 23px; font-weight: 200; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Helvetica', 'Arial', sans-serif;padding: 0px 11px 10px 0px; color: #888; background-repeat: no-repeat; background-size: cover; background-image: url('$header_image');" align="left" valign="top">$email_date</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
 						</td>
 					</tr>
-				</table>
-				<table class="container" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: inherit; width: 580px; background: #fff; margin: 0 auto; padding: 0;" bgcolor="#fff">
 					<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
 						<td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; padding: 0;" align="left" valign="top">
 							<table class="row" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;">
@@ -556,6 +554,10 @@ color: #ac0404 !important;
 									</td>
 								</tr>
 							</table>
+						</td>
+					<tr>
+					<tr>
+						<td>
 							<table class="row callout" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;">
 								<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
 									<td class="wrapper last" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; padding: 10px 0px 0px;" align="left" valign="top">
@@ -587,9 +589,13 @@ EMAIL;
 									</td>
 								</tr>
 							</table>
+						</td>
+					</tr>
+					<tr>
+						<td>
 							<table class="row footer" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;">
 								<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
-									<td class="wrapper" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; padding: 10px 20px 0px 0px;" align="left" valign="top">
+									<td class="wrapper last" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; padding: 10px 20px 0px 0px;" align="left" valign="top">
 										<table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;">
 											<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
 												<td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; padding: 0px 0px 10px;" align="left" valign="top">
