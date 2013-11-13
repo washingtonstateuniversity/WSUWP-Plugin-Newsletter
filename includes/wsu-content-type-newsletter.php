@@ -516,14 +516,15 @@ color: #ac0404 !important;
 EMAIL;
 
 		foreach ( $newsletter_items as $item ) {
-			$excerpt = $item['excerpt'];
-			$permalink = $item['permalink'];
-			$title = $item['title'];
+			$item_excerpt   = wp_kses_post( $item['excerpt']   );
+			$item_permalink = esc_url_raw(  $item['permalink'] );
+			$item_title     = esc_html(     $item['title']     );
+
 			$html_email .= <<<EMAIL
 <h3 style="color: #222222; display: block; font-family: 'Open Sans Condensed', 'Lucida Grande', 'Lucida Sans Unicode', arial, sans-serif; font-weight: 700; text-align: left; line-height: 1.3; word-break: normal; font-size: 15px; margin: 0; padding: 0;"
-    align="left"><a href="$permalink" style="color: #ac0404 !important; text-decoration: none !important;">$title</a></h3>
+    align="left"><a href="$item_permalink" style="color: #ac0404 !important; text-decoration: none !important;">$item_title</a></h3>
 <p style="color: #222222; display: block; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Arial, sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 12px; margin: 10px 0 25px 0; padding: 0 25px 0 0;"
-    align="left">$excerpt <a href="$permalink"
+    align="left">$item_excerpt <a href="$item_permalink"
     style="color: #ac0404; text-decoration: none !important;">Continue reading&hellip;</a></p>
 EMAIL;
 
@@ -546,6 +547,7 @@ EMAIL;
 		</tr></table></body>
 </html>
 EMAIL;
+
 		return $html_email;
 	}
 }
