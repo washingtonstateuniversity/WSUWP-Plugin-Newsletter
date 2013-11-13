@@ -421,6 +421,7 @@ class WSU_Content_Type_Newsletter {
 	private function _generate_html_email( $post_id, $post_ids ) {
 		$email_title = esc_html( get_the_title( $post_id ) );
 		$newsletter_items = $this->_build_announcements_newsletter_response( $post_ids );
+		$header_image = esc_url_raw( plugins_url( '/wsu-news-announcements/images/wsu-announcements-banner.png' ) );
 
 		$html_email = <<<EMAIL
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
