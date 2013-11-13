@@ -122,9 +122,19 @@ class WSU_Content_Type_Newsletter {
 		foreach ( $newsletter_types as $newsletter_type ) {
 			echo '<input type="button" value="' . esc_html( $newsletter_type->name ) . '" id="' . esc_attr( $newsletter_type->slug ) . '" class="button button-large button-secondary newsletter-type" /> ';
 		}*/
-		echo '<input type="button" value="Announcements" id="announcements" class="button button-large button-secondary newsletter-type" /> ';
 
+		if ( $newsletter_date = get_post_meta( $post->ID, '_newsletter_date', true ) ) {
+			$n_year  = substr( $newsletter_date, 0, 4 );
+			$n_month = substr( $newsletter_date, 4, 2 );
+			$n_day   = substr( $newsletter_date, 6, 2 );
+			$newsletter_date = $n_month . '/' . $n_day . '/' . $n_year;
+		} else {
+			$newsletter_date = date( 'm/d/Y', current_time( 'timestamp' ) );
+		}
 		?>
+		<label for="newsletter-date">Newsletter Date:</label>
+		<input type="text" id="newsletter-date" name="newsletter_date" value="<?php echo $newsletter_date; ?>" />
+		<input type="button" value="Announcements" id="announcements" class="button button-large button-secondary newsletter-type" />
 		<div id="newsletter-build">
 			<div class="newsletter-date"><?php echo date( 'l, F j, Y', current_time( 'timestamp' ) ); ?></div>
 			<div class="newsletter-head">
@@ -146,10 +156,8 @@ class WSU_Content_Type_Newsletter {
 
 	/**
 	 * Display a meta box to allow the sending of a newsletter to an email address.
-	 *
-	 * @param WP_Post $post Post object for the post currently being edited.
 	 */
-	public function display_newsletter_send_meta_box( $post ) {
+	public function display_newsletter_send_meta_box() {
 		?>
 		<label for="newsletter-email">Email Address:</label>
 		<input type="text" name="newsletter_email" id="newsletter-email" value="" placeholder="email..." />
@@ -167,29 +175,31 @@ class WSU_Content_Type_Newsletter {
 			return;
 
 		if ( $this->post_type === get_current_screen()->id ) {
-			wp_enqueue_script( 'wsu-newsletter-admin', plugins_url( 'js/wsu-newsletter-admin.js',   dirname( __FILE__ ) ), array( 'jquery', 'jquery-ui-sortable' ), false, true );
+			wp_enqueue_script( 'wsu-newsletter-admin', plugins_url( 'js/wsu-newsletter-admin.js',   dirname( __FILE__ ) ), array( 'jquery', 'jquery-ui-sortable', 'jquery-ui-datepicker' ), false, true );
+			wp_enqueue_style( 'jquery-ui-core', 'http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css' );
 			wp_enqueue_style(  'wsu-newsletter-admin', plugins_url( 'css/wsu-newsletter-admin.css', dirname( __FILE__ ) ) );
 		}
 	}
 
-	private function _build_announcements_newsletter_response( $post_ids = array() ) {
+	private function _build_announcements_newsletter_response( $post_ids = array(), $post_date = null ) {
 		// @global WSU_Content_Type_Announcement $wsu_content_type_announcement
 		global $wsu_content_type_announcement;
-
-		$query_date = date( 'Ymd', current_time( 'timestamp' ) );
 
 		$query_args = array(
 			'post_type'       => $wsu_content_type_announcement->post_type,
 			'posts_per_page'  => 100,
-			'meta_query'      => array(
+		);
+
+		if ( $post_date ) {
+			$query_args['meta_query'] = array(
 				array(
-					'key'     => '_announcement_date_' . $query_date,
+					'key'     => '_announcement_date_' . $post_date,
 					'value'   => 1,
 					'compare' => '=',
 					'type'    => 'numeric',
-				)
-			),
-		);
+				),
+			);
+		}
 
 		// If an array of post IDs has been passed, use only those.
 		if ( ! empty( $post_ids ) ) {
@@ -217,10 +227,29 @@ class WSU_Content_Type_Newsletter {
 		if ( ! DOING_AJAX || ! isset( $_POST['action'] ) || 'set_newsletter_type' !== $_POST['action'] )
 			die();
 
-		if ( 'announcements' === $_POST['newsletter_type'] )
-			echo json_encode( $this->_build_announcements_newsletter_response() );
-		elseif ( 'news' === $_POST['newsletter_type'] )
+		if ( 'announcements' === $_POST['newsletter_type'] ) {
+			if ( isset( $_POST['post_date'] ) )
+				$post_date = $_POST['post_date'];
+			else
+				$post_date = false;
+
+			if ( $post_date ) {
+				$post_date = explode( '/', $post_date );
+				$post_date = array_map( 'absint', $post_date );
+
+				if ( 3 === count( $post_date ) )
+					$post_date = $post_date[2] . zeroise( $post_date[0], 2 ) . zeroise( $post_date[1], 2 );
+				else
+					$post_date = false;
+			}
+
+			if ( false === $post_date )
+				$post_date = date( 'Ymd', current_time( 'timestamp' ) );
+
+			echo json_encode( $this->_build_announcements_newsletter_response( array(), $post_date ) );
+		} elseif ( 'news' === $_POST['newsletter_type'] ) {
 			echo 'news';
+		}
 
 		exit(); // close the callback
 	}
@@ -303,12 +332,29 @@ class WSU_Content_Type_Newsletter {
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 			return;
 
-		if ( 'auto-draft' === $post->post_status || empty( $_POST['newsletter_item_order'] ) )
+		if ( 'auto-draft' === $post->post_status )
 			return;
 
-		$newsletter_item_order = explode( ',', $_POST['newsletter_item_order'] );
-		$newsletter_item_order = array_map( 'absint', $newsletter_item_order );
-		update_post_meta( $post_id, '_newsletter_item_order', $newsletter_item_order );
+		if ( empty( $_POST['newsletter_item_order'] ) && empty( $_POST['newsletter_date'] ) )
+			return;
+
+		if ( ! empty( $_POST['newsletter_item_order'] ) ) {
+			$newsletter_item_order = explode( ',', $_POST['newsletter_item_order'] );
+			$newsletter_item_order = array_map( 'absint', $newsletter_item_order );
+			update_post_meta( $post_id, '_newsletter_item_order', $newsletter_item_order );
+		}
+
+		if ( ! empty( $_POST['newsletter_date'] ) ) {
+			$newsletter_date = explode( '/', $_POST['newsletter_date'] );
+			$newsletter_date = array_map( 'absint', $newsletter_date );
+
+			if ( 3 === count( $newsletter_date ) )
+				$newsletter_date = $newsletter_date[2] . zeroise( $newsletter_date[0], 2 ) . zeroise( $newsletter_date[1], 2 );
+			else
+				$newsletter_date = date( 'Ymd', current_time( 'timestamp' ) );
+
+			update_post_meta( $post_id, '_newsletter_date', $newsletter_date );
+		}
 	}
 
 	public function single_template( $template ) {
