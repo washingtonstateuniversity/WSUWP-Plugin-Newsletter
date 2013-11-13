@@ -181,18 +181,19 @@ class WSU_Content_Type_Newsletter {
 		}
 	}
 
-	private function _build_announcements_newsletter_response( $post_ids = array() ) {
+	private function _build_announcements_newsletter_response( $post_ids = array(), $post_date = null ) {
 		// @global WSU_Content_Type_Announcement $wsu_content_type_announcement
 		global $wsu_content_type_announcement;
 
-		$query_date = date( 'Ymd', current_time( 'timestamp' ) );
+		if ( ! $post_date )
+			$post_date = date( 'Ymd', current_time( 'timestamp' ) );
 
 		$query_args = array(
 			'post_type'       => $wsu_content_type_announcement->post_type,
 			'posts_per_page'  => 100,
 			'meta_query'      => array(
 				array(
-					'key'     => '_announcement_date_' . $query_date,
+					'key'     => '_announcement_date_' . $post_date,
 					'value'   => 1,
 					'compare' => '=',
 					'type'    => 'numeric',
@@ -226,10 +227,25 @@ class WSU_Content_Type_Newsletter {
 		if ( ! DOING_AJAX || ! isset( $_POST['action'] ) || 'set_newsletter_type' !== $_POST['action'] )
 			die();
 
-		if ( 'announcements' === $_POST['newsletter_type'] )
-			echo json_encode( $this->_build_announcements_newsletter_response() );
-		elseif ( 'news' === $_POST['newsletter_type'] )
+		if ( 'announcements' === $_POST['newsletter_type'] ) {
+			if ( isset( $_POST['post_date'] ) )
+				$post_date = $_POST['post_date'];
+			else
+				$post_date = null;
+
+			if ( $post_date ) {
+				$post_date = explode( '/', $post_date );
+				$post_date = array_map( 'absint', $post_date );
+
+				if ( 3 === count( $post_date ) )
+					$post_date = $post_date[2] . zeroise( $post_date[0], 2 ) . zeroise( $post_date[1], 2 );
+				else
+					$post_date = null;
+			}
+			echo json_encode( $this->_build_announcements_newsletter_response( array(), $post_date ) );
+		} elseif ( 'news' === $_POST['newsletter_type'] ) {
 			echo 'news';
+		}
 
 		exit(); // close the callback
 	}

@@ -50,11 +50,14 @@
 		// Don't do anything rash.
 		e.preventDefault();
 
+		var post_date = $('#newsletter-date').val();
+
 		// Cache the newsletter build area for future use.
 		var data = {
 				action:          'set_newsletter_type',
 				newsletter_type: this.id,
-				post_id:         window.wsu_newsletter.post_id
+				post_id:         window.wsu_newsletter.post_id,
+				post_date:       post_date
 			};
 
 		// Make the ajax call
