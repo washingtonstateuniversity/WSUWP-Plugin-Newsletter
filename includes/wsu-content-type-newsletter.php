@@ -337,7 +337,6 @@ class WSU_Content_Type_Newsletter {
 		$newsletter_date = array_map( 'absint', $newsletter_date );
 
 		if ( 3 === count( $newsletter_date ) ) {
-			$newsletter_date = $newsletter_date[2] . zeroise( $newsletter_date[0], 2 ) . zeroise( $newsletter_date[1], 2 );
 			$title_date  = date( 'l, F j, Y', strtotime( $newsletter_date[2] . '-' . zeroise( $newsletter_date[0], 2 ) . '-' . zeroise( $newsletter_date[1], 2 ) ) . ' 00:00:00' );
 		} else {
 			$title_date      = date( 'l, F j, Y', current_time( 'timestamp' ) );
