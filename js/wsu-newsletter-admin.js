@@ -81,6 +81,14 @@
 			$('#newsletter-send-response').html( response );
 		})
 	});
+
+	$( '.newsletter-item-remove').on('click', function( e ) {
+		// Doesn't hurt.
+		e.preventDefault();
+
+		$(this).parent().remove();
+		process_sorted_data();
+	});
 	// Fire an event any time sorting has stopped after a move.
 	$newsletter_build.on( "sortupdate", process_sorted_data );
 }( jQuery, window ) );
