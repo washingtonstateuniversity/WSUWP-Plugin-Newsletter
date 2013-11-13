@@ -25,6 +25,7 @@ class WSU_Content_Type_Newsletter {
 		add_action( 'wp_ajax_nopriv_set_newsletter_type', array( $this, 'ajax_callback'                     ), 10    );
 		add_action( 'wp_ajax_send_newsletter',            array( $this, 'ajax_send_newsletter'              ), 10    );
 		add_filter( 'single_template',                    array( $this, 'single_template'                   ), 10, 1 );
+		add_filter( 'wp_insert_post_data',                array( $this, 'wp_insert_post_data'               ), 10, 1 );
 	}
 
 	/**
@@ -320,6 +321,31 @@ class WSU_Content_Type_Newsletter {
 
 		echo 'Emailed ' . esc_html( $_POST['email'] ) . '...';
 		exit;
+	}
+
+	public function wp_insert_post_data( $post_data ) {
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+			return $post_data;
+
+		if ( 'auto-draft' === $post_data['post_status'] )
+			return $post_data;
+
+		if ( empty( $_POST['newsletter_date'] ) )
+			return $post_data;
+
+		$newsletter_date = explode( '/', $_POST['newsletter_date'] );
+		$newsletter_date = array_map( 'absint', $newsletter_date );
+
+		if ( 3 === count( $newsletter_date ) ) {
+			$newsletter_date = $newsletter_date[2] . zeroise( $newsletter_date[0], 2 ) . zeroise( $newsletter_date[1], 2 );
+			$title_date  = date( 'l, F j, Y', strtotime( $newsletter_date[2] . '-' . zeroise( $newsletter_date[0], 2 ) . '-' . zeroise( $newsletter_date[1], 2 ) ) . ' 00:00:00' );
+		} else {
+			$title_date      = date( 'l, F j, Y', current_time( 'timestamp' ) );
+		}
+
+		$post_data['post_title'] = 'WSU Announcements for ' . $title_date;
+
+		return $post_data;
 	}
 
 	/**
