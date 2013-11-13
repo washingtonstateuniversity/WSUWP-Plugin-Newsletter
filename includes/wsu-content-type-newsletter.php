@@ -374,10 +374,11 @@ class WSU_Content_Type_Newsletter {
 			$newsletter_date = explode( '/', $_POST['newsletter_date'] );
 			$newsletter_date = array_map( 'absint', $newsletter_date );
 
-			if ( 3 === count( $newsletter_date ) )
+			if ( 3 === count( $newsletter_date ) ) {
 				$newsletter_date = $newsletter_date[2] . zeroise( $newsletter_date[0], 2 ) . zeroise( $newsletter_date[1], 2 );
-			else
+			} else {
 				$newsletter_date = date( 'Ymd', current_time( 'timestamp' ) );
+			}
 
 			update_post_meta( $post_id, '_newsletter_date', $newsletter_date );
 		}
