@@ -518,20 +518,50 @@ color: #ac0404 !important;
   }
 }
 </style>
-<table class="body" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; height: 100%; width: 100%; background: #fff; padding: 0;" bgcolor="#fff"><tr style="vertical-align: top; text-align: left; padding: 0;" align="left"><td class="center" align="center" valign="top" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: center; padding: 0;">
-	<center style="width: 100%; min-width: 580px;">
-		<table class="row header" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; padding: 0px;"><tr style="vertical-align: top; text-align: left; padding: 0;" align="left"><td class="center" align="center" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: center; padding: 0;" valign="top">
+<table class="body" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; height: 100%; width: 100%; background: #fff; padding: 0;" bgcolor="#fff">
+	<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
+		<td class="center" align="center" valign="top" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: center; padding: 0;">
 			<center style="width: 100%; min-width: 580px;">
-				<table class="container" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: inherit; width: 580px; background: #fff; margin: 0 auto; padding: 0;" bgcolor="#fff"><tr style="vertical-align: top; text-align: left; padding: 0;" align="left"><td class="wrapper last" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; padding: 10px 0px 0px;" align="left" valign="top">
-					<table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;"><tr style="vertical-align: top; text-align: left; padding: 0;" align="left"><td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; padding: 0px 0px 10px;" align="left" valign="top"><img src="$header_image" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: auto; max-width: 100%; float: left; clear: both; display: block;" align="left" /></td></tr></table></td></tr></table>
-			</center></td></tr>
-		</table>
-		<table class="container" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: inherit; width: 580px; background: #fff; margin: 0 auto; padding: 0;" bgcolor="#fff"><tr style="vertical-align: top; text-align: left; padding: 0;" align="left"><td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; padding: 0;" align="left" valign="top">
-			<table class="row" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;"><tr style="vertical-align: top; text-align: left; padding: 0;" align="left"><td class="wrapper last" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; padding: 10px 0px 0px;" align="left" valign="top">
-				<table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;"><tr style="vertical-align: top; text-align: left; padding: 0;" align="left"><td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; padding: 0px 0px 0px 0px;" align="left" valign="top"><p style="display: block; font-style: italic; $standard_font_properties margin: 0 0 5px 0; padding: 0 0 0 0;" align="left">Submit announcements online at <a href="http://news.wsu.edu/announcements/" style="color: blue; text-decoration: none !important;">http://news.wsu.edu/announcements</a></p></td>
-					<td class="expander" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; padding: 0;" align="left" valign="top"></td></tr></table></td></tr></table>
-			<table class="row callout" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;"><tr style="vertical-align: top; text-align: left; padding: 0;" align="left"><td class="wrapper last" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; padding: 10px 0px 0px;" align="left" valign="top">
-				<table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;"><tr style="vertical-align: top; text-align: left; padding: 0;" align="left"><td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; padding: 0px 0px 5px;" align="left" valign="top">
+				<table class="row header" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; padding: 0px;">
+					<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
+						<td class="center" align="center" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: center; padding: 0;" valign="top">
+							<center style="width: 100%; min-width: 580px;">
+								<table class="container" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: inherit; width: 580px; background: #fff; margin: 0 auto; padding: 0;" bgcolor="#fff">
+									<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
+										<td class="wrapper last" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; padding: 10px 0px 0px;" align="left" valign="top">
+											<table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;">
+												<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
+													<td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; padding: 0px 0px 10px;" align="left" valign="top"><img src="$header_image" style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: auto; max-width: 100%; float: left; clear: both; display: block;" align="left" /></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+							</center>
+						</td>
+					</tr>
+				</table>
+				<table class="container" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: inherit; width: 580px; background: #fff; margin: 0 auto; padding: 0;" bgcolor="#fff">
+					<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
+						<td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; padding: 0;" align="left" valign="top">
+							<table class="row" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;">
+								<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
+									<td class="wrapper last" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; padding: 10px 0px 0px;" align="left" valign="top">
+										<table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;">
+											<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
+												<td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; padding: 0px 0px 0px 0px;" align="left" valign="top"><p style="display: block; font-style: italic; $standard_font_properties margin: 0 0 5px 0; padding: 0 0 0 0;" align="left">Submit announcements online at <a href="http://news.wsu.edu/announcements/" style="color: blue; text-decoration: none !important;">http://news.wsu.edu/announcements</a></p></td>
+												<td class="expander" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; padding: 0;" align="left" valign="top"></td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+							<table class="row callout" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;">
+								<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
+									<td class="wrapper last" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; padding: 10px 0px 0px;" align="left" valign="top">
+										<table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;">
+											<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
+												<td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; padding: 0px 0px 5px;" align="left" valign="top">
 EMAIL;
 
 		foreach ( $newsletter_items as $item ) {
@@ -550,14 +580,36 @@ EMAIL;
 		}
 
 		$html_email .= <<<EMAIL
-</td><td class="expander" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; padding: 0;" align="left" valign="top"></td></tr></table></td></tr></table>
-			<table class="row footer" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;"><tr style="vertical-align: top; text-align: left; padding: 0;" align="left"><td class="wrapper" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; padding: 10px 20px 0px 0px;" align="left" valign="top">
-				<table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;"><tr style="vertical-align: top; text-align: left; padding: 0;" align="left"><td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; padding: 0px 0px 10px;" align="left" valign="top">
-					<p style="display: block; font-style: italic; $standard_font_properties margin: 10px 0 25px; padding: 0;" align="left">The Announcement newsletter will continue to be sent once a day at 10 a.m. Submissions made after 9 a.m. each day will appear in the next days’ newsletter. Any edits will be still be made by Brenda Campbell at <a style="color: blue; text-decoration: none !important;" href="mailto:bcampbell@wsu.edu">bcampbell@wsu.edu</a>.</p>
-					<p style="display: block; font-style: italic; $standard_font_properties margin: 10px 0 25px; padding: 0;" align="left">If you are having difficulty reading the announcements, try unsubscribing and then resubscribe. Click <a style="color: blue; text-decoration: none !important;" href="http://lists.wsu.edu/leave.php">here</a> to unsubscribe and <a style="color: blue; text-decoration: none !important;" href="http://lists.wsu.edu/join.php">here</a> to subscribe</p></td>
-					<td class="expander" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; padding: 0;" align="left" valign="top"></td></tr></table></td></tr></table><!-- container end below --></td></tr>
-		</table>
-	</center></td></tr></table>
+												</td>
+												<td class="expander" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; padding: 0;" align="left" valign="top"></td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+							<table class="row footer" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;">
+								<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
+									<td class="wrapper" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; padding: 10px 20px 0px 0px;" align="left" valign="top">
+										<table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;">
+											<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
+												<td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; padding: 0px 0px 10px;" align="left" valign="top">
+													<p style="display: block; font-style: italic; $standard_font_properties margin: 10px 0 25px; padding: 0;" align="left">The Announcement newsletter will continue to be sent once a day at 10 a.m. Submissions made after 9 a.m. each day will appear in the next days’ newsletter. Any edits will be still be made by Brenda Campbell at <a style="color: blue; text-decoration: none !important;" href="mailto:bcampbell@wsu.edu">bcampbell@wsu.edu</a>.</p>
+													<p style="display: block; font-style: italic; $standard_font_properties margin: 10px 0 25px; padding: 0;" align="left">If you are having difficulty reading the announcements, try unsubscribing and then resubscribe. Click <a style="color: blue; text-decoration: none !important;" href="http://lists.wsu.edu/leave.php">here</a> to unsubscribe and <a style="color: blue; text-decoration: none !important;" href="http://lists.wsu.edu/join.php">here</a> to subscribe</p>
+												</td>
+												<td class="expander" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; padding: 0;" align="left" valign="top"></td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+							<!-- container end below -->
+						</td>
+					</tr>
+				</table>
+			</center>
+		</td>
+	</tr>
+</table>
 </body>
 </html>
 EMAIL;
