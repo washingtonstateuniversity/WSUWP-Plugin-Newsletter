@@ -335,7 +335,7 @@ class WSU_Content_Type_Newsletter {
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 			return $post_data;
 
-		if ( 'auto-draft' === $post_data['post_status'] )
+		if ( 'auto-draft' === $post_data['post_status'] || $this->post_type !== $post_data['post_type'] )
 			return $post_data;
 
 		if ( empty( $_POST['newsletter_date'] ) )
