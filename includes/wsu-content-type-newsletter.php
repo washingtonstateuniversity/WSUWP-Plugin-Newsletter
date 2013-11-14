@@ -489,11 +489,28 @@ class WSU_Content_Type_Newsletter {
 									<td class="wrapper"
 									    style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; padding: 10px 0px 0px;" align="left" valign="top">
 										<table class="twelve columns"
+										       style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: right; margin: 0 auto; padding: 0;">
+											<tr style="vertical-align: top; text-align: right; padding: 0;"
+											    align="left">
+												<td style="border-collapse: collapse !important; vertical-align: top; text-align: right; color: #888888 !important; width: 580px; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Helvetica', 'Arial', sans-serif; font-weight: 200; font-size: 21px; padding: 0 20px 0 0;"
+												    align="left" valign="top">$email_date</td>
+												</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+							<table class="row"
+							       style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; padding: 0px;">
+								<tr style="vertical-align: top; text-align: left; padding: 0;"
+								    align="left">
+									<td class="wrapper"
+									    style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; padding: 10px 0px 0px;" align="left" valign="top">
+										<table class="twelve columns"
 										       style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;">
 											<tr style="vertical-align: top; text-align: left; padding: 0;"
 											    align="left">
-												<td style="border-collapse: collapse !important; vertical-align: top; width: 580px; height: 119px; line-height: 1px; font-size: 1px; padding: 0;"
-												    align="left" valign="top"><img src="$header_image" /></td>
+												<td style="border-collapse: collapse !important; vertical-align: top; width: 580px; height: 68px; line-height: 1px; font-size: 1px; padding: 0;"
+												    align="left" valign="top"><img style="width: 580px; height: 68px;" src="$header_image" /></td>
 												</tr>
 										</table>
 									</td>
