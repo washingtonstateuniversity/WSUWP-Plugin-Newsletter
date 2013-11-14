@@ -66,7 +66,7 @@
 }
 
 #newsletter-build .newsletter-item h3 a {
-	color: #262a2d;
+	color: #ac0404;
 	text-decoration: none;
 }
 
@@ -75,11 +75,12 @@
 }
 
 #newsletter-build .newsletter-item p {
+	color: #222222;
 	margin: 10px 0 0 0;
 }
 
 #newsletter-build .newsletter-item p a {
-	color: #981e32;
+	color: #ac0404;
 	text-decoration: underline;
 }
 
@@ -105,5 +106,6 @@
 }
 
 .newsletter-head p {
+	font-style: italic;
 	margin: 0 20px 10px 10px;
 }
