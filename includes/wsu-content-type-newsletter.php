@@ -491,10 +491,6 @@ class WSU_Content_Type_Newsletter {
 									</td>
 								</tr>
 							</table>
-						</td>
-					</tr>
-					<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
-						<td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; padding: 0;" align="left" valign="top">
 							<table class="row" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;">
 								<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
 									<td class="wrapper last" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; padding: 10px 0px 0px;" align="left" valign="top">
@@ -509,10 +505,6 @@ class WSU_Content_Type_Newsletter {
 									</td>
 								</tr>
 							</table>
-						</td>
-					</tr>
-					<tr>
-						<td>
 							<table class="row callout" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;">
 								<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
 									<td class="wrapper last" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; padding: 10px 0px 0px;" align="left" valign="top">
@@ -544,10 +536,6 @@ EMAIL;
 									</td>
 								</tr>
 							</table>
-						</td>
-					</tr>
-					<tr>
-						<td>
 							<table class="row footer" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; display: block; padding: 0px;">
 								<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
 									<td class="wrapper last" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; padding: 10px 20px 0px 0px;" align="left" valign="top">
