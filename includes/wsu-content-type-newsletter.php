@@ -526,7 +526,7 @@ class WSU_Content_Type_Newsletter {
 										       style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;">
 											<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
 												<td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; padding: 0px 0px 0px 0px;"
-												    align="left" valign="top"><p style="display: block; color: #222222 !important; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Helvetica', 'Arial', sans-serif; font-style: italic; margin: 0 0 5px 0; padding: 0 0 0 0;"
+												    align="left" valign="top"><p style="display: block; color: #555555 !important; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Helvetica', 'Arial', sans-serif; font-style: italic; margin: 10px 0 5px 0; padding: 0 0 0 0;"
 												                                 align="left">Submit announcements online at <a href="http://news.wsu.edu/announcements/"
 												                                 style="color: blue; text-decoration: none !important;">http://news.wsu.edu/announcements</a></p></td>
 												<td class="expander" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; padding: 0;"
