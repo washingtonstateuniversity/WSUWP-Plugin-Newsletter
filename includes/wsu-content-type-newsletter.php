@@ -485,7 +485,7 @@ class WSU_Content_Type_Newsletter {
 									<td class="wrapper last" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; position: relative; padding: 10px 0px 0px;" align="left" valign="top">
 										<table class="twelve columns" style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 580px; margin: 0 auto; padding: 0;">
 											<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
-												<td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: right; width: 580px; height: 119px; line-height: 60px; font-size: 23px; font-weight: 200; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Helvetica', 'Arial', sans-serif;padding: 0px 11px 10px 0px; color: #888; background-repeat: no-repeat; background-size: cover; background-image: url('$header_image');" align="left" valign="top">$email_date</td>
+												<td style="border-collapse: collapse !important; vertical-align: top; width: 580px; height: 119px; line-height: 1px; font-size: 1px; padding: 0;" align="left" valign="top"><img src="$header_image" /></td>
 											</tr>
 										</table>
 									</td>
