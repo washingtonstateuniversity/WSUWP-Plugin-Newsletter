@@ -555,7 +555,7 @@ EMAIL;
 
 			$html_email .= <<<EMAIL
 <h3 style="display: block; margin: 0; padding: 0; font-family: 'Open Sans Condensed', 'Lucida Grande', 'Lucida Sans Unicode', arial, sans-serif; word-break: normal; font-size: 1.15em;"
-    align="left"><a href="$item_permalink" style="color: #ac0404 !important; text-decoration: none !important;">$item_title</a></h3>
+    align="left"><a href="$item_permalink" style="color: #ac0404 !important; text-decoration: none !important;"><font color="#ac0404"><span style="color: #ac0404 !important; text-decoration:none !important;">$item_title</span></font></a></h3>
 <p style="display: block; color: #222222 !important; font-family: 'Lucida Grande', 'Lucida Sans Unicode', arial, sans-serif; line-height: 19px; text-align: left; margin: 10px 0 25px 0; padding: 0 25px 0 0;"
     align="left">$item_excerpt <a href="$item_permalink"
     style="color: #ac0404; text-decoration: underline !important;">Continue reading&hellip;</a></p>
