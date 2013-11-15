@@ -493,7 +493,7 @@ class WSU_Content_Type_Newsletter {
 											<tr style="vertical-align: top; text-align: right; padding: 0;"
 											    align="left">
 												<td style="border-collapse: collapse !important; vertical-align: top; text-align: right; color: #888888 !important; width: 580px; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Helvetica', 'Arial', sans-serif; font-weight: 200; font-size: 21px; padding: 0 20px 0 0;"
-												    align="left" valign="top">$email_date</td>
+												    align="left" valign="top"><font color="#888888"><span style="color:#888888 !important;">$email_date</span></font></td>
 												</tr>
 										</table>
 									</td>
@@ -527,7 +527,7 @@ class WSU_Content_Type_Newsletter {
 											<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
 												<td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; padding: 0px 0px 0px 0px;"
 												    align="left" valign="top"><p style="display: block; color: #555555 !important; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Helvetica', 'Arial', sans-serif; font-style: italic; margin: 10px 0 5px 0; padding: 0 0 0 0;"
-												                                 align="left">Submit announcements online at <a href="http://news.wsu.edu/announcements/"
+												                                 align="left"><font color="#555555"><span style="color:#555555 !important;">Submit announcements online at</span></font> <a href="http://news.wsu.edu/announcements/"
 												                                 style="color: blue; text-decoration: none !important;">http://news.wsu.edu/announcements</a></p></td>
 												<td class="expander" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; padding: 0;"
 												    align="left" valign="top"></td>
@@ -557,7 +557,7 @@ EMAIL;
 <h3 style="display: block; margin: 0; padding: 0; font-family: 'Open Sans Condensed', 'Lucida Grande', 'Lucida Sans Unicode', arial, sans-serif; word-break: normal; font-size: 1.15em;"
     align="left"><a href="$item_permalink" style="color: #ac0404 !important; text-decoration: none !important;"><font color="#ac0404"><span style="color: #ac0404 !important; text-decoration:none !important;">$item_title</span></font></a></h3>
 <p style="display: block; color: #222222 !important; font-family: 'Lucida Grande', 'Lucida Sans Unicode', arial, sans-serif; line-height: 19px; text-align: left; margin: 10px 0 25px 0; padding: 0 25px 0 0;"
-    align="left">$item_excerpt <a href="$item_permalink"
+    align="left"><font color="#222222"><span style="color:#222222 !important;">$item_excerpt</span></font> <a href="$item_permalink"
     style="color: #ac0404; text-decoration: underline !important;">Continue reading&hellip;</a></p>
 EMAIL;
 
@@ -583,9 +583,9 @@ EMAIL;
 												<td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; padding: 0px 0px 10px;"
 												    align="left" valign="top">
 													<p style="display: block; color: #222222 !important; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Helvetica', 'Arial', sans-serif; font-style: italic; margin: 10px 0 25px; padding: 0;"
-													   align="left">The Announcement newsletter will continue to be sent once a day at 10 a.m. Submissions made after 9 a.m. each day will appear in the next days’ newsletter. Any edits will be still be made by Brenda Campbell at <a style="color: blue; text-decoration: none !important;" href="mailto:bcampbell@wsu.edu">bcampbell@wsu.edu</a>.</p>
+													   align="left"><font color="#222222"><span style="color:#222222 !important;">The Announcement newsletter will continue to be sent once a day at 10 a.m. Submissions made after 9 a.m. each day will appear in the next days’ newsletter. Any edits will be still be made by Brenda Campbell at <a style="color: blue; text-decoration: none !important;" href="mailto:bcampbell@wsu.edu">bcampbell@wsu.edu</a>.</span></font></p>
 													<p style="display: block; color: #222222 !important; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Helvetica', 'Arial', sans-serif; font-style: italic;  margin: 10px 0 25px; padding: 0;"
-													   align="left">If you are having difficulty reading the announcements, try unsubscribing and then resubscribe. Click <a style="color: blue; text-decoration: none !important;" href="http://lists.wsu.edu/leave.php">here</a> to unsubscribe and <a style="color: blue; text-decoration: none !important;" href="http://lists.wsu.edu/join.php">here</a> to subscribe</p>
+													   align="left"><font color="#222222"><span style="color: #222222 !important;">If you are having difficulty reading the announcements, try unsubscribing and then resubscribe. Click <a style="color: blue; text-decoration: none !important;" href="http://lists.wsu.edu/leave.php">here</a> to unsubscribe and <a style="color: blue; text-decoration: none !important;" href="http://lists.wsu.edu/join.php">here</a> to subscribe.</span></font></p>
 												</td>
 												<td class="expander" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; padding: 0;"
 												    align="left" valign="top"></td>
