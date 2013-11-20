@@ -555,10 +555,10 @@ EMAIL;
 
 			$html_email .= <<<EMAIL
 <h3 style="display: block; margin: 0; padding: 0; font-family: 'Open Sans Condensed', 'Lucida Grande', 'Lucida Sans Unicode', arial, sans-serif; word-break: normal; font-size: 1.15em;"
-    align="left"><a href="$item_permalink" style="color: #ac0404; text-decoration: none;"><font color="#ac0404"><span style="color: #ac0404; text-decoration:none;">$item_title</span></font></a></h3>
+    align="left"><a href="$item_permalink" style="color: #981e32; text-decoration: none;"><font color="#981e32"><span style="color: #981e32; text-decoration:none;">$item_title</span></font></a></h3>
 <p style="display: block; color: #222222; font-family: 'Lucida Grande', 'Lucida Sans Unicode', arial, sans-serif; line-height: 19px; text-align: left; margin: 10px 0 25px 0; padding: 0 25px 0 0;"
     align="left"><font color="#222222"><span style="color:#222222;">$item_excerpt</span></font> <a href="$item_permalink"
-    style="color: #ac0404; text-decoration: underline !important;">Continue reading&hellip;</a></p>
+    style="color: #981e32; text-decoration: underline !important;">Continue reading&hellip;</a></p>
 EMAIL;
 
 		}
