@@ -55,7 +55,7 @@
 	width: 100px;
 	border: 1px solid #ccc;
 	color: #333;
-	background: #b3c7e1;
+	background: #e2f4f8;
 	text-align: center;
 	font-size: 13px;
 	line-height: 18px;
@@ -64,7 +64,7 @@
 
 .newsletter-item:hover .newsletter-item-remove:hover {
 	color: #ececec;
-	background: #f04040;
+	background: #981e32;
 }
 
 #newsletter-build .newsletter-item h3 {
