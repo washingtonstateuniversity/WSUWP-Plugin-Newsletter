@@ -423,7 +423,7 @@ class WSU_Content_Type_Newsletter {
 		$email_date = str_replace( 'WSU Announcements for ', '', $email_title ); // *cough* hack *cough
 
 		$newsletter_items = $this->_build_announcements_newsletter_response( $post_ids );
-		$header_image = 'http://news.wsu.edu/wp-content/plugins/wsu-news-announcements/images/wsu-announcements-banner-580x68.png';
+		$header_image = 'http://news.wsu.edu/wp-content/plugins/wsu-news-announcements/images/wsu-announcements-banner-616x67-001.png';
 
 		$html_email = <<<EMAIL
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
