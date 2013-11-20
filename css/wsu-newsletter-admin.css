@@ -109,16 +109,17 @@
 
 .newsletter-footer {
 	clear: left;
-	padding-top: 0;
-	border-top: 1px dashed #ccc;
+	padding-top: 10px;
 }
 
 .newsletter-footer p {
+	color: #5e6a71;
 	font-style: italic;
 	margin: 10px 0;
 }
 
 .newsletter-head p {
+	color: #5e6a71;
 	font-style: italic;
 	margin: 20px 0 10px 0;
 }
