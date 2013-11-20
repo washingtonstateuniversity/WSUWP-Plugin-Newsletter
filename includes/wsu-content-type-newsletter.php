@@ -144,20 +144,23 @@ class WSU_Content_Type_Newsletter {
 		<label for="newsletter-date">Newsletter Date:</label>
 		<input type="text" id="newsletter-date" name="newsletter_date" value="<?php echo $newsletter_date; ?>" />
 		<input type="button" value="Announcements" id="announcements" class="button button-large button-secondary newsletter-type" />
-		<div id="newsletter-build">
-			<div class="newsletter-date"><?php echo date( 'l, F j, Y', current_time( 'timestamp' ) ); ?></div>
-			<div class="newsletter-head">
-				<p>Submit announcements online at <a href="http://news.wsu.edu/announcements/">http://news.wsu.edu/announcements</a></p>
+		<div id="newsletter-container">
+			<div id="newsletter-build">
+				<div class="newsletter-date"><?php echo date( 'l, F j, Y', current_time( 'timestamp' ) ); ?></div>
+				<div class="newsletter-image"><img src="<?php echo home_url( '/wp-content/plugins/wsu-news-announcements/images/wsu-announcements-banner-616x67-001.png' ); ?>" /></div>
+				<div class="newsletter-head">
+					<p>Submit announcements online at <a href="http://news.wsu.edu/announcements/">http://news.wsu.edu/announcements</a></p>
+				</div>
+				<div id="newsletter-build-items">
+					<p class="newsletter-build-tip">Click 'Announcements' above to load in today's announcements.</p>
+				</div>
+				<div class="newsletter-footer">
+					<p>The Announcement newsletter will continue to be sent once a day at 10 a.m. Submissions made after 9 a.m.
+					each day will appear in the next days’ newsletter. Any edits will be still be made by Brenda Campbell at <a href="mailto:bcampbell@wsu.edu">bcampbell@wsu.edu</a>.</p>
+					<p>If you are having difficulty reading the announcements, try unsubscribing and then resubscribe. Click <a href="http://lists.wsu.edu/leave.php">here</a> to unsubscribe and <a href="http://lists.wsu.edu/join.php">here</a> to subscribe</p>
+				</div>
+				<div style="clear:left;"> </div>
 			</div>
-			<div id="newsletter-build-items">
-				<p class="newsletter-build-tip">Click 'Announcements' above to load in today's announcements.</p>
-			</div>
-			<div class="newsletter-footer">
-				<p>The Announcement newsletter will continue to be sent once a day at 10 a.m. Submissions made after 9 a.m.
-				each day will appear in the next days’ newsletter. Any edits will be still be made by Brenda Campbell at <a href="mailto:bcampbell@wsu.edu">bcampbell@wsu.edu</a>.</p>
-				<p>If you are having difficulty reading the announcements, try unsubscribing and then resubscribe. Click <a href="http://lists.wsu.edu/leave.php">here</a> to unsubscribe and <a href="http://lists.wsu.edu/join.php">here</a> to subscribe</p>
-			</div>
-			<div style="clear:left;"> </div>
 		</div>
 		<input type="hidden" id="newsletter-item-order" name="newsletter_item_order" value="" />
 		<?php

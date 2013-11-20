@@ -1,14 +1,27 @@
+#newsletter-container {
+	width: 600px;
+	background: #fff;
+	border: 1px solid #777;
+	margin: 10px;
+}
+
 #newsletter-build {
 	position: relative;
 	font-family: 'Lucida Grande', 'Lucida Sans Unicode', Arial, sans-serif;
 	font-size: 100%;
-	max-width: 600px;
+	max-width: 580px;
 	background: #fff;
-	margin: 10px;
-	border: 1px solid #777;
-	padding-top: 123px;
-	background-image: url('../images/wsu-announcements-banner-580x119.png');
-	background-repeat: no-repeat;
+	margin: 0 auto;
+	padding-top: 45px;
+}
+
+.newsletter-image img {
+	width: 100%;
+	height: auto;
+}
+
+.newsletter-head {
+	margin-top: 10px;
 }
 
 .newsletter-build-tip {
@@ -19,7 +32,7 @@
 
 .newsletter-item {
 	position: relative;
-	margin: 10px 25px 15px 10px;
+	margin: 10px 0 15px 0;
 	cursor: move;
 	float: left;
 }
@@ -27,7 +40,7 @@
 .newsletter-item:hover {
 	border: 1px dashed #ccc;
 	padding: 5px;
-	margin: 4px 19px 9px 4px;
+	margin: 4px -4px 9px -6px;
 }
 
 .newsletter-item .newsletter-item-remove {
@@ -107,5 +120,5 @@
 
 .newsletter-head p {
 	font-style: italic;
-	margin: 0 20px 10px 10px;
+	margin: 20px 0 10px 0;
 }
