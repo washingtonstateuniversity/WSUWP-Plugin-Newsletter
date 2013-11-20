@@ -492,8 +492,8 @@ class WSU_Content_Type_Newsletter {
 										       style="border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: right; margin: 0 auto; padding: 0;">
 											<tr style="vertical-align: top; text-align: right; padding: 0;"
 											    align="left">
-												<td style="border-collapse: collapse !important; vertical-align: top; text-align: right; color: #888888; width: 580px; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Helvetica', 'Arial', sans-serif; font-weight: 200; font-size: 21px; padding: 0 20px 0 0;"
-												    align="left" valign="top"><font color="#888888"><span style="color:#888888;">$email_date</span></font></td>
+												<td style="border-collapse: collapse !important; vertical-align: top; text-align: right; color: #5e6a71; width: 580px; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Helvetica', 'Arial', sans-serif; font-weight: 200; font-size: 21px; padding: 0 20px 0 0;"
+												    align="left" valign="top"><font color="#5e6a71"><span style="color:#5e6a71;">$email_date</span></font></td>
 												</tr>
 										</table>
 									</td>
