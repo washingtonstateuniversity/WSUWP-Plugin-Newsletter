@@ -72,28 +72,28 @@
 	padding: 0;
 	border: 0;
 	background: none;
-	color: #262a2d;
+	color: #981e32;
 	cursor: auto;
 	font-family: 'Open Sans Condensed', 'Lucida Grande', 'Lucida Sans Unicode', arial, sans-serif;
 	font-weight: 700;
 }
 
 #newsletter-build .newsletter-item h3 a {
-	color: #ac0404;
+	color: #981e32;
 	text-decoration: none;
 }
 
 #newsletter-build .newsletter-item h3 a:hover {
-	color: #ac0404;
+	color: #981e32;
 }
 
 #newsletter-build .newsletter-item p {
-	color: #222222;
+	color: #262b2d;
 	margin: 10px 0 0 0;
 }
 
 #newsletter-build .newsletter-item p a {
-	color: #ac0404;
+	color: #981e32;
 	text-decoration: underline;
 }
 
@@ -104,7 +104,7 @@
 	position: absolute;
 	top: 30px;
 	right: 12px;
-	color: #777;
+	color: #5e6a71;
 }
 
 .newsletter-footer {
