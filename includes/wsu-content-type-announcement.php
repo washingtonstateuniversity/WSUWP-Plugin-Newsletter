@@ -46,6 +46,7 @@ class WSU_Content_Type_Announcement {
 		add_action( 'delete_post',                        array( $this, 'delete_calendar_cache'    ), 20, 1 );
 		add_action( 'update_option_start_of_week',        array( $this, 'delete_calendar_cache'    )        );
 		add_action( 'update_option_gmt_offset',           array( $this, 'delete_calendar_cache'    )        );
+		add_action( 'admin_enqueue_scripts',              array( $this, 'enqueue_admin_scripts'    )        );
 
 		add_action( 'manage_' . $this->post_type . '_posts_custom_column', array( $this, 'manage_list_table_email_column'              ), 10, 2 );
 		add_action( 'manage_' . $this->post_type . '_posts_custom_column', array( $this, 'manage_list_table_announcement_dates_column' ), 10, 2 );
@@ -105,6 +106,17 @@ class WSU_Content_Type_Announcement {
 	function add_meta_boxes() {
 		add_meta_box( 'wsu_announcement_email', 'Announcement Submitted By:', array( $this, 'display_email_meta_box' ), $this->post_type, 'side' );
 		add_meta_box( 'wsu_announcement_dates', 'Announcement Dates:',        array( $this, 'display_dates_meta_box' ), $this->post_type, 'side' );
+	}
+
+	/**
+	 * Enqueue scripts and styles required in the admin.
+	 */
+	public function enqueue_admin_scripts() {
+		if ( $this->post_type === get_current_screen()->id ) {
+			wp_enqueue_script( 'jquery-ui-datepicker' );
+			wp_enqueue_style( 'jquery-ui-core', 'http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css' );
+			wp_enqueue_script( 'wsu-news-announcement-admin', plugins_url( 'wsu-news-announcements/js/announcements-admin.js' ), array(), false, true );
+		}
 	}
 
 	/**
