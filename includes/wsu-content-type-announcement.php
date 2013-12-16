@@ -131,7 +131,7 @@ class WSU_Content_Type_Announcement {
 		$date_input = '';
 		$date_input_count = 1;
 		?>
-		<p>This announcement will be published on the following announcement archive pages:</p>
+		<p>This announcement is currently set to publish on the following announcement archive pages:</p>
 		<ul>
 		<?php
 		foreach ( $results as $result ) {
