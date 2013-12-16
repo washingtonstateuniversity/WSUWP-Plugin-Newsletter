@@ -46,6 +46,7 @@ class WSU_Content_Type_Announcement {
 		add_action( 'delete_post',                        array( $this, 'delete_calendar_cache'    ), 20, 1 );
 		add_action( 'update_option_start_of_week',        array( $this, 'delete_calendar_cache'    )        );
 		add_action( 'update_option_gmt_offset',           array( $this, 'delete_calendar_cache'    )        );
+		add_action( 'save_post',                          array( $this, 'save_announcement_dates'  ), 10, 2 );
 		add_action( 'admin_enqueue_scripts',              array( $this, 'enqueue_admin_scripts'    )        );
 
 		add_action( 'manage_' . $this->post_type . '_posts_custom_column', array( $this, 'manage_list_table_email_column'              ), 10, 2 );
@@ -178,6 +179,39 @@ class WSU_Content_Type_Announcement {
 		<label for="announcement-form-date">What date(s) should this announcement be published on?</label><br>
 		<?php
 		echo $date_input;
+	}
+
+	/**
+	 * Save the dates assigned to an announcement whenever an announcement is updated.
+	 *
+	 * @param $post_id
+	 * @param $post
+	 */
+	public function save_announcement_dates( $post_id, $post ) {
+		if ( $this->post_type !== $post->post_type ) {
+			return;
+		}
+
+		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+			return;
+		}
+
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return;
+		}
+
+		if ( ! isset( $_POST['announcement-date'] ) ) {
+			return;
+		}
+
+		$formatted_dates = array();
+		foreach( $_POST['announcement-date'] as $date ) {
+			$formatted_dates[] = strtotime( $date );
+		}
+		sort( $formatted_dates );
+
+		$this->_save_announcement_date_meta( $post_id, $formatted_dates );
+
 	}
 
 	/**
