@@ -128,6 +128,8 @@ class WSU_Content_Type_Announcement {
 	 */
 	function display_dates_meta_box( $post ) {
 		$results = $this->_get_announcement_date_meta( $post->ID );
+		$date_input = '';
+		$date_input_count = 1;
 		?>
 		<p>This announcement will be published on the following announcement archive pages:</p>
 		<ul>
@@ -149,9 +151,21 @@ class WSU_Content_Type_Announcement {
 				$date_url = substr( $date, 0, 4 ) . '/' . substr( $date, 4, 2 ) . '/' . substr( $date, 6, 2 );
 				$date_display = substr( $date, 4, 2 ) . '/' . substr( $date, 6, 2 ) . '/' . substr( $date, 0, 4 );
 				echo '<li>Daily: <a href="' . esc_url( site_url( $this->post_type_archive . '/' . $date_url ) ) . '" >' . $date_display . '</a></li>';
+				$date_input .= '<input type="text" id="announcement-form-date' . $date_input_count . '" class="announcement-form-input announcement-form-date-input" name="announcement-date[]" value="' . $date_display . '" />';
+				$date_input_count++;
 			}
 		}
 		echo '</ul>';
+
+		// Ensure we have 3 inputs listed. (This could be expandable...)
+		while ( $date_input_count <= 3 ) {
+			$date_input .= '<input type="text" id="announcement-form-date' . $date_input_count . '" class="announcement-form-input announcement-form-date-input" name="announcement-date[]" value="" />';
+			$date_input_count++;
+		}
+		?>
+		<label for="announcement-form-date">What date(s) should this announcement be published on?</label><br>
+		<?php
+		echo $date_input;
 	}
 
 	/**
