@@ -370,17 +370,7 @@ class WSU_Content_Type_Announcement {
 
 		update_post_meta( $post_id, '_announcement_contact_email', $email );
 
-		// Capture the various days, months, and years on which this announcement should appear
-		// and update post meta accordingly so that we can perform custom queries as needed.
-		foreach( $formatted_dates as $date ) {
-			$date_formatted  = date( 'Ymd', $date );
-			$month_formatted = date( 'Ym',  $date );
-			$year_formatted  = date( 'Y',   $date );
-
-			update_post_meta( $post_id, '_announcement_date_'  . $date_formatted,  1 );
-			update_post_meta( $post_id, '_announcement_date_'  . $month_formatted, 1 );
-			update_post_meta( $post_id, '_announcement_date_'  . $year_formatted,  1 );
-		}
+		$this->_save_announcement_date_meta( $post_id, $formatted_dates );
 
 		echo 'success';
 		exit;
@@ -446,6 +436,27 @@ class WSU_Content_Type_Announcement {
 		$columns['date'] = 'Publish Date';
 
 		return $columns;
+	}
+
+	/**
+	 * Capture the various days, months, and years on which this announcement should appear and
+	 * update post meta accordingly so that we can perform custom queries as needed.
+	 *
+	 * @todo Delete any old announcement date meta associated with this post...
+	 *
+	 * @param int   $post_id         ID of the post to assign the dates to.
+	 * @param array $formatted_dates An array of dates the announcement will be shown on.
+	 */
+	private function _save_announcement_date_meta( $post_id, $formatted_dates ) {
+		foreach( $formatted_dates as $date ) {
+			$date_formatted  = date( 'Ymd', $date );
+			$month_formatted = date( 'Ym',  $date );
+			$year_formatted  = date( 'Y',   $date );
+
+			update_post_meta( $post_id, '_announcement_date_'  . $date_formatted,  1 );
+			update_post_meta( $post_id, '_announcement_date_'  . $month_formatted, 1 );
+			update_post_meta( $post_id, '_announcement_date_'  . $year_formatted,  1 );
+		}
 	}
 
 	/**
