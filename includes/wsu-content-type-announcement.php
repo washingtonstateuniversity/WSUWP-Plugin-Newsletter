@@ -480,6 +480,12 @@ class WSU_Content_Type_Announcement {
 		unset( $columns['tags'] );
 		unset( $columns['date'] );
 
+		// Remove all WPSEO added columns as we have no use for them on this screen.
+		unset( $columns['wpseo-score'] );
+		unset( $columns['wpseo-title'] );
+		unset( $columns['wpseo-metadesc'] );
+		unset( $columns['wpseo-focuskw'] );
+
 		// Add our custom columns. Move date to the end of the array after we unset it above.
 		$columns['contact_email'] = 'Contact Email';
 		$columns['announce_dates'] = 'Announcement Dates';
