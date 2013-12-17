@@ -144,9 +144,7 @@ class WSU_Content_Type_Announcement {
 		$date_input = '';
 		$date_input_count = 1;
 		$archive_dates = array( 'daily', 'monthly', 'yearly' );
-		?>
-		<p>This announcement will appear on the following announcement archive pages:</p>
-		<?php
+
 		foreach ( $results as $result ) {
 			$date = str_replace( '_announcement_date_', '', $result->meta_key );
 
@@ -175,9 +173,9 @@ class WSU_Content_Type_Announcement {
 			$date_input_count++;
 		}
 		?>
-		<label for="announcement-form-date">This announcement will appear on the following date(s):</label><br /><br />
+		<label for="announcement-form-date">This announcement is assigned to the following date(s):</label><br /><br />
 		<?php echo $date_input;	?>
-		<p>This announcement will appear on the following announcement archive pages:</p>
+		<p>It will appear on the following announcement archive pages:</p>
 		<ul>
 			<li>Yearly: <?php echo implode( ', ', $archive_dates['yearly'] ); ?></li>
 			<li>Monthly: <?php echo implode( ', ', $archive_dates['monthly'] ); ?></li>
