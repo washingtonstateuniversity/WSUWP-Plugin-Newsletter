@@ -175,9 +175,15 @@ class WSU_Content_Type_Announcement {
 			$date_input_count++;
 		}
 		?>
-		<label for="announcement-form-date">This announcement will appear on the following date(s):</label><br>
+		<label for="announcement-form-date">This announcement will appear on the following date(s):</label><br /><br />
+		<?php echo $date_input;	?>
+		<p>This announcement will appear on the following announcement archive pages:</p>
+		<ul>
+			<li>Yearly: <?php echo implode( ', ', $archive_dates['yearly'] ); ?></li>
+			<li>Monthly: <?php echo implode( ', ', $archive_dates['monthly'] ); ?></li>
+			<li>Daily: <?php echo implode( ', ', $archive_dates['daily'] ); ?></li>
+		</ul>
 		<?php
-		echo $date_input;
 	}
 
 	/**
