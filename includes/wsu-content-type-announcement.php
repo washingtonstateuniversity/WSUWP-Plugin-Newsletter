@@ -210,6 +210,7 @@ class WSU_Content_Type_Announcement {
 		}
 		sort( $formatted_dates );
 
+		$this->_clear_announcement_date_meta( $post_id );
 		$this->_save_announcement_date_meta( $post_id, $formatted_dates );
 
 	}
@@ -520,6 +521,18 @@ class WSU_Content_Type_Announcement {
 		$results = $wpdb->get_results( $wpdb->prepare( "SELECT meta_key FROM $wpdb->postmeta WHERE post_id = %d and meta_key LIKE %s GROUP BY meta_key", $post_id, $announcement_date ) );
 
 		return $results;
+	}
+
+	/**
+	 * Delete any announcement dates associated with an announcement.
+	 *
+	 * @param int $post_id Post ID of the announcement to clear date data from.
+	 */
+	private function _clear_announcement_date_meta( $post_id ) {
+		global $wpdb;
+
+		$announcement_key = '_announcement_date_%';
+		$wpdb->get_results( $wpdb->prepare( "DELETE FROM $wpdb->postmeta WHERE post_id = %d AND meta_key LIKE %s", $post_id, $announcement_key ) );
 	}
 
 	/**
