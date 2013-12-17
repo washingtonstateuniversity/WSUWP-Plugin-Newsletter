@@ -498,8 +498,6 @@ class WSU_Content_Type_Announcement {
 	 * Capture the various days, months, and years on which this announcement should appear and
 	 * update post meta accordingly so that we can perform custom queries as needed.
 	 *
-	 * @todo Delete any old announcement date meta associated with this post...
-	 *
 	 * @param int   $post_id         ID of the post to assign the dates to.
 	 * @param array $formatted_dates An array of dates the announcement will be shown on.
 	 */
