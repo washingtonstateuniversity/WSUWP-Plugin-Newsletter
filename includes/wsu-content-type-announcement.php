@@ -46,6 +46,8 @@ class WSU_Content_Type_Announcement {
 		add_action( 'delete_post',                        array( $this, 'delete_calendar_cache'    ), 20, 1 );
 		add_action( 'update_option_start_of_week',        array( $this, 'delete_calendar_cache'    )        );
 		add_action( 'update_option_gmt_offset',           array( $this, 'delete_calendar_cache'    )        );
+		add_action( 'save_post',                          array( $this, 'save_announcement_dates'  ), 10, 2 );
+		add_action( 'admin_enqueue_scripts',              array( $this, 'enqueue_admin_scripts'    )        );
 
 		add_action( 'manage_' . $this->post_type . '_posts_custom_column', array( $this, 'manage_list_table_email_column'              ), 10, 2 );
 		add_action( 'manage_' . $this->post_type . '_posts_custom_column', array( $this, 'manage_list_table_announcement_dates_column' ), 10, 2 );
@@ -108,6 +110,17 @@ class WSU_Content_Type_Announcement {
 	}
 
 	/**
+	 * Enqueue scripts and styles required in the admin.
+	 */
+	public function enqueue_admin_scripts() {
+		if ( $this->post_type === get_current_screen()->id ) {
+			wp_enqueue_script( 'jquery-ui-datepicker' );
+			wp_enqueue_style( 'jquery-ui-core', 'http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css' );
+			wp_enqueue_script( 'wsu-news-announcement-admin', plugins_url( 'wsu-news-announcements/js/announcements-admin.js' ), array(), false, true );
+		}
+	}
+
+	/**
 	 * Display the email associated with the announcement submission.
 	 *
 	 * @param WP_Post $post Current post object.
@@ -128,8 +141,10 @@ class WSU_Content_Type_Announcement {
 	 */
 	function display_dates_meta_box( $post ) {
 		$results = $this->_get_announcement_date_meta( $post->ID );
+		$date_input = '';
+		$date_input_count = 1;
 		?>
-		<p>This announcement will be published on the following announcement archive pages:</p>
+		<p>This announcement is currently set to publish on the following announcement archive pages:</p>
 		<ul>
 		<?php
 		foreach ( $results as $result ) {
@@ -149,9 +164,55 @@ class WSU_Content_Type_Announcement {
 				$date_url = substr( $date, 0, 4 ) . '/' . substr( $date, 4, 2 ) . '/' . substr( $date, 6, 2 );
 				$date_display = substr( $date, 4, 2 ) . '/' . substr( $date, 6, 2 ) . '/' . substr( $date, 0, 4 );
 				echo '<li>Daily: <a href="' . esc_url( site_url( $this->post_type_archive . '/' . $date_url ) ) . '" >' . $date_display . '</a></li>';
+				$date_input .= '<input type="text" id="announcement-form-date' . $date_input_count . '" class="announcement-form-input announcement-form-date-input" name="announcement-date[]" value="' . $date_display . '" />';
+				$date_input_count++;
 			}
 		}
 		echo '</ul>';
+
+		// Ensure we have 3 inputs listed. (This could be expandable...)
+		while ( $date_input_count <= 3 ) {
+			$date_input .= '<input type="text" id="announcement-form-date' . $date_input_count . '" class="announcement-form-input announcement-form-date-input" name="announcement-date[]" value="" />';
+			$date_input_count++;
+		}
+		?>
+		<label for="announcement-form-date">What date(s) should this announcement be published on?</label><br>
+		<?php
+		echo $date_input;
+	}
+
+	/**
+	 * Save the dates assigned to an announcement whenever an announcement is updated.
+	 *
+	 * @param $post_id
+	 * @param $post
+	 */
+	public function save_announcement_dates( $post_id, $post ) {
+		if ( $this->post_type !== $post->post_type ) {
+			return;
+		}
+
+		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+			return;
+		}
+
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return;
+		}
+
+		if ( ! isset( $_POST['announcement-date'] ) ) {
+			return;
+		}
+
+		$formatted_dates = array();
+		foreach( $_POST['announcement-date'] as $date ) {
+			$formatted_dates[] = strtotime( $date );
+		}
+		sort( $formatted_dates );
+
+		$this->_clear_announcement_date_meta( $post_id );
+		$this->_save_announcement_date_meta( $post_id, $formatted_dates );
+
 	}
 
 	/**
@@ -356,17 +417,7 @@ class WSU_Content_Type_Announcement {
 
 		update_post_meta( $post_id, '_announcement_contact_email', $email );
 
-		// Capture the various days, months, and years on which this announcement should appear
-		// and update post meta accordingly so that we can perform custom queries as needed.
-		foreach( $formatted_dates as $date ) {
-			$date_formatted  = date( 'Ymd', $date );
-			$month_formatted = date( 'Ym',  $date );
-			$year_formatted  = date( 'Y',   $date );
-
-			update_post_meta( $post_id, '_announcement_date_'  . $date_formatted,  1 );
-			update_post_meta( $post_id, '_announcement_date_'  . $month_formatted, 1 );
-			update_post_meta( $post_id, '_announcement_date_'  . $year_formatted,  1 );
-		}
+		$this->_save_announcement_date_meta( $post_id, $formatted_dates );
 
 		echo 'success';
 		exit;
@@ -435,6 +486,27 @@ class WSU_Content_Type_Announcement {
 	}
 
 	/**
+	 * Capture the various days, months, and years on which this announcement should appear and
+	 * update post meta accordingly so that we can perform custom queries as needed.
+	 *
+	 * @todo Delete any old announcement date meta associated with this post...
+	 *
+	 * @param int   $post_id         ID of the post to assign the dates to.
+	 * @param array $formatted_dates An array of dates the announcement will be shown on.
+	 */
+	private function _save_announcement_date_meta( $post_id, $formatted_dates ) {
+		foreach( $formatted_dates as $date ) {
+			$date_formatted  = date( 'Ymd', $date );
+			$month_formatted = date( 'Ym',  $date );
+			$year_formatted  = date( 'Y',   $date );
+
+			update_post_meta( $post_id, '_announcement_date_'  . $date_formatted,  1 );
+			update_post_meta( $post_id, '_announcement_date_'  . $month_formatted, 1 );
+			update_post_meta( $post_id, '_announcement_date_'  . $year_formatted,  1 );
+		}
+	}
+
+	/**
 	 * Retrieve announcement date meta for a post.
 	 *
 	 * @param int $post_id Post ID to retrieve metadata for.
@@ -449,6 +521,18 @@ class WSU_Content_Type_Announcement {
 		$results = $wpdb->get_results( $wpdb->prepare( "SELECT meta_key FROM $wpdb->postmeta WHERE post_id = %d and meta_key LIKE %s GROUP BY meta_key", $post_id, $announcement_date ) );
 
 		return $results;
+	}
+
+	/**
+	 * Delete any announcement dates associated with an announcement.
+	 *
+	 * @param int $post_id Post ID of the announcement to clear date data from.
+	 */
+	private function _clear_announcement_date_meta( $post_id ) {
+		global $wpdb;
+
+		$announcement_key = '_announcement_date_%';
+		$wpdb->get_results( $wpdb->prepare( "DELETE FROM $wpdb->postmeta WHERE post_id = %d AND meta_key LIKE %s", $post_id, $announcement_key ) );
 	}
 
 	/**
