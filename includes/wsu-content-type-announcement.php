@@ -144,7 +144,7 @@ class WSU_Content_Type_Announcement {
 		$date_input = '';
 		$date_input_count = 1;
 		?>
-		<p>This announcement is currently set to publish on the following announcement archive pages:</p>
+		<p>This announcement will appear on the following announcement archive pages:</p>
 		<ul>
 		<?php
 		foreach ( $results as $result ) {
@@ -176,7 +176,7 @@ class WSU_Content_Type_Announcement {
 			$date_input_count++;
 		}
 		?>
-		<label for="announcement-form-date">What date(s) should this announcement be published on?</label><br>
+		<label for="announcement-form-date">This announcement will appear on the following date(s):</label><br>
 		<?php
 		echo $date_input;
 	}
