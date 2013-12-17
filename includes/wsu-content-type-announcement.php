@@ -143,32 +143,29 @@ class WSU_Content_Type_Announcement {
 		$results = $this->_get_announcement_date_meta( $post->ID );
 		$date_input = '';
 		$date_input_count = 1;
-		?>
-		<p>This announcement is currently set to publish on the following announcement archive pages:</p>
-		<ul>
-		<?php
+		$archive_dates = array( 'daily', 'monthly', 'yearly' );
+
 		foreach ( $results as $result ) {
 			$date = str_replace( '_announcement_date_', '', $result->meta_key );
 
 			if ( 4 == strlen( $date ) ) {
-				echo '<li>Yearly: <a href="' . esc_url( site_url( $this->post_type_archive . '/' . $date ) ) . '" >' . $date . '</a></li>';
+				$archive_dates['yearly'][] = '<a href="' . esc_url( site_url( $this->post_type_archive . '/' . $date ) ) . '" >' . $date . '</a>';
 			}
 
 			if ( 6 == strlen( $date ) ) {
 				$date_url = substr( $date, 0, 4 ) . '/' . substr( $date, 4, 2 );
 				$date_display = substr( $date, 4, 2 ) . '/' . substr( $date, 0, 4 );
-				echo '<li>Monthly: <a href="' . esc_url( site_url( $this->post_type_archive . '/' . $date_url ) ) . '" >' . $date_display . '</a></li>';
+				$archive_dates['monthly'][] = '<a href="' . esc_url( site_url( $this->post_type_archive . '/' . $date_url ) ) . '" >' . $date_display . '</a>';
 			}
 
 			if ( 8 == strlen( $date ) ) {
 				$date_url = substr( $date, 0, 4 ) . '/' . substr( $date, 4, 2 ) . '/' . substr( $date, 6, 2 );
 				$date_display = substr( $date, 4, 2 ) . '/' . substr( $date, 6, 2 ) . '/' . substr( $date, 0, 4 );
-				echo '<li>Daily: <a href="' . esc_url( site_url( $this->post_type_archive . '/' . $date_url ) ) . '" >' . $date_display . '</a></li>';
+				$archive_dates['daily'][] = '<a href="' . esc_url( site_url( $this->post_type_archive . '/' . $date_url ) ) . '" >' . $date_display . '</a>';
 				$date_input .= '<input type="text" id="announcement-form-date' . $date_input_count . '" class="announcement-form-input announcement-form-date-input" name="announcement-date[]" value="' . $date_display . '" />';
 				$date_input_count++;
 			}
 		}
-		echo '</ul>';
 
 		// Ensure we have 3 inputs listed. (This could be expandable...)
 		while ( $date_input_count <= 3 ) {
@@ -176,9 +173,15 @@ class WSU_Content_Type_Announcement {
 			$date_input_count++;
 		}
 		?>
-		<label for="announcement-form-date">What date(s) should this announcement be published on?</label><br>
+		<label for="announcement-form-date">This announcement is assigned to the following date(s):</label><br /><br />
+		<?php echo $date_input;	?>
+		<p>It will appear on the following announcement archive pages:</p>
+		<ul>
+			<li>Yearly: <?php echo implode( ', ', $archive_dates['yearly'] ); ?></li>
+			<li>Monthly: <?php echo implode( ', ', $archive_dates['monthly'] ); ?></li>
+			<li>Daily: <?php echo implode( ', ', $archive_dates['daily'] ); ?></li>
+		</ul>
 		<?php
-		echo $date_input;
 	}
 
 	/**
