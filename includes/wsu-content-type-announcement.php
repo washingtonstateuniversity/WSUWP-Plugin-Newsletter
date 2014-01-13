@@ -389,10 +389,12 @@ class WSU_Content_Type_Announcement {
 
 		// If a websubmission user exists, we'll use that user ID.
 		$user = get_user_by( 'slug', 'websubmission' );
-		if ( is_wp_error( $user ) )
+
+		if ( is_wp_error( $user ) || false === $user ) {
 			$user_id = 0;
-		else
+		} else {
 			$user_id = $user->ID;
+		}
 
 		$formatted_dates = array();
 		foreach( $_POST['dates'] as $date ) {
