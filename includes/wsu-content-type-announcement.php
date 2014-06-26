@@ -115,7 +115,7 @@ class WSU_Content_Type_Announcement {
 	public function enqueue_admin_scripts() {
 		if ( $this->post_type === get_current_screen()->id ) {
 			wp_enqueue_script( 'jquery-ui-datepicker' );
-			wp_enqueue_style( 'jquery-ui-core', 'http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css' );
+			wp_enqueue_style( 'jquery-ui-core', 'https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css' );
 			wp_enqueue_script( 'wsu-news-announcement-admin', plugins_url( 'wsu-news-announcements/js/announcements-admin.js' ), array(), false, true );
 		}
 	}
@@ -316,7 +316,7 @@ class WSU_Content_Type_Announcement {
 	function output_announcement_form() {
 		// Enqueue jQuery UI's datepicker to provide an interface for the publish date(s).
 		wp_enqueue_script( 'jquery-ui-datepicker' );
-		wp_enqueue_style( 'jquery-ui-core', 'http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css' );
+		wp_enqueue_style( 'jquery-ui-core', 'https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css' );
 
 		// Enqueue the Javascript needed to handle the form submission properly.
 		wp_enqueue_script( 'wsu-news-announcement-form', plugins_url( 'wsu-news-announcements/js/announcements-form.js' ), array(), false, true );
