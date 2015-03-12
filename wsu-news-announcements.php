@@ -1,10 +1,10 @@
 <?php
 /*
 Plugin Name: WSU News & Announcements
-Plugin URI: http://news.wsu.edu/
-Description: Handles functionality for WSU News and Announcements
+Plugin URI: https://news.wsu.edu/
+Description: Handles functionality the Announcement Newsletter for WSU News.
 Author: washingtonstateuniversity, jeremyfelt
-Version: 1.6
+Version: 1.6.0
 */
 
 include( dirname( __FILE__ ) . '/includes/wsu-content-type-announcement.php' );

@@ -116,7 +116,7 @@ class WSU_Content_Type_Announcement {
 		if ( $this->post_type === get_current_screen()->id ) {
 			wp_enqueue_script( 'jquery-ui-datepicker' );
 			wp_enqueue_style( 'jquery-ui-core', 'https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css' );
-			wp_enqueue_script( 'wsu-news-announcement-admin', plugins_url( 'wsu-news-announcements/js/announcements-admin.js' ), array(), false, true );
+			wp_enqueue_script( 'wsu-news-announcement-admin', plugins_url( '../js/announcements-admin.js', __FILE__ ), array(), false, true );
 		}
 	}
 
@@ -128,10 +128,11 @@ class WSU_Content_Type_Announcement {
 	function display_email_meta_box( $post ) {
 		$email = get_post_meta( $post->ID, '_announcement_contact_email', true );
 
-		if ( ! $email )
+		if ( ! $email ) {
 			echo '<strong>No email submitted with announcement.';
-		else
+		} else {
 			echo esc_html( $email );
+		}
 	}
 
 	/**
