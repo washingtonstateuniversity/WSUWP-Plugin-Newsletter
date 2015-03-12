@@ -147,9 +147,9 @@ class WSU_Content_Type_Newsletter {
 		<div id="newsletter-container">
 			<div id="newsletter-build">
 				<div class="newsletter-date"><?php echo date( 'l, F j, Y', current_time( 'timestamp' ) ); ?></div>
-				<div class="newsletter-image"><img src="<?php echo home_url( '/wp-content/plugins/wsu-news-announcements/images/wsu-announcements-banner-616x67-001.png' ); ?>" /></div>
+				<div class="newsletter-image"><img src="<?php echo esc_url( plugins_url( '../images/wsu-announcements-banner-616x67-001.png', __FILE__ ) ); ?>" /></div>
 				<div class="newsletter-head">
-					<p>Submit announcements online at <a href="http://news.wsu.edu/announcements/">http://news.wsu.edu/announcements</a></p>
+					<p>Submit announcements online at <a href="https://news.wsu.edu/announcements/">http://news.wsu.edu/announcements</a></p>
 				</div>
 				<div id="newsletter-build-items">
 					<p class="newsletter-build-tip">Click 'Announcements' above to load in today's announcements.</p>
