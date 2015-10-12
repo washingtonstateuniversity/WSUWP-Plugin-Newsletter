@@ -292,8 +292,14 @@ class WSU_Content_Type_Newsletter {
 
 		$post_id = absint( $_POST['post_id'] );
 
+		$post = get_post( $post_id );
+		if ( 'publish' !== $post->post_status ) {
+			echo '<br>Please publish the newsletter before sending.';
+			exit;
+		}
+
 		if ( ! $post_ids = get_post_meta( $post_id, '_newsletter_item_order', true ) ) {
-			echo $post_id . 'No items to send...';
+			echo '<br>No items to send...';
 			exit;
 		}
 
@@ -311,7 +317,7 @@ class WSU_Content_Type_Newsletter {
 		remove_filter( 'wp_mail_from',         array( $this, 'set_mail_from'         ) );
 		remove_filter( 'wp_mail_from_name',    array( $this, 'set_mail_from_name'    ) );
 
-		echo 'Emailed ' . esc_html( $_POST['email'] ) . '...';
+		echo '<br>Emailed ' . esc_html( $_POST['email'] ) . '...';
 		exit;
 	}
 
