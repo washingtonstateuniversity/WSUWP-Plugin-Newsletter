@@ -166,13 +166,14 @@ class WSU_Content_Type_Newsletter {
 	/**
 	 * Build the list of items that should be included in a newsletter.
 	 *
+	 * @global WSU_Content_Type_Announcement $wsu_content_type_announcement
+	 *
 	 * @param array        $post_ids  List of specific post IDs to include. Defaults to an empty array.
 	 * @param null|string  $post_date Post date to assign to the newsletter. A null default indicates the current date.
 	 *
 	 * @return array Containing information on each newsletter item.
 	 */
 	private function _build_announcements_newsletter_response( $post_ids = array(), $post_date = null ) {
-		// @global WSU_Content_Type_Announcement $wsu_content_type_announcement
 		global $wsu_content_type_announcement;
 
 		$query_args = array(
@@ -205,6 +206,7 @@ class WSU_Content_Type_Newsletter {
 				$items[] = array(
 					'id'        => get_the_ID(),
 					'title'     => get_the_title(),
+					'content'   => get_the_content(),
 					'excerpt'   => get_the_excerpt(),
 					'permalink' => get_permalink(),
 				);
@@ -409,6 +411,8 @@ class WSU_Content_Type_Newsletter {
 	 * @return string The full HTML email to be sent.
 	 */
 	private function _generate_html_email( $post_id, $post_ids ) {
+		$special_announcement = get_post_meta( $post_id, '_newsletter_type', true );
+
 		$email_title = esc_html( get_the_title( $post_id ) );
 		/**
 		 * Email title should be one of:
@@ -548,7 +552,11 @@ class WSU_Content_Type_Newsletter {
 EMAIL;
 
 		foreach ( $newsletter_items as $item ) {
-			$item_excerpt   = wp_kses_post( $item['excerpt']   );
+			if ( 'special-announcement' === $special_announcement ) {
+				$item_excerpt = $item['content'];
+			} else {
+				$item_excerpt = wp_kses_post( $item['excerpt'] );
+			}
 			$item_permalink = esc_url_raw(  $item['permalink'] );
 			$item_title     = esc_html(     $item['title']     );
 
