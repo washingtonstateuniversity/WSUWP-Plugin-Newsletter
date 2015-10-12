@@ -112,7 +112,7 @@ class WSU_Content_Type_Newsletter {
 				<div class="newsletter-date"><?php echo date( 'l, F j, Y', current_time( 'timestamp' ) ); ?></div>
 				<div class="newsletter-image"><img src="<?php echo esc_url( plugins_url( '../images/wsu-announcements-banner-616x67-001.png', __FILE__ ) ); ?>" /></div>
 				<div class="newsletter-head">
-					<p>Submit announcements online at <a href="https://news.wsu.edu/announcements/">http://news.wsu.edu/announcements</a></p>
+					<p>Submit announcements online at <a href="https://news.wsu.edu/announcements/">https://news.wsu.edu/announcements</a></p>
 				</div>
 				<div id="newsletter-build-items">
 					<p class="newsletter-build-tip">Click 'Announcements' above to load in today's announcements.</p>
@@ -526,8 +526,8 @@ class WSU_Content_Type_Newsletter {
 											<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
 												<td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; padding: 0px 0px 20px 0px;"
 												    align="left" valign="top"><p style="display: block; color: #5e6a71; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Helvetica', 'Arial', sans-serif; font-style: italic; margin: 10px 0 5px 0; padding: 0 0 0 0;"
-												                                 align="left"><font color="#5e6a71"><span style="color:#5e6a71;">Submit announcements online at</span></font> <a href="http://news.wsu.edu/announcements/"
-												                                 style="color: blue; text-decoration: none !important;">http://news.wsu.edu/announcements</a></p></td>
+												                                 align="left"><font color="#5e6a71"><span style="color:#5e6a71;">Submit announcements online at</span></font> <a href="https://news.wsu.edu/announcements/"
+												                                 style="color: blue; text-decoration: none !important;">https://news.wsu.edu/announcements</a></p></td>
 												<td class="expander" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; padding: 0;"
 												    align="left" valign="top"></td>
 											</tr>
