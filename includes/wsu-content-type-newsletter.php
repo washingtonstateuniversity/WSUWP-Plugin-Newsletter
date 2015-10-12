@@ -348,7 +348,11 @@ class WSU_Content_Type_Newsletter {
 			$title_date = date( 'l, F j, Y', current_time( 'timestamp' ) );
 		}
 
-		$post_data['post_title'] = 'WSU Announcements for ' . $title_date;
+		if ( isset( $_POST['newsletter_type'] ) && 'on' === $_POST['newsletter_type'] ) {
+			$post_data['post_title'] = 'SPECIAL WSU ANNOUNCEMENT for ' . $title_date;
+		} else {
+			$post_data['post_title'] = 'WSU Announcements for ' . $title_date;
+		}
 
 		return $post_data;
 	}
@@ -406,7 +410,16 @@ class WSU_Content_Type_Newsletter {
 	 */
 	private function _generate_html_email( $post_id, $post_ids ) {
 		$email_title = esc_html( get_the_title( $post_id ) );
-		$email_date = str_replace( 'WSU Announcements for ', '', $email_title ); // *cough* hack *cough
+		/**
+		 * Email title should be one of:
+		 *
+		 * - "WSU Announcements for 10/12/2015"
+		 * - "SPECIAL WSU ANNOUNCEMENT for 10/12/2015"
+		 *
+		 * Such a hack.
+		 */
+		$email_title_parts = explode( 'for ', $email_title );
+		$email_date = $email_title_parts[1];
 
 		$newsletter_items = $this->_build_announcements_newsletter_response( $post_ids );
 		$header_image = 'http://news.wsu.edu/wp-content/plugins/wsu-news-announcements/images/wsu-announcements-banner-616x67-001.png';
