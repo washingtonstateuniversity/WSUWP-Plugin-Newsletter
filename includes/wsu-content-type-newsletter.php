@@ -132,8 +132,15 @@ class WSU_Content_Type_Newsletter {
 	/**
 	 * Display a meta box to allow the sending of a newsletter to an email address.
 	 */
-	public function display_newsletter_send_meta_box() {
+	public function display_newsletter_send_meta_box( $post ) {
+		$newsletter_type = get_post_meta( $post->ID, '_newsletter_type', true );
+		if ( ! $newsletter_type || 'special-announcement' !== $newsletter_type ) {
+			$newsletter_type = 'announcements';
+		}
 		?>
+		<input id="newsletter-type" name="newsletter_type" type="checkbox" <?php checked( 'special-announcement', $newsletter_type ); ?>>
+		<label for="newsletter-type">Special Announcement</label>
+		<br /><br />
 		<label for="newsletter-email">Email Address:</label>
 		<input type="text" name="newsletter_email" id="newsletter-email" value="" placeholder="email..." />
 		<input type="button" id="newsletter-send" value="Send" class="button button-primary" />
@@ -353,8 +360,15 @@ class WSU_Content_Type_Newsletter {
 		if ( 'auto-draft' === $post->post_status )
 			return;
 
-		if ( empty( $_POST['newsletter_item_order'] ) && empty( $_POST['newsletter_date'] ) )
+		if ( $this->post_type !== $post->post_type ) {
 			return;
+		}
+
+		if ( ! empty( $_POST['newsletter_type']) && 'on' === $_POST['newsletter_type'] ) {
+			update_post_meta( $post_id, '_newsletter_type', 'special-announcement' );
+		} else {
+			delete_post_meta( $post_id, '_newsletter_type' );
+		}
 
 		if ( ! empty( $_POST['newsletter_item_order'] ) ) {
 			$newsletter_item_order = explode( ',', $_POST['newsletter_item_order'] );
