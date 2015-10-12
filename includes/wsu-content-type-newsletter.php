@@ -17,16 +17,10 @@ class WSU_Content_Type_Newsletter {
 	var $post_type_name = 'Newsletters';
 
 	/**
-	 * @var string The slug for the newsletter taxonomy type.
-	 */
-	var $tax_newsletter_type = 'wsu_newsletter_type';
-
-	/**
 	 * Add the hooks that we'll make use of.
 	 */
 	public function __construct() {
 		add_action( 'init',                               array( $this, 'register_post_type'                ), 10    );
-		add_action( 'init',                               array( $this, 'register_newsletter_type_taxonomy' ), 10    );
 		add_action( 'save_post_' . $this->post_type,      array( $this, 'save_post'                         ), 10, 2 );
 		add_action( 'add_meta_boxes',                     array( $this, 'add_meta_boxes'                    ), 10    );
 		add_action( 'admin_enqueue_scripts',              array( $this, 'admin_enqueue_scripts'             ), 10    );
@@ -76,31 +70,6 @@ class WSU_Content_Type_Newsletter {
 	}
 
 	/**
-	 * Register a taxonomy for newsletter type.
-	 */
-	public function register_newsletter_type_taxonomy() {
-		$labels = array(
-			'name'          => 'Newsletter Types',
-			'singular_name' => 'Newsletter Type',
-			'parent_item'   => 'Parent Newsletter Type',
-			'edit_item'     => 'Edit Newsletter Type',
-			'update_item'   => 'Update Newsletter Type',
-			'add_new_item'  => 'Add Newsletter Type',
-			'new_item_name' => 'New Newsletter Type',
-		);
-
-		$args = array(
-			'hierarchical'          => true,
-			'labels'                => $labels,
-			'show_ui'               => false,
-			'show_admin_column'     => true,
-			'query_var'             => true,
-		);
-
-		register_taxonomy( $this->tax_newsletter_type, array( $this->post_type ), $args );
-	}
-
-	/**
 	 * Add the meta boxes used by the WSU newsletter content type.
 	 */
 	public function add_meta_boxes() {
@@ -126,12 +95,6 @@ class WSU_Content_Type_Newsletter {
 
 		wp_localize_script( 'wsu-newsletter-admin', 'wsu_newsletter', $localized_data );
 
-		// Select Newsletter Type
-		/*$newsletter_types = get_terms( $this->tax_newsletter_type );
-		foreach ( $newsletter_types as $newsletter_type ) {
-			echo '<input type="button" value="' . esc_html( $newsletter_type->name ) . '" id="' . esc_attr( $newsletter_type->slug ) . '" class="button button-large button-secondary newsletter-type" /> ';
-		}*/
-
 		if ( $newsletter_date = get_post_meta( $post->ID, '_newsletter_date', true ) ) {
 			$n_year  = substr( $newsletter_date, 0, 4 );
 			$n_month = substr( $newsletter_date, 4, 2 );
@@ -149,15 +112,17 @@ class WSU_Content_Type_Newsletter {
 				<div class="newsletter-date"><?php echo date( 'l, F j, Y', current_time( 'timestamp' ) ); ?></div>
 				<div class="newsletter-image"><img src="<?php echo esc_url( plugins_url( '../images/wsu-announcements-banner-616x67-001.png', __FILE__ ) ); ?>" /></div>
 				<div class="newsletter-head">
-					<p>Submit announcements online at <a href="https://news.wsu.edu/announcements/">http://news.wsu.edu/announcements</a></p>
+					<p>Submit announcements online at <a href="https://news.wsu.edu/announcements/">https://news.wsu.edu/announcements</a></p>
 				</div>
 				<div id="newsletter-build-items">
 					<p class="newsletter-build-tip">Click 'Announcements' above to load in today's announcements.</p>
 				</div>
 				<div class="newsletter-footer">
-					<p>The Announcement newsletter will continue to be sent once a day at 10 a.m. Submissions made after 9 a.m.
-					each day will appear in the next days’ newsletter. Any edits will be still be made by Brenda Campbell at <a href="mailto:bcampbell@wsu.edu">bcampbell@wsu.edu</a>.</p>
-					<p>If you are having difficulty reading the announcements, try unsubscribing and then resubscribe. Click <a href="http://lists.wsu.edu/leave.php">here</a> to unsubscribe and <a href="http://lists.wsu.edu/join.php">here</a> to subscribe</p>
+					<p>The Announcement newsletter will be sent once a day at 10 a.m. Submissions made after 9:30 a.m
+					each day will appear in the next days’ newsletter. If you need to make an edit to your announcement,
+					contact Brenda Campbell at <a href="mailto:bcampbell@wsu.edu">bcampbell@wsu.edu</a>.</p>
+					<p>If you are having difficulty reading the announcements, try unsubscribing and then resubscribe.
+					Click <a href="http://lists.wsu.edu/leave.php">here</a> to unsubscribe and <a href="http://lists.wsu.edu/join.php">here</a> to subscribe.</p>
 				</div>
 				<div style="clear:left;"> </div>
 			</div>
@@ -169,8 +134,15 @@ class WSU_Content_Type_Newsletter {
 	/**
 	 * Display a meta box to allow the sending of a newsletter to an email address.
 	 */
-	public function display_newsletter_send_meta_box() {
+	public function display_newsletter_send_meta_box( $post ) {
+		$newsletter_type = get_post_meta( $post->ID, '_newsletter_type', true );
+		if ( ! $newsletter_type || 'special-announcement' !== $newsletter_type ) {
+			$newsletter_type = 'announcements';
+		}
 		?>
+		<input id="newsletter-type" name="newsletter_type" type="checkbox" <?php checked( 'special-announcement', $newsletter_type ); ?>>
+		<label for="newsletter-type">Special Announcement</label>
+		<br /><br />
 		<label for="newsletter-email">Email Address:</label>
 		<input type="text" name="newsletter_email" id="newsletter-email" value="" placeholder="email..." />
 		<input type="button" id="newsletter-send" value="Send" class="button button-primary" />
@@ -196,13 +168,14 @@ class WSU_Content_Type_Newsletter {
 	/**
 	 * Build the list of items that should be included in a newsletter.
 	 *
+	 * @global WSU_Content_Type_Announcement $wsu_content_type_announcement
+	 *
 	 * @param array        $post_ids  List of specific post IDs to include. Defaults to an empty array.
 	 * @param null|string  $post_date Post date to assign to the newsletter. A null default indicates the current date.
 	 *
 	 * @return array Containing information on each newsletter item.
 	 */
 	private function _build_announcements_newsletter_response( $post_ids = array(), $post_date = null ) {
-		// @global WSU_Content_Type_Announcement $wsu_content_type_announcement
 		global $wsu_content_type_announcement;
 
 		$query_args = array(
@@ -235,6 +208,7 @@ class WSU_Content_Type_Newsletter {
 				$items[] = array(
 					'id'        => get_the_ID(),
 					'title'     => get_the_title(),
+					'content'   => apply_filters( 'the_content', get_the_content() ),
 					'excerpt'   => get_the_excerpt(),
 					'permalink' => get_permalink(),
 				);
@@ -322,8 +296,14 @@ class WSU_Content_Type_Newsletter {
 
 		$post_id = absint( $_POST['post_id'] );
 
+		$post = get_post( $post_id );
+		if ( 'publish' !== $post->post_status ) {
+			echo '<br>Please publish the newsletter before sending.';
+			exit;
+		}
+
 		if ( ! $post_ids = get_post_meta( $post_id, '_newsletter_item_order', true ) ) {
-			echo $post_id . 'No items to send...';
+			echo '<br>No items to send...';
 			exit;
 		}
 
@@ -341,7 +321,7 @@ class WSU_Content_Type_Newsletter {
 		remove_filter( 'wp_mail_from',         array( $this, 'set_mail_from'         ) );
 		remove_filter( 'wp_mail_from_name',    array( $this, 'set_mail_from_name'    ) );
 
-		echo 'Emailed ' . esc_html( $_POST['email'] ) . '...';
+		echo '<br>Emailed ' . esc_html( $_POST['email'] ) . '...';
 		exit;
 	}
 
@@ -367,12 +347,16 @@ class WSU_Content_Type_Newsletter {
 		$newsletter_date = array_map( 'absint', $newsletter_date );
 
 		if ( 3 === count( $newsletter_date ) ) {
-			$title_date  = date( 'l, F j, Y', strtotime( $newsletter_date[2] . '-' . zeroise( $newsletter_date[0], 2 ) . '-' . zeroise( $newsletter_date[1], 2 ) ) . ' 00:00:00' );
+			$title_date = date( 'l, F j, Y', strtotime( $newsletter_date[2] . '-' . zeroise( $newsletter_date[0], 2 ) . '-' . zeroise( $newsletter_date[1], 2 ) . ' 00:00:00' ) );
 		} else {
-			$title_date      = date( 'l, F j, Y', current_time( 'timestamp' ) );
+			$title_date = date( 'l, F j, Y', current_time( 'timestamp' ) );
 		}
 
-		$post_data['post_title'] = 'WSU Announcements for ' . $title_date;
+		if ( isset( $_POST['newsletter_type'] ) && 'on' === $_POST['newsletter_type'] ) {
+			$post_data['post_title'] = 'SPECIAL WSU ANNOUNCEMENT for ' . $title_date;
+		} else {
+			$post_data['post_title'] = 'WSU Announcements for ' . $title_date;
+		}
 
 		return $post_data;
 	}
@@ -390,8 +374,15 @@ class WSU_Content_Type_Newsletter {
 		if ( 'auto-draft' === $post->post_status )
 			return;
 
-		if ( empty( $_POST['newsletter_item_order'] ) && empty( $_POST['newsletter_date'] ) )
+		if ( $this->post_type !== $post->post_type ) {
 			return;
+		}
+
+		if ( ! empty( $_POST['newsletter_type']) && 'on' === $_POST['newsletter_type'] ) {
+			update_post_meta( $post_id, '_newsletter_type', 'special-announcement' );
+		} else {
+			delete_post_meta( $post_id, '_newsletter_type' );
+		}
 
 		if ( ! empty( $_POST['newsletter_item_order'] ) ) {
 			$newsletter_item_order = explode( ',', $_POST['newsletter_item_order'] );
@@ -422,11 +413,22 @@ class WSU_Content_Type_Newsletter {
 	 * @return string The full HTML email to be sent.
 	 */
 	private function _generate_html_email( $post_id, $post_ids ) {
+		$special_announcement = get_post_meta( $post_id, '_newsletter_type', true );
+
 		$email_title = esc_html( get_the_title( $post_id ) );
-		$email_date = str_replace( 'WSU Announcements for ', '', $email_title ); // *cough* hack *cough
+		/**
+		 * Email title should be one of:
+		 *
+		 * - "WSU Announcements for 10/12/2015"
+		 * - "SPECIAL WSU ANNOUNCEMENT for 10/12/2015"
+		 *
+		 * Such a hack.
+		 */
+		$email_title_parts = explode( 'for ', $email_title );
+		$email_date = $email_title_parts[1];
 
 		$newsletter_items = $this->_build_announcements_newsletter_response( $post_ids );
-		$header_image = 'http://news.wsu.edu/wp-content/plugins/wsu-news-announcements/images/wsu-announcements-banner-616x67-001.png';
+		$header_image = 'https://news.wsu.edu/wp-content/plugins/wsu-news-announcements/images/wsu-announcements-banner-616x67-001.png';
 
 		$html_email = <<<EMAIL
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -530,8 +532,8 @@ class WSU_Content_Type_Newsletter {
 											<tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
 												<td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; padding: 0px 0px 20px 0px;"
 												    align="left" valign="top"><p style="display: block; color: #5e6a71; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Helvetica', 'Arial', sans-serif; font-style: italic; margin: 10px 0 5px 0; padding: 0 0 0 0;"
-												                                 align="left"><font color="#5e6a71"><span style="color:#5e6a71;">Submit announcements online at</span></font> <a href="http://news.wsu.edu/announcements/"
-												                                 style="color: blue; text-decoration: none !important;">http://news.wsu.edu/announcements</a></p></td>
+												                                 align="left"><font color="#5e6a71"><span style="color:#5e6a71;">Submit announcements online at</span></font> <a href="https://news.wsu.edu/announcements/"
+												                                 style="color: blue; text-decoration: none !important;">https://news.wsu.edu/announcements</a></p></td>
 												<td class="expander" style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; visibility: hidden; width: 0px; padding: 0;"
 												    align="left" valign="top"></td>
 											</tr>
@@ -552,7 +554,11 @@ class WSU_Content_Type_Newsletter {
 EMAIL;
 
 		foreach ( $newsletter_items as $item ) {
-			$item_excerpt   = wp_kses_post( $item['excerpt']   );
+			if ( 'special-announcement' === $special_announcement ) {
+				$item_excerpt = $item['content'];
+			} else {
+				$item_excerpt = wp_kses_post( $item['excerpt'] );
+			}
 			$item_permalink = esc_url_raw(  $item['permalink'] );
 			$item_title     = esc_html(     $item['title']     );
 
@@ -586,7 +592,7 @@ EMAIL;
 												<td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; padding: 0px 0px 10px;"
 												    align="left" valign="top">
 													<p style="display: block; color: #5e6a71; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Helvetica', 'Arial', sans-serif; font-style: italic; margin: 10px 0 25px; padding: 0;"
-													   align="left"><font color="#5e6a71"><span style="color: #5e6a71;">The Announcement newsletter will continue to be sent once a day at 10 a.m. Submissions made after 9 a.m. each day will appear in the next days’ newsletter. Any edits will be still be made by Brenda Campbell at <a style="color: blue; text-decoration: none !important;" href="mailto:bcampbell@wsu.edu">bcampbell@wsu.edu</a>.</span></font></p>
+													   align="left"><font color="#5e6a71"><span style="color: #5e6a71;">The Announcement newsletter will be sent once a day at 10 a.m. Submissions made after 9:30 a.m each day will appear in the next days’ newsletter. If you need to make an edit to your announcement, contact Brenda Campbell at <a style="color: blue; text-decoration: none !important;" href="mailto:bcampbell@wsu.edu">bcampbell@wsu.edu</a>.</span></font></p>
 													<p style="display: block; color: #5e6a71; font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Helvetica', 'Arial', sans-serif; font-style: italic;  margin: 10px 0 25px; padding: 0;"
 													   align="left"><font color="#5e6a71"><span style="color: #5e6a71;">If you are having difficulty reading the announcements, try unsubscribing and then resubscribe. Click <a style="color: blue; text-decoration: none !important;" href="http://lists.wsu.edu/leave.php">here</a> to unsubscribe and <a style="color: blue; text-decoration: none !important;" href="http://lists.wsu.edu/join.php">here</a> to subscribe.</span></font></p>
 												</td>

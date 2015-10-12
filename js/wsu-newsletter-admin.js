@@ -32,12 +32,20 @@
 	function load_newsletter_items( raw_data ) {
 		var data = '';
 
+		var checked = $('#newsletter-type').prop('checked');
+
 		// Append the results to the existing build of newsletter items.
 		$.each( raw_data, function( index, val ) {
 			data += '<div id="newsletter-item-' + val.id + '" class="newsletter-item">' +
-				'<h3><a href="' + val.permalink + '">' + val.title + '</a></h3>' +
-				'<p>' + val.excerpt + ' <a href="' + val.permalink + '" >Continue reading&hellip;</a></p>' +
-				'<span class="newsletter-item-remove">Remove</span>' +
+				'<h3><a href="' + val.permalink + '">' + val.title + '</a></h3>';
+
+			if ( checked ) {
+				data += val.content;
+			} else {
+				data += '<p>' + val.excerpt + ' <a href="' + val.permalink + '" >Continue reading&hellip;</a></p>';
+			}
+
+			data += '<span class="newsletter-item-remove">Remove</span>' +
 				'</div>';
 		} );
 
