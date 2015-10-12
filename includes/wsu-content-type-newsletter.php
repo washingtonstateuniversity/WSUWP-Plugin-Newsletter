@@ -206,7 +206,7 @@ class WSU_Content_Type_Newsletter {
 				$items[] = array(
 					'id'        => get_the_ID(),
 					'title'     => get_the_title(),
-					'content'   => get_the_content(),
+					'content'   => apply_filters( 'the_content', get_the_content() ),
 					'excerpt'   => get_the_excerpt(),
 					'permalink' => get_permalink(),
 				);
