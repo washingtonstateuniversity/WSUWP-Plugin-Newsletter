@@ -17,16 +17,10 @@ class WSU_Content_Type_Newsletter {
 	var $post_type_name = 'Newsletters';
 
 	/**
-	 * @var string The slug for the newsletter taxonomy type.
-	 */
-	var $tax_newsletter_type = 'wsu_newsletter_type';
-
-	/**
 	 * Add the hooks that we'll make use of.
 	 */
 	public function __construct() {
 		add_action( 'init',                               array( $this, 'register_post_type'                ), 10    );
-		add_action( 'init',                               array( $this, 'register_newsletter_type_taxonomy' ), 10    );
 		add_action( 'save_post_' . $this->post_type,      array( $this, 'save_post'                         ), 10, 2 );
 		add_action( 'add_meta_boxes',                     array( $this, 'add_meta_boxes'                    ), 10    );
 		add_action( 'admin_enqueue_scripts',              array( $this, 'admin_enqueue_scripts'             ), 10    );
@@ -76,31 +70,6 @@ class WSU_Content_Type_Newsletter {
 	}
 
 	/**
-	 * Register a taxonomy for newsletter type.
-	 */
-	public function register_newsletter_type_taxonomy() {
-		$labels = array(
-			'name'          => 'Newsletter Types',
-			'singular_name' => 'Newsletter Type',
-			'parent_item'   => 'Parent Newsletter Type',
-			'edit_item'     => 'Edit Newsletter Type',
-			'update_item'   => 'Update Newsletter Type',
-			'add_new_item'  => 'Add Newsletter Type',
-			'new_item_name' => 'New Newsletter Type',
-		);
-
-		$args = array(
-			'hierarchical'          => true,
-			'labels'                => $labels,
-			'show_ui'               => false,
-			'show_admin_column'     => true,
-			'query_var'             => true,
-		);
-
-		register_taxonomy( $this->tax_newsletter_type, array( $this->post_type ), $args );
-	}
-
-	/**
 	 * Add the meta boxes used by the WSU newsletter content type.
 	 */
 	public function add_meta_boxes() {
@@ -125,12 +94,6 @@ class WSU_Content_Type_Newsletter {
 			$localized_data['items'] = $this->_build_announcements_newsletter_response( $post_ids );
 
 		wp_localize_script( 'wsu-newsletter-admin', 'wsu_newsletter', $localized_data );
-
-		// Select Newsletter Type
-		/*$newsletter_types = get_terms( $this->tax_newsletter_type );
-		foreach ( $newsletter_types as $newsletter_type ) {
-			echo '<input type="button" value="' . esc_html( $newsletter_type->name ) . '" id="' . esc_attr( $newsletter_type->slug ) . '" class="button button-large button-secondary newsletter-type" /> ';
-		}*/
 
 		if ( $newsletter_date = get_post_meta( $post->ID, '_newsletter_date', true ) ) {
 			$n_year  = substr( $newsletter_date, 0, 4 );
