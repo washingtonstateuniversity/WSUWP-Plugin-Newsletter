@@ -96,6 +96,8 @@ class WSU_Content_Type_Announcement {
 			'menu_position'      => 5,
 			'supports'           => array( 'title', 'editor', 'categories' ),
 			'taxonomies'         => array( 'category', 'post_tag' ),
+			'show_in_rest'       => true,
+			'rest_base'          => 'announcements',
 		);
 
 		register_post_type( $this->post_type, $args );
