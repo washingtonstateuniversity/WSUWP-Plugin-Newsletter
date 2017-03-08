@@ -559,7 +559,12 @@ EMAIL;
 			} else {
 				$item_excerpt = wp_kses_post( $item['excerpt'] );
 			}
-			$item_permalink = esc_url_raw(  $item['permalink'] );
+			$query_vars = array(
+				'utm_source' => 'WSUAnnouncements',
+				'utm_campaign' => 'wsuannouncements',
+				'utm_medium' => 'email',
+			);
+			$item_permalink = esc_url_raw( add_query_arg( $query_vars, $item['permalink'] ) );
 			$item_title     = esc_html(     $item['title']     );
 
 			$html_email .= <<<EMAIL
