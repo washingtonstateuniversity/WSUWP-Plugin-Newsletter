@@ -212,12 +212,20 @@ class WSU_Content_Type_Newsletter {
 		if ( $announcements_query->have_posts() ) {
 			while ( $announcements_query->have_posts() ) {
 				$announcements_query->the_post();
+
+				$announcement_url = get_post_meta( get_the_ID(), '_announcement_url', true );
+				if ( empty( $announcement_url ) || false === wp_parse_url( $announcement_url ) ) {
+					$permalink = get_permalink();
+				} else {
+					$permalink = esc_url( $announcement_url );
+				}
+
 				$items[] = array(
 					'id'        => get_the_ID(),
 					'title'     => get_the_title(),
 					'content'   => apply_filters( 'the_content', get_the_content() ),
 					'excerpt'   => get_the_excerpt(),
-					'permalink' => get_permalink(),
+					'permalink' => $permalink,
 				);
 			}
 		}
