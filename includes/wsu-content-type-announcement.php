@@ -133,7 +133,7 @@ class WSU_Content_Type_Announcement {
 		$email = get_post_meta( $post->ID, '_announcement_contact_email', true );
 
 		if ( ! $email ) {
-			echo '<strong>No email submitted with announcement.';
+			echo '<strong>No email submitted with announcement.</strong>';
 		} else {
 			echo esc_html( $email );
 		}
@@ -148,7 +148,11 @@ class WSU_Content_Type_Announcement {
 		$results = $this->_get_announcement_date_meta( $post->ID );
 		$date_input = '';
 		$date_input_count = 1;
-		$archive_dates = array( 'daily', 'monthly', 'yearly' );
+		$archive_dates = array(
+			'daily' => array(),
+			'monthly' => array(),
+			'yearly' => array(),
+		);
 
 		foreach ( $results as $result ) {
 			$date = str_replace( '_announcement_date_', '', $result->meta_key );
@@ -180,13 +184,21 @@ class WSU_Content_Type_Announcement {
 		?>
 		<label for="announcement-form-date">This announcement is assigned to the following date(s):</label><br /><br />
 		<?php echo $date_input; // @codingStandardsIgnoreLine ?>
-		<p>It will appear on the following announcement archive pages:</p>
-		<ul>
-			<li>Yearly: <?php echo esc_html( implode( ', ', $archive_dates['yearly'] ) ); ?></li>
-			<li>Monthly: <?php echo esc_html( implode( ', ', $archive_dates['monthly'] ) ); ?></li>
-			<li>Daily: <?php echo esc_html( implode( ', ', $archive_dates['daily'] ) ); ?></li>
-		</ul>
+
 		<?php
+		if ( 0 === count( $archive_dates['yearly'] ) && 0 === count( $archive_dates['monthly'] ) && 0 === count( $archive_dates['daily'] ) ) {
+			echo '<p>Please enter dates for this announcement.</p>';
+		} else {
+			?>
+			<p>It will appear on the following announcement archive pages:</p>
+			<ul>
+				<li>Yearly: <?php echo esc_html( implode( ', ', $archive_dates['yearly'] ) ); ?></li>
+				<li>Monthly: <?php echo esc_html( implode( ', ', $archive_dates['monthly'] ) ); ?></li>
+				<li>Daily: <?php echo esc_html( implode( ', ', $archive_dates['daily'] ) ); ?></li>
+			</ul>
+			<?php
+		}
+
 	}
 
 	/**
