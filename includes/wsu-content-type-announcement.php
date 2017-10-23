@@ -334,11 +334,10 @@ class WSU_Content_Type_Announcement {
 		wp_enqueue_script( 'wsu-news-announcement-form', plugins_url( 'wsu-news-announcements/js/announcements-form.js' ), array(), false, true );
 
 		// Provide a global variable containing the ajax URL that we can access
-		wp_localize_script(
-			'wsu-news-announcement-form', 'announcementSubmission', array(
-				'ajaxurl' => admin_url( 'admin-ajax.php' ),
-			)
-		);
+		wp_localize_script( 'wsu-news-announcement-form', 'announcementSubmission', array(
+			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+		) );
+
 		wp_enqueue_style( 'wsu-news-announcement-form', plugins_url( 'wsu-news-announcements/css/announcements-form.css' ) );
 
 		// Build the output to return for use by the shortcode.
@@ -469,7 +468,8 @@ class WSU_Content_Type_Announcement {
 			return date( 'F Y ', strtotime( $url_dates[0] . '-' . $url_dates[1] . '-01 00:00:00' ) ) . $name;
 		} elseif ( isset( $url_dates[0] ) && 0 !== absint( $url_dates[0] ) ) {
 			return date( 'Y ', strtotime( $url_dates[0] . '-01-01 00:00:00' ) ) . $name;
-		} else {          return $name;
+		} else {
+			return $name;
 		}
 
 	}
@@ -675,7 +675,8 @@ class WSU_Content_Type_Announcement {
 			$thisyear = '' . intval( substr( $m, 0, 4 ) );
 			if ( strlen( $m ) < 6 ) {
 				$thismonth = '01';
-			} else {              $thismonth = '' . zeroise( intval( substr( $m, 4, 2 ) ), 2 );
+			} else {
+				$thismonth = '' . zeroise( intval( substr( $m, 4, 2 ) ), 2 );
 			}
 		} else {
 			$thisyear  = gmdate( 'Y', current_time( 'timestamp' ) );
@@ -775,12 +776,14 @@ class WSU_Content_Type_Announcement {
 
 			if ( $day == gmdate( 'j', current_time( 'timestamp' ) ) && $thismonth == gmdate( 'm', current_time( 'timestamp' ) ) && $thisyear == gmdate( 'Y', current_time( 'timestamp' ) ) ) {
 				$calendar_output .= '<td id="today">';
-			} else {              $calendar_output .= '<td>';
+			} else {
+				$calendar_output .= '<td>';
 			}
 
 			if ( in_array( $day, $days_with_post ) ) { // any posts today?
 				$calendar_output .= '<a href="' . $this->get_day_link( $thisyear, $thismonth, $day ) . '" title="' . esc_attr( 'Announcements for ' . $thismonth . '/' . $day . '/' . $thisyear ) . " \">$day</a>";
-			} else {              $calendar_output .= $day;
+			} else {
+				$calendar_output .= $day;
 			}
 			$calendar_output .= '</td>';
 
@@ -801,7 +804,8 @@ class WSU_Content_Type_Announcement {
 
 		if ( $echo ) {
 			echo $calendar_output;
-		} else {          return $calendar_output;
+		} else {
+			return $calendar_output;
 		}
 
 		// @codingStandardsIgnoreEnd
