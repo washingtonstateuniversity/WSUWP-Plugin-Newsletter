@@ -35,26 +35,26 @@ class WSU_Content_Type_Announcement {
 	 * Set up the hooks used by WSU_Content_Type_Announcement
 	 */
 	public function __construct() {
-		add_action( 'init',                               array( $this, 'register_post_type'       )        );
-		add_action( 'wp_ajax_submit_announcement',        array( $this, 'ajax_callback'            )        );
-		add_action( 'wp_ajax_nopriv_submit_announcement', array( $this, 'ajax_callback'            )        );
-		add_action( 'generate_rewrite_rules',             array( $this, 'rewrite_rules'            )        );
-		add_action( 'pre_get_posts',                      array( $this, 'modify_post_query'        )        );
-		add_action( 'add_meta_boxes',                     array( $this, 'add_meta_boxes'           )        );
-		add_action( 'widgets_init',                       array( $this, 'register_widget'          )        );
-		add_action( 'save_post',                          array( $this, 'delete_calendar_cache'    ), 20, 1 );
-		add_action( 'delete_post',                        array( $this, 'delete_calendar_cache'    ), 20, 1 );
-		add_action( 'update_option_start_of_week',        array( $this, 'delete_calendar_cache'    )        );
-		add_action( 'update_option_gmt_offset',           array( $this, 'delete_calendar_cache'    )        );
-		add_action( 'save_post',                          array( $this, 'save_announcement_dates'  ), 10, 2 );
-		add_action( 'admin_enqueue_scripts',              array( $this, 'enqueue_admin_scripts'    )        );
+		add_action( 'init',                               array( $this, 'register_post_type' ) );
+		add_action( 'wp_ajax_submit_announcement',        array( $this, 'ajax_callback' ) );
+		add_action( 'wp_ajax_nopriv_submit_announcement', array( $this, 'ajax_callback' ) );
+		add_action( 'generate_rewrite_rules',             array( $this, 'rewrite_rules' ) );
+		add_action( 'pre_get_posts',                      array( $this, 'modify_post_query' ) );
+		add_action( 'add_meta_boxes',                     array( $this, 'add_meta_boxes' ) );
+		add_action( 'widgets_init',                       array( $this, 'register_widget' ) );
+		add_action( 'save_post',                          array( $this, 'delete_calendar_cache' ), 20, 1 );
+		add_action( 'delete_post',                        array( $this, 'delete_calendar_cache' ), 20, 1 );
+		add_action( 'update_option_start_of_week',        array( $this, 'delete_calendar_cache' ) );
+		add_action( 'update_option_gmt_offset',           array( $this, 'delete_calendar_cache' ) );
+		add_action( 'save_post',                          array( $this, 'save_announcement_dates' ), 10, 2 );
+		add_action( 'admin_enqueue_scripts',              array( $this, 'enqueue_admin_scripts' ) );
 
-		add_action( 'manage_' . $this->post_type . '_posts_custom_column', array( $this, 'manage_list_table_email_column'              ), 10, 2 );
+		add_action( 'manage_' . $this->post_type . '_posts_custom_column', array( $this, 'manage_list_table_email_column' ), 10, 2 );
 		add_action( 'manage_' . $this->post_type . '_posts_custom_column', array( $this, 'manage_list_table_announcement_dates_column' ), 10, 2 );
 
-		add_filter( 'wpseo_title',                                  array( $this, 'post_type_archive_wpseo_title'), 10, 1 );
-		add_filter( 'post_type_archive_title',                      array( $this, 'post_type_archive_title'      ), 10, 1 );
-		add_filter( 'manage_edit-' . $this->post_type . '_columns', array( $this, 'manage_list_table_columns'    ), 10, 1 );
+		add_filter( 'wpseo_title',                                  array( $this, 'post_type_archive_wpseo_title' ), 10, 1 );
+		add_filter( 'post_type_archive_title',                      array( $this, 'post_type_archive_title' ), 10, 1 );
+		add_filter( 'manage_edit-' . $this->post_type . '_columns', array( $this, 'manage_list_table_columns' ), 10, 1 );
 
 		add_shortcode( 'wsu_announcement_form',           array( $this, 'output_announcement_form' ) );
 	}
@@ -89,7 +89,9 @@ class WSU_Content_Type_Announcement {
 			'show_ui'            => true,
 			'show_in_menu'       => true,
 			'query_var'          => true,
-			'rewrite'            => array( 'slug' => $this->post_type_slug ),
+			'rewrite'            => array(
+				'slug' => $this->post_type_slug,
+			),
 			'capability_type'    => 'post',
 			'has_archive'        => $this->post_type_archive,
 			'hierarchical'       => false,
@@ -177,7 +179,7 @@ class WSU_Content_Type_Announcement {
 		}
 		?>
 		<label for="announcement-form-date">This announcement is assigned to the following date(s):</label><br /><br />
-		<?php echo $date_input;	?>
+		<?php echo $date_input; ?>
 		<p>It will appear on the following announcement archive pages:</p>
 		<ul>
 			<li>Yearly: <?php echo implode( ', ', $archive_dates['yearly'] ); ?></li>
@@ -211,7 +213,7 @@ class WSU_Content_Type_Announcement {
 		}
 
 		$formatted_dates = array();
-		foreach( $_POST['announcement-date'] as $date ) {
+		foreach ( $_POST['announcement-date'] as $date ) {
 			$formatted_dates[] = strtotime( $date );
 		}
 		sort( $formatted_dates );
@@ -237,14 +239,17 @@ class WSU_Content_Type_Announcement {
 
 		$dates = array(
 			array(
-				'rule' => "([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})",
-				'vars' => array( 'year', 'monthnum', 'day' ) ),
+				'rule' => '([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})',
+				'vars' => array( 'year', 'monthnum', 'day' ),
+			),
 			array(
-				'rule' => "([0-9]{4})/([0-9]{1,2})",
-				'vars' => array( 'year', 'monthnum' ) ),
+				'rule' => '([0-9]{4})/([0-9]{1,2})',
+				'vars' => array( 'year', 'monthnum' ),
+			),
 			array(
-				'rule' => "([0-9]{4})",
-				'vars' => array( 'year' ) ),
+				'rule' => '([0-9]{4})',
+				'vars' => array( 'year' ),
+			),
 		);
 
 		foreach ( $dates as $data ) {
@@ -257,10 +262,10 @@ class WSU_Content_Type_Announcement {
 				$i++;
 			}
 
-			$rules[ $rule . "/?$"                               ] = $query;
-			$rules[ $rule . "/feed/(feed|rdf|rss|rss2|atom)/?$" ] = $query . "&feed="  . $wp_rewrite->preg_index( $i );
-			$rules[ $rule . "/(feed|rdf|rss|rss2|atom)/?$"      ] = $query . "&feed="  . $wp_rewrite->preg_index( $i );
-			$rules[ $rule . "/page/([0-9]{1,})/?$"              ] = $query . "&paged=" . $wp_rewrite->preg_index( $i );
+			$rules[ $rule . '/?$'                               ] = $query;
+			$rules[ $rule . '/feed/(feed|rdf|rss|rss2|atom)/?$' ] = $query . '&feed=' . $wp_rewrite->preg_index( $i );
+			$rules[ $rule . '/(feed|rdf|rss|rss2|atom)/?$'      ] = $query . '&feed=' . $wp_rewrite->preg_index( $i );
+			$rules[ $rule . '/page/([0-9]{1,})/?$'              ] = $query . '&paged=' . $wp_rewrite->preg_index( $i );
 		}
 
 		$wp_rewrite->rules = $rules + $wp_rewrite->rules;
@@ -275,15 +280,18 @@ class WSU_Content_Type_Announcement {
 	 */
 	function modify_post_query( $query ) {
 
-		if ( is_admin() || ! is_post_type_archive( $this->post_type ) )
+		if ( is_admin() || ! is_post_type_archive( $this->post_type ) ) {
 			return;
+		}
 
-		if ( ! $query->is_main_query() )
+		if ( ! $query->is_main_query() ) {
 			return;
+		}
 
 		// Not to much of an archive if we don't have the year.
-		if ( ! isset( $query->query['year'] ) )
+		if ( ! isset( $query->query['year'] ) ) {
 			return;
+		}
 
 		$query_date = $query->query['year'];
 		$query->set( 'year', '' );
@@ -299,13 +307,14 @@ class WSU_Content_Type_Announcement {
 			$query->set( 'posts_per_page', 50 ); // Try to fit all of one day's announcements on a screen.
 		}
 
-		$query->set( 'meta_query', array(
+		$query->set(
+			'meta_query', array(
 				array(
 					'key' => '_announcement_date_' . $query_date,
 					'value' => 1,
 					'compare' => '=',
-					'type' => 'numeric'
-				)
+					'type' => 'numeric',
+				),
 			)
 		);
 
@@ -325,7 +334,11 @@ class WSU_Content_Type_Announcement {
 		wp_enqueue_script( 'wsu-news-announcement-form', plugins_url( 'wsu-news-announcements/js/announcements-form.js' ), array(), false, true );
 
 		// Provide a global variable containing the ajax URL that we can access
-		wp_localize_script( 'wsu-news-announcement-form', 'announcementSubmission', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+		wp_localize_script(
+			'wsu-news-announcement-form', 'announcementSubmission', array(
+				'ajaxurl' => admin_url( 'admin-ajax.php' ),
+			)
+		);
 		wp_enqueue_style( 'wsu-news-announcement-form', plugins_url( 'wsu-news-announcements/css/announcements-form.css' ) );
 
 		// Build the output to return for use by the shortcode.
@@ -379,12 +392,14 @@ class WSU_Content_Type_Announcement {
 	 * Handle the ajax submission of the announcement form.
 	 */
 	function ajax_callback() {
-		if ( ! DOING_AJAX || ! isset( $_POST['action'] ) || 'submit_announcement' !== $_POST['action'] )
+		if ( ! DOING_AJAX || ! isset( $_POST['action'] ) || 'submit_announcement' !== $_POST['action'] ) {
 			die();
+		}
 
 		// If the honeypot input has anything filled in, we can bail.
-		if ( isset( $_POST['other'] ) && '' !== $_POST['other'] )
+		if ( isset( $_POST['other'] ) && '' !== $_POST['other'] ) {
 			die();
+		}
 
 		$title = $_POST['title'];
 		$text  = wp_kses_post( $_POST['text'] );
@@ -400,7 +415,7 @@ class WSU_Content_Type_Announcement {
 		}
 
 		$formatted_dates = array();
-		foreach( $_POST['dates'] as $date ) {
+		foreach ( $_POST['dates'] as $date ) {
 			$formatted_dates[] = strtotime( $date );
 		}
 		sort( $formatted_dates );
@@ -440,21 +455,22 @@ class WSU_Content_Type_Announcement {
 	 */
 	public function post_type_archive_title( $name ) {
 
-		if ( 'Announcements' !== $name )
+		if ( 'Announcements' !== $name ) {
 			return $name;
+		}
 
 		// Get the date from our URL because we've tricked the query until now.
 		$url_dates = explode( '/', trim( $_SERVER['REQUEST_URI'], '/' ) );
 		array_shift( $url_dates );
 
-		if ( isset( $url_dates[2] ) )
+		if ( isset( $url_dates[2] ) ) {
 			return date( 'F j, Y ', strtotime( $url_dates[0] . '-' . $url_dates[1] . '-' . $url_dates[2] . ' 00:00:00' ) ) . $name;
-		elseif ( isset( $url_dates[1] ) && 0 !== absint( $url_dates[0] ) )
-			return date( 'F Y ', strtotime( $url_dates[0] . '-' .  $url_dates[1] . '-01 00:00:00' ) ) . $name;
-		elseif ( isset( $url_dates[0] ) && 0 !== absint( $url_dates[0] ) )
+		} elseif ( isset( $url_dates[1] ) && 0 !== absint( $url_dates[0] ) ) {
+			return date( 'F Y ', strtotime( $url_dates[0] . '-' . $url_dates[1] . '-01 00:00:00' ) ) . $name;
+		} elseif ( isset( $url_dates[0] ) && 0 !== absint( $url_dates[0] ) ) {
 			return date( 'Y ', strtotime( $url_dates[0] . '-01-01 00:00:00' ) ) . $name;
-		else
-			return $name;
+		} else {          return $name;
+		}
 
 	}
 
@@ -466,8 +482,9 @@ class WSU_Content_Type_Announcement {
 	 * @return string Our replacement version of the title.
 	 */
 	public function post_type_archive_wpseo_title( $title ) {
-		if ( is_post_type_archive( $this->post_type ) )
+		if ( is_post_type_archive( $this->post_type ) ) {
 			return $this->post_type_archive_title( $this->post_type_name ) . ' |';
+		}
 
 		return $title;
 	}
@@ -507,14 +524,14 @@ class WSU_Content_Type_Announcement {
 	 * @param array $formatted_dates An array of dates the announcement will be shown on.
 	 */
 	private function _save_announcement_date_meta( $post_id, $formatted_dates ) {
-		foreach( $formatted_dates as $date ) {
+		foreach ( $formatted_dates as $date ) {
 			$date_formatted  = date( 'Ymd', $date );
 			$month_formatted = date( 'Ym',  $date );
 			$year_formatted  = date( 'Y',   $date );
 
-			update_post_meta( $post_id, '_announcement_date_'  . $date_formatted,  1 );
-			update_post_meta( $post_id, '_announcement_date_'  . $month_formatted, 1 );
-			update_post_meta( $post_id, '_announcement_date_'  . $year_formatted,  1 );
+			update_post_meta( $post_id, '_announcement_date_' . $date_formatted,  1 );
+			update_post_meta( $post_id, '_announcement_date_' . $month_formatted, 1 );
+			update_post_meta( $post_id, '_announcement_date_' . $year_formatted,  1 );
 		}
 	}
 
@@ -554,11 +571,13 @@ class WSU_Content_Type_Announcement {
 	 * @param int    $post_id     Post ID of the current row being displayed.
 	 */
 	public function manage_list_table_email_column( $column_name, $post_id ) {
-		if ( 'contact_email' !== $column_name )
+		if ( 'contact_email' !== $column_name ) {
 			return;
+		}
 
-		if ( $contact_email = get_post_meta( $post_id, '_announcement_contact_email', true ) )
+		if ( $contact_email = get_post_meta( $post_id, '_announcement_contact_email', true ) ) {
 			echo esc_html( $contact_email );
+		}
 	}
 
 	/**
@@ -568,12 +587,13 @@ class WSU_Content_Type_Announcement {
 	 * @param int    $post_id     Post ID of the current row being displayed.
 	 */
 	public function manage_list_table_announcement_dates_column( $column_name, $post_id ) {
-		if ( 'announce_dates' !== $column_name )
+		if ( 'announce_dates' !== $column_name ) {
 			return;
+		}
 
 		$announcement_meta = $this->_get_announcement_date_meta( $post_id );
 
-		foreach( $announcement_meta as $meta ) {
+		foreach ( $announcement_meta as $meta ) {
 			$date = str_replace( '_announcement_date_', '', $meta->meta_key );
 
 			if ( 8 === strlen( $date ) ) {
@@ -616,8 +636,9 @@ class WSU_Content_Type_Announcement {
 			}
 		}
 
-		if ( ! is_array( $cache ) )
+		if ( ! is_array( $cache ) ) {
 			$cache = array();
+		}
 
 		// Quick check. If we have no posts at all, abort!
 		if ( ! $posts ) {
@@ -629,8 +650,9 @@ class WSU_Content_Type_Announcement {
 			}
 		}
 
-		if ( isset($_GET['w']) )
+		if ( isset( $_GET['w'] ) ) {
 			$w = '' . intval( $_GET['w'] );
+		}
 
 		// week_begins = 0 stands for Sunday
 		$week_begins = intval( get_option( 'start_of_week' ) );
@@ -646,10 +668,10 @@ class WSU_Content_Type_Announcement {
 			$thismonth = $wpdb->get_var( "SELECT DATE_FORMAT((DATE_ADD('{$thisyear}0101', INTERVAL $d DAY) ), '%m')" );
 		} elseif ( ! empty( $m ) ) {
 			$thisyear = '' . intval( substr( $m, 0, 4 ) );
-			if ( strlen( $m ) < 6 )
+			if ( strlen( $m ) < 6 ) {
 				$thismonth = '01';
-			else
-				$thismonth = '' . zeroise( intval( substr( $m, 4, 2 ) ), 2 );
+			} else {              $thismonth = '' . zeroise( intval( substr( $m, 4, 2 ) ), 2 );
+			}
 		} else {
 			$thisyear  = gmdate( 'Y', current_time( 'timestamp' ) );
 			$thismonth = gmdate( 'm', current_time( 'timestamp' ) );
@@ -663,13 +685,13 @@ class WSU_Content_Type_Announcement {
 		$next     = false;
 
 		$calendar_output = '<table id="wp-calendar">
-	<caption><a href="' . esc_url( $this->get_month_link( $thisyear, $thismonth ) ) . '" title="Announcements for ' . $thismonth . '/' . $thisyear . '">' . date( 'F Y ') . '</a></caption>
+	<caption><a href="' . esc_url( $this->get_month_link( $thisyear, $thismonth ) ) . '" title="Announcements for ' . $thismonth . '/' . $thisyear . '">' . date( 'F Y ' ) . '</a></caption>
 	<thead>
 	<tr>';
 
 		$myweek = array();
 
-		for ( $wdcount=0; $wdcount<=6; $wdcount++ ) {
+		for ( $wdcount = 0; $wdcount <= 6; $wdcount++ ) {
 			$myweek[] = $wp_locale->get_weekday( ( $wdcount + $week_begins ) % 7 );
 		}
 
@@ -687,17 +709,17 @@ class WSU_Content_Type_Announcement {
 	<tr>';
 
 		if ( $previous ) {
-			$calendar_output .= "\n\t\t".'<td colspan="3" id="prev"><a href="' . $this->get_month_link( $previous->year, $previous->month ) . '" title="' . esc_attr( sprintf(__('View posts for %1$s %2$s'), $wp_locale->get_month( $previous->month ), date( 'Y', mktime( 0, 0 , 0, $previous->month, 1, $previous->year ) ) ) ) . '">&laquo; ' . $wp_locale->get_month_abbrev( $wp_locale->get_month( $previous->month ) ) . '</a></td>';
+			$calendar_output .= "\n\t\t" . '<td colspan="3" id="prev"><a href="' . $this->get_month_link( $previous->year, $previous->month ) . '" title="' . esc_attr( sprintf( __( 'View posts for %1$s %2$s' ), $wp_locale->get_month( $previous->month ), date( 'Y', mktime( 0, 0 , 0, $previous->month, 1, $previous->year ) ) ) ) . '">&laquo; ' . $wp_locale->get_month_abbrev( $wp_locale->get_month( $previous->month ) ) . '</a></td>';
 		} else {
-			$calendar_output .= "\n\t\t".'<td colspan="3" id="prev" class="pad">&nbsp;</td>';
+			$calendar_output .= "\n\t\t" . '<td colspan="3" id="prev" class="pad">&nbsp;</td>';
 		}
 
-		$calendar_output .= "\n\t\t".'<td class="pad">&nbsp;</td>';
+		$calendar_output .= "\n\t\t" . '<td class="pad">&nbsp;</td>';
 
 		if ( $next ) {
-			$calendar_output .= "\n\t\t".'<td colspan="3" id="next"><a href="' . $this->get_month_link( $next->year, $next->month ) . '" title="' . esc_attr( sprintf(__('View posts for %1$s %2$s'), $wp_locale->get_month( $next->month ), date( 'Y', mktime( 0, 0 , 0, $next->month, 1, $next->year ) ) ) ) . '">' . $wp_locale->get_month_abbrev( $wp_locale->get_month( $next->month ) ) . ' &raquo;</a></td>';
+			$calendar_output .= "\n\t\t" . '<td colspan="3" id="next"><a href="' . $this->get_month_link( $next->year, $next->month ) . '" title="' . esc_attr( sprintf( __( 'View posts for %1$s %2$s' ), $wp_locale->get_month( $next->month ), date( 'Y', mktime( 0, 0 , 0, $next->month, 1, $next->year ) ) ) ) . '">' . $wp_locale->get_month_abbrev( $wp_locale->get_month( $next->month ) ) . ' &raquo;</a></td>';
 		} else {
-			$calendar_output .= "\n\t\t".'<td colspan="3" id="next" class="pad">&nbsp;</td>';
+			$calendar_output .= "\n\t\t" . '<td colspan="3" id="next" class="pad">&nbsp;</td>';
 		}
 
 		$calendar_output .= '
@@ -719,58 +741,63 @@ class WSU_Content_Type_Announcement {
 		$days_post_ids = join( ',', $days_post_ids );
 
 		// No go back and get the distinct dates on which these announcements are to be made.
-		$days_results = $wpdb->get_results( $wpdb->prepare( "SELECT DISTINCT meta_key FROM $wpdb->postmeta WHERE post_id IN ( " . $days_post_ids . " ) AND meta_key LIKE %s", $announcement_date_key ), ARRAY_N );
+		$days_results = $wpdb->get_results( $wpdb->prepare( "SELECT DISTINCT meta_key FROM $wpdb->postmeta WHERE post_id IN ( " . $days_post_ids . ' ) AND meta_key LIKE %s', $announcement_date_key ), ARRAY_N );
 
 		$current_day    = date( 'd' ); // We need this to avoid future announcements.
 		$days_with_post = array();     // Ensure at least an empty array.
 
 		if ( $days_results ) {
-			foreach( $days_results as $day_with ) {
+			foreach ( $days_results as $day_with ) {
 				$day_with = str_replace( '_announcement_date_' . $thisyear . $thismonth, '', $day_with );
-				if ( '' !== $day_with[0] && $current_day >= $day_with[0] )
+				if ( '' !== $day_with[0] && $current_day >= $day_with[0] ) {
 					$days_with_post[] = $day_with[0];
+				}
 			}
 		}
 
 		// See how much we should pad in the beginning
 		$pad = calendar_week_mod( date( 'w', $unixmonth ) - $week_begins );
-		if ( 0 != $pad )
+		if ( 0 != $pad ) {
 			$calendar_output .= "\n\t\t" . '<td colspan="' . esc_attr( $pad ) . '" class="pad">&nbsp;</td>';
+		}
 
 		$daysinmonth = intval( date( 't', $unixmonth ) );
 		for ( $day = 1; $day <= $daysinmonth; ++$day ) {
-			if ( isset( $newrow ) && $newrow )
+			if ( isset( $newrow ) && $newrow ) {
 				$calendar_output .= "\n\t</tr>\n\t<tr>\n\t\t";
+			}
 			$newrow = false;
 
-			if ( $day == gmdate( 'j', current_time( 'timestamp' ) ) && $thismonth == gmdate( 'm', current_time( 'timestamp' ) ) && $thisyear == gmdate( 'Y', current_time( 'timestamp' ) ) )
+			if ( $day == gmdate( 'j', current_time( 'timestamp' ) ) && $thismonth == gmdate( 'm', current_time( 'timestamp' ) ) && $thisyear == gmdate( 'Y', current_time( 'timestamp' ) ) ) {
 				$calendar_output .= '<td id="today">';
-			else
-				$calendar_output .= '<td>';
+			} else {              $calendar_output .= '<td>';
+			}
 
-			if ( in_array( $day, $days_with_post ) ) // any posts today?
+			if ( in_array( $day, $days_with_post ) ) { // any posts today?
 				$calendar_output .= '<a href="' . $this->get_day_link( $thisyear, $thismonth, $day ) . '" title="' . esc_attr( 'Announcements for ' . $thismonth . '/' . $day . '/' . $thisyear ) . " \">$day</a>";
-			else
-				$calendar_output .= $day;
+			} else {              $calendar_output .= $day;
+			}
 			$calendar_output .= '</td>';
 
-			if ( 6 == calendar_week_mod( date( 'w', mktime( 0, 0 , 0, $thismonth, $day, $thisyear ) ) - $week_begins ) )
+			if ( 6 == calendar_week_mod( date( 'w', mktime( 0, 0 , 0, $thismonth, $day, $thisyear ) ) - $week_begins ) ) {
 				$newrow = true;
+			}
 		}
 
 		$pad = 7 - calendar_week_mod( date( 'w', mktime( 0, 0 , 0, $thismonth, $day, $thisyear ) ) - $week_begins );
-		if ( $pad != 0 && $pad != 7 )
+		if ( $pad != 0 && $pad != 7 ) {
 			$calendar_output .= "\n\t\t" . '<td class="pad" colspan="' . esc_attr( $pad ) . '">&nbsp;</td>';
+		}
 
 		$calendar_output .= "\n\t</tr>\n\t</tbody>\n\t</table>";
 
 		$cache[ $key ] = $calendar_output;
 		set_transient( $this->calendar_cache_key, $cache, 60 * 60 * 24 ); // Will likely be flushed well before this.
 
-		if ( $echo )
+		if ( $echo ) {
 			echo $calendar_output;
-		else
-			return $calendar_output;
+		} else {          return $calendar_output;
+		}
 
 		return null;
 	}
@@ -781,8 +808,9 @@ class WSU_Content_Type_Announcement {
 	 * @param int $post_id Current post being acted on.
 	 */
 	public function delete_calendar_cache( $post_id ) {
-		if ( $this->post_type === get_post_type( $post_id ) )
+		if ( $this->post_type === get_post_type( $post_id ) ) {
 			delete_transient( $this->calendar_cache_key );
+		}
 	}
 
 	/**

@@ -20,15 +20,15 @@ class WSU_Content_Type_Newsletter {
 	 * Add the hooks that we'll make use of.
 	 */
 	public function __construct() {
-		add_action( 'init',                               array( $this, 'register_post_type'                ), 10    );
-		add_action( 'save_post_' . $this->post_type,      array( $this, 'save_post'                         ), 10, 2 );
-		add_action( 'add_meta_boxes',                     array( $this, 'add_meta_boxes'                    ), 10    );
-		add_action( 'admin_enqueue_scripts',              array( $this, 'admin_enqueue_scripts'             ), 10    );
-		add_action( 'wp_ajax_set_newsletter_type',        array( $this, 'ajax_callback'                     ), 10    );
-		add_action( 'wp_ajax_nopriv_set_newsletter_type', array( $this, 'ajax_callback'                     ), 10    );
-		add_action( 'wp_ajax_send_newsletter',            array( $this, 'ajax_send_newsletter'              ), 10    );
+		add_action( 'init',                               array( $this, 'register_post_type' ), 10 );
+		add_action( 'save_post_' . $this->post_type,      array( $this, 'save_post' ), 10, 2 );
+		add_action( 'add_meta_boxes',                     array( $this, 'add_meta_boxes' ), 10 );
+		add_action( 'admin_enqueue_scripts',              array( $this, 'admin_enqueue_scripts' ), 10 );
+		add_action( 'wp_ajax_set_newsletter_type',        array( $this, 'ajax_callback' ), 10 );
+		add_action( 'wp_ajax_nopriv_set_newsletter_type', array( $this, 'ajax_callback' ), 10 );
+		add_action( 'wp_ajax_send_newsletter',            array( $this, 'ajax_send_newsletter' ), 10 );
 
-		add_filter( 'wp_insert_post_data',                array( $this, 'wp_insert_post_data'               ), 10, 1 );
+		add_filter( 'wp_insert_post_data',                array( $this, 'wp_insert_post_data' ), 10, 1 );
 	}
 
 	/**
@@ -74,7 +74,7 @@ class WSU_Content_Type_Newsletter {
 	 */
 	public function add_meta_boxes() {
 		add_meta_box( 'wsu_newsletter_items', 'Newsletter Items', array( $this, 'display_newsletter_items_meta_box' ), $this->post_type, 'normal' );
-		add_meta_box( 'wsu_newsletter_send',  'Send Newsletter',  array( $this, 'display_newsletter_send_meta_box'  ), $this->post_type, 'side'   );
+		add_meta_box( 'wsu_newsletter_send',  'Send Newsletter',  array( $this, 'display_newsletter_send_meta_box' ), $this->post_type, 'side' );
 	}
 
 	/**
@@ -87,11 +87,14 @@ class WSU_Content_Type_Newsletter {
 	 * @param WP_Post $post Object for the post currently being edited.
 	 */
 	public function display_newsletter_items_meta_box( $post ) {
-		$localized_data = array( 'post_id' => $post->ID );
+		$localized_data = array(
+			'post_id' => $post->ID,
+		);
 
 		// If this newsletter has items assigned already, we want to make them available to our JS
-		if ( $post_ids = get_post_meta( $post->ID, '_newsletter_item_order', true ) )
+		if ( $post_ids = get_post_meta( $post->ID, '_newsletter_item_order', true ) ) {
 			$localized_data['items'] = $this->_build_announcements_newsletter_response( $post_ids );
+		}
 
 		wp_localize_script( 'wsu-newsletter-admin', 'wsu_newsletter', $localized_data );
 
@@ -155,13 +158,14 @@ class WSU_Content_Type_Newsletter {
 	 * Enqueue the scripts used in the WordPress admin for managing newsletter creation.
 	 */
 	public function admin_enqueue_scripts( $hook ) {
-		if ( ! in_array( $hook, array( 'post.php', 'post-new.php' ) ) )
+		if ( ! in_array( $hook, array( 'post.php', 'post-new.php' ) ) ) {
 			return;
+		}
 
 		if ( $this->post_type === get_current_screen()->id ) {
 			wp_enqueue_script( 'wsu-newsletter-admin', plugins_url( 'js/wsu-newsletter-admin.js',   dirname( __FILE__ ) ), array( 'jquery', 'jquery-ui-sortable', 'jquery-ui-datepicker' ), false, true );
 			wp_enqueue_style( 'jquery-ui-core', 'http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css' );
-			wp_enqueue_style(  'wsu-newsletter-admin', plugins_url( 'css/wsu-newsletter-admin.css', dirname( __FILE__ ) ) );
+			wp_enqueue_style( 'wsu-newsletter-admin', plugins_url( 'css/wsu-newsletter-admin.css', dirname( __FILE__ ) ) );
 		}
 	}
 
@@ -221,27 +225,29 @@ class WSU_Content_Type_Newsletter {
 	 * Handle the ajax callback too push a list of newsletter items to a newsletter.
 	 */
 	public function ajax_callback() {
-		if ( ! DOING_AJAX || ! isset( $_POST['action'] ) || 'set_newsletter_type' !== $_POST['action'] )
+		if ( ! DOING_AJAX || ! isset( $_POST['action'] ) || 'set_newsletter_type' !== $_POST['action'] ) {
 			die();
+		}
 
 		if ( 'announcements' === $_POST['newsletter_type'] ) {
-			if ( isset( $_POST['post_date'] ) )
+			if ( isset( $_POST['post_date'] ) ) {
 				$post_date = $_POST['post_date'];
-			else
-				$post_date = false;
+			} else {              $post_date = false;
+			}
 
 			if ( $post_date ) {
 				$post_date = explode( '/', $post_date );
 				$post_date = array_map( 'absint', $post_date );
 
-				if ( 3 === count( $post_date ) )
+				if ( 3 === count( $post_date ) ) {
 					$post_date = $post_date[2] . zeroise( $post_date[0], 2 ) . zeroise( $post_date[1], 2 );
-				else
-					$post_date = false;
+				} else {                  $post_date = false;
+				}
 			}
 
-			if ( false === $post_date )
+			if ( false === $post_date ) {
 				$post_date = date( 'Ymd', current_time( 'timestamp' ) );
+			}
 
 			echo json_encode( $this->_build_announcements_newsletter_response( array(), $post_date ) );
 		} elseif ( 'news' === $_POST['newsletter_type'] ) {
@@ -291,8 +297,9 @@ class WSU_Content_Type_Newsletter {
 	 * Receive and process an ajax request to send an email for an individual newsletter.
 	 */
 	public function ajax_send_newsletter() {
-		if ( ! DOING_AJAX || ! isset( $_POST['action'] ) || 'send_newsletter' !== $_POST['action'] )
+		if ( ! DOING_AJAX || ! isset( $_POST['action'] ) || 'send_newsletter' !== $_POST['action'] ) {
 			die();
+		}
 
 		$post_id = absint( $_POST['post_id'] );
 
@@ -309,17 +316,17 @@ class WSU_Content_Type_Newsletter {
 
 		$email_html = $this->_generate_html_email( $post_id, $post_ids );
 
-		add_filter( 'wp_mail_from_name',    array( $this, 'set_mail_from_name'    ) );
-		add_filter( 'wp_mail_from',         array( $this, 'set_mail_from'         ) );
+		add_filter( 'wp_mail_from_name',    array( $this, 'set_mail_from_name' ) );
+		add_filter( 'wp_mail_from',         array( $this, 'set_mail_from' ) );
 		add_filter( 'wp_mail_content_type', array( $this, 'set_mail_content_type' ) );
-		add_filter( 'wp_mail_charset',      array( $this, 'set_mail_charset'      ) );
+		add_filter( 'wp_mail_charset',      array( $this, 'set_mail_charset' ) );
 
 		wp_mail( sanitize_email( $_POST['email'] ), get_the_title( $post_id ), $email_html );
 
-		remove_filter( 'wp_mail_charset',      array( $this, 'set_mail_charset'      ) );
+		remove_filter( 'wp_mail_charset',      array( $this, 'set_mail_charset' ) );
 		remove_filter( 'wp_mail_content_type', array( $this, 'set_mail_content_type' ) );
-		remove_filter( 'wp_mail_from',         array( $this, 'set_mail_from'         ) );
-		remove_filter( 'wp_mail_from_name',    array( $this, 'set_mail_from_name'    ) );
+		remove_filter( 'wp_mail_from',         array( $this, 'set_mail_from' ) );
+		remove_filter( 'wp_mail_from_name',    array( $this, 'set_mail_from_name' ) );
 
 		echo '<br>Emailed ' . esc_html( $_POST['email'] ) . '...';
 		exit;
@@ -334,14 +341,17 @@ class WSU_Content_Type_Newsletter {
 	 * @return array Modified data for the post save.
 	 */
 	public function wp_insert_post_data( $post_data ) {
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 			return $post_data;
+		}
 
-		if ( 'auto-draft' === $post_data['post_status'] || $this->post_type !== $post_data['post_type'] )
+		if ( 'auto-draft' === $post_data['post_status'] || $this->post_type !== $post_data['post_type'] ) {
 			return $post_data;
+		}
 
-		if ( empty( $_POST['newsletter_date'] ) )
+		if ( empty( $_POST['newsletter_date'] ) ) {
 			return $post_data;
+		}
 
 		$newsletter_date = explode( '/', $_POST['newsletter_date'] );
 		$newsletter_date = array_map( 'absint', $newsletter_date );
@@ -368,17 +378,19 @@ class WSU_Content_Type_Newsletter {
 	 * @param WP_Post $post    Object of the current post being saved.
 	 */
 	public function save_post( $post_id, $post ) {
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 			return;
+		}
 
-		if ( 'auto-draft' === $post->post_status )
+		if ( 'auto-draft' === $post->post_status ) {
 			return;
+		}
 
 		if ( $this->post_type !== $post->post_type ) {
 			return;
 		}
 
-		if ( ! empty( $_POST['newsletter_type']) && 'on' === $_POST['newsletter_type'] ) {
+		if ( ! empty( $_POST['newsletter_type'] ) && 'on' === $_POST['newsletter_type'] ) {
 			update_post_meta( $post_id, '_newsletter_type', 'special-announcement' );
 		} else {
 			delete_post_meta( $post_id, '_newsletter_type' );
@@ -565,7 +577,7 @@ EMAIL;
 				'utm_medium' => 'email',
 			);
 			$item_permalink = esc_url_raw( add_query_arg( $query_vars, $item['permalink'] ) );
-			$item_title     = esc_html(     $item['title']     );
+			$item_title     = esc_html( $item['title'] );
 
 			$html_email .= <<<EMAIL
 <h3 style="display: block; margin: 0; padding: 0; font-family: 'Open Sans Condensed', 'Lucida Grande', 'Lucida Sans Unicode', arial, sans-serif; word-break: normal; font-size: 1.15em;"
