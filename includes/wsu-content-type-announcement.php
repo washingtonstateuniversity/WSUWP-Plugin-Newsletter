@@ -227,14 +227,17 @@ class WSU_Content_Type_Announcement {
 		if ( 0 === count( $archive_dates['yearly'] ) && 0 === count( $archive_dates['monthly'] ) && 0 === count( $archive_dates['daily'] ) ) {
 			echo '<p>Please enter dates for this announcement.</p>';
 		} else {
+			// @codingStandardsIgnoreStart
+			// These were each manually built above with escaped content.
 			?>
 			<p>It will appear on the following announcement archive pages:</p>
 			<ul>
-				<li>Yearly: <?php echo esc_html( implode( ', ', $archive_dates['yearly'] ) ); ?></li>
-				<li>Monthly: <?php echo esc_html( implode( ', ', $archive_dates['monthly'] ) ); ?></li>
-				<li>Daily: <?php echo esc_html( implode( ', ', $archive_dates['daily'] ) ); ?></li>
+				<li>Yearly: <?php echo implode( ', ', $archive_dates['yearly'] ); ?></li>
+				<li>Monthly: <?php echo implode( ', ', $archive_dates['monthly'] ); ?></li>
+				<li>Daily: <?php echo implode( ', ', $archive_dates['daily'] ); ?></li>
 			</ul>
 			<?php
+			// @codingStandardsIgnoreEnd
 		}
 
 	}
