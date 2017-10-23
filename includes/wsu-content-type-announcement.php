@@ -47,6 +47,7 @@ class WSU_Content_Type_Announcement {
 		add_action( 'update_option_start_of_week',        array( $this, 'delete_calendar_cache' ) );
 		add_action( 'update_option_gmt_offset',           array( $this, 'delete_calendar_cache' ) );
 		add_action( 'save_post',                          array( $this, 'save_announcement_dates' ), 10, 2 );
+		add_action( 'save_post',                          array( $this, 'save_announcement_url' ), 10, 2 );
 		add_action( 'admin_enqueue_scripts',              array( $this, 'enqueue_admin_scripts' ) );
 
 		add_action( 'manage_' . $this->post_type . '_posts_custom_column', array( $this, 'manage_list_table_email_column' ), 10, 2 );
@@ -109,6 +110,7 @@ class WSU_Content_Type_Announcement {
 	 * Add meta boxes used in the announcement edit screen.
 	 */
 	function add_meta_boxes() {
+		add_meta_box( 'wsu_announcement_url', 'Announcement URL:', array( $this, 'display_url_meta_box' ), $this->post_type, 'normal' );
 		add_meta_box( 'wsu_announcement_email', 'Announcement Submitted By:', array( $this, 'display_email_meta_box' ), $this->post_type, 'side' );
 		add_meta_box( 'wsu_announcement_dates', 'Announcement Dates:',        array( $this, 'display_dates_meta_box' ), $this->post_type, 'side' );
 	}
@@ -122,6 +124,37 @@ class WSU_Content_Type_Announcement {
 			wp_enqueue_style( 'jquery-ui-core', 'https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css' );
 			wp_enqueue_script( 'wsu-news-announcement-admin', plugins_url( '../js/announcements-admin.js', __FILE__ ), array(), false, true );
 		}
+	}
+
+	/**
+	 * Display the meta box used to capture an external URL for
+	 * an announcement.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param \WP_Post $post
+	 */
+	public function display_url_meta_box( $post ) {
+		$url = get_post_meta( $post->ID, '_announcement_url', true );
+
+		if ( $url ) {
+			$url_parts = wp_parse_url( $url );
+
+			if ( false === $url_parts ) {
+				$url = '';
+			} elseif ( ! isset( $url_parts['scheme'] ) ) {
+				$url = esc_url( 'http://' . $url_parts['host'] . $url_parts['path'] );
+			} else {
+				$url = esc_url( $url_parts['scheme'] . '://' . $url_parts['host'] . $url_parts['path'] );
+			}
+		} else {
+			$url = '';
+		}
+
+		?>
+		<label for="announcement-form-url">Announcement URL:</label>
+		<input type="text" id="announcement-form-url" name="announcement_url" value="<?php echo $url; // @codingStandardsIgnoreLine ?>" />
+		<?php
 	}
 
 	/**
@@ -199,6 +232,40 @@ class WSU_Content_Type_Announcement {
 			<?php
 		}
 
+	}
+
+	/**
+	 * Save an announcement URL if provided in the announcement admin.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param int      $post_id
+	 * @param \WP_Post $post
+	 */
+	public function save_announcement_url( $post_id, $post ) {
+		if ( $this->post_type !== $post->post_type ) {
+			return;
+		}
+
+		if ( wp_doing_ajax() ) {
+			return;
+		}
+
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return;
+		}
+
+		if ( ! isset( $_POST['announcement_url'] ) ) {
+			return;
+		}
+
+		$announcement_url = $_POST['announcement_url'];
+
+		if ( empty( $announcement_url ) || false === wp_parse_url( $announcement_url ) ) {
+			update_post_meta( $post_id, '_announcement_url', '' );
+		} else {
+			update_post_meta( $post_id, '_announcement_url', esc_url_raw( $announcement_url ) );
+		}
 	}
 
 	/**
