@@ -133,7 +133,7 @@ class WSU_Content_Type_Announcement {
 		$email = get_post_meta( $post->ID, '_announcement_contact_email', true );
 
 		if ( ! $email ) {
-			echo '<strong>No email submitted with announcement.';
+			echo '<strong>No email submitted with announcement.</strong>';
 		} else {
 			echo esc_html( $email );
 		}
