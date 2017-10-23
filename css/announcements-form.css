@@ -1,8 +1,9 @@
 /*
  * Styles for the display of the announcement submission form.
  */
+
 .announcement-form {
-	margin: 15px 0 15px 0;
+	margin: 15px 0;
 	padding-top: 10px;
 }
 
@@ -19,7 +20,7 @@
 	height: 30px;
 	line-height: 30px;
 	padding: 5px 10px;
-	margin: 0 0 10px 0;
+	margin: 0 0 10px;
 }
 
 #wp-announcement-form-text-wrap {
@@ -32,7 +33,7 @@
 	height: 20px;
 	line-height: 20px;
 	padding: 5px 10px;
-	margin: 0 0 10px 0;
+	margin: 0 0 10px;
 }
 
 /* Hide the honeypot */
