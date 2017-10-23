@@ -1,0 +1,18 @@
+{
+  "name": "wsuwp-plugin-newsletter",
+  "version": "1.8.2",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/washingtonstateuniversity/wsuwp-plugin-newsletter"
+  },
+  "author": "washingtonstateuniversity",
+  "license": "GPL-2.0+",
+  "devDependencies": {
+    "grunt": "~1.0.1",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-jscs": "^3.0.1",
+    "grunt-phpcs": "^0.4.0",
+    "grunt-stylelint": "^0.9.x",
+    "stylelint": "^8.x.x"
+  }
+}
