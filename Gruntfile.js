@@ -2,6 +2,10 @@ module.exports = function( grunt ) {
 	grunt.initConfig( {
 		pkg: grunt.file.readJSON( "package.json" ),
 
+		stylelint: {
+			src: [ "css/*.css" ]
+		},
+
 		phpcs: {
 			plugin: {
 				src: [ "./*.php", "./includes/*.php", "./tests/*.php" ]
@@ -42,7 +46,8 @@ module.exports = function( grunt ) {
 	grunt.loadNpmTasks( "grunt-jscs" );
 	grunt.loadNpmTasks( "grunt-contrib-jshint" );
 	grunt.loadNpmTasks( "grunt-phpcs" );
+	grunt.loadNpmTasks( "grunt-stylelint" );
 
 	// Default task(s).
-	grunt.registerTask( "default", [ "phpcs", "jscs", "jshint" ] );
+	grunt.registerTask( "default", [ "phpcs", "jscs", "jshint", "stylelint" ] );
 };

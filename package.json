@@ -11,6 +11,8 @@
     "grunt": "~1.0.1",
     "grunt-contrib-jshint": "^1.1.0",
     "grunt-jscs": "^3.0.1",
-    "grunt-phpcs": "^0.4.0"
+    "grunt-phpcs": "^0.4.0",
+    "grunt-stylelint": "^0.9.x",
+    "stylelint": "^8.x.x"
   }
 }
