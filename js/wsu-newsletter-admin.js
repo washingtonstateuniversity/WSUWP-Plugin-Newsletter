@@ -74,6 +74,7 @@
 	}
 
 	$( ".newsletter-type" ).on( "click", function( e ) {
+
 		// Don't do anything rash.
 		e.preventDefault();
 
@@ -98,6 +99,7 @@
 	} );
 
 	$( "#newsletter-send" ).on( "click", function( e ) {
+
 		// Not entirely sure this button has a default, but if it does...
 		e.preventDefault();
 
@@ -113,6 +115,7 @@
 	} );
 
 	$newsletter_build.on( "click", ".newsletter-item-remove", function( e ) {
+
 		// Doesn't hurt.
 		e.preventDefault();
 

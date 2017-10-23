@@ -38,6 +38,7 @@
 	 * content before submitting the ajax request.
 	 */
 	$( "#announcement-form-submit" ).click( function( e ) {
+
 		// Don't actually submit the form.
 		e.preventDefault();
 
