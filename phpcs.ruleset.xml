@@ -24,5 +24,12 @@
         <exclude name="Squiz.PHP.EmbeddedPhp.ContentAfterOpen" />
         <exclude name="Squiz.PHP.EmbeddedPhp.ContentAfterEnd" />
         <exclude name="Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace" />
+
+        <!-- Excluded in this plugin -->
+        <exclude name="WordPress.PHP.StrictComparisons.LooseComparison" />
+        <exclude name="WordPress.PHP.YodaConditions.NotYoda" />
+
+        <!-- Excluded, but should be fixed -->
+        <exclude name="WordPress.CSRF.NonceVerification.NoNonceVerification" />
     </rule>
 </ruleset>

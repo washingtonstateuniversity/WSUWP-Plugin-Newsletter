@@ -91,14 +91,17 @@ class WSU_Content_Type_Newsletter {
 			'post_id' => $post->ID,
 		);
 
+		$post_ids = get_post_meta( $post->ID, '_newsletter_item_order', true );
+
 		// If this newsletter has items assigned already, we want to make them available to our JS
-		if ( $post_ids = get_post_meta( $post->ID, '_newsletter_item_order', true ) ) {
+		if ( $post_ids ) {
 			$localized_data['items'] = $this->_build_announcements_newsletter_response( $post_ids );
 		}
 
 		wp_localize_script( 'wsu-newsletter-admin', 'wsu_newsletter', $localized_data );
 
-		if ( $newsletter_date = get_post_meta( $post->ID, '_newsletter_date', true ) ) {
+		$newsletter_date = get_post_meta( $post->ID, '_newsletter_date', true );
+		if ( $newsletter_date ) {
 			$n_year  = substr( $newsletter_date, 0, 4 );
 			$n_month = substr( $newsletter_date, 4, 2 );
 			$n_day   = substr( $newsletter_date, 6, 2 );
@@ -108,11 +111,11 @@ class WSU_Content_Type_Newsletter {
 		}
 		?>
 		<label for="newsletter-date">Newsletter Date:</label>
-		<input type="text" id="newsletter-date" name="newsletter_date" value="<?php echo $newsletter_date; ?>" />
+		<input type="text" id="newsletter-date" name="newsletter_date" value="<?php echo esc_attr( $newsletter_date ); ?>" />
 		<input type="button" value="Announcements" id="announcements" class="button button-large button-secondary newsletter-type" />
 		<div id="newsletter-container">
 			<div id="newsletter-build">
-				<div class="newsletter-date"><?php echo date( 'l, F j, Y', current_time( 'timestamp' ) ); ?></div>
+				<div class="newsletter-date"><?php echo esc_html( date( 'l, F j, Y', current_time( 'timestamp' ) ) ); ?></div>
 				<div class="newsletter-image"><img src="<?php echo esc_url( plugins_url( '../images/wsu-announcements-banner-616x67-001.png', __FILE__ ) ); ?>" /></div>
 				<div class="newsletter-head">
 					<p>Submit announcements online at <a href="https://news.wsu.edu/announcements/">https://news.wsu.edu/announcements</a></p>
@@ -158,7 +161,7 @@ class WSU_Content_Type_Newsletter {
 	 * Enqueue the scripts used in the WordPress admin for managing newsletter creation.
 	 */
 	public function admin_enqueue_scripts( $hook ) {
-		if ( ! in_array( $hook, array( 'post.php', 'post-new.php' ) ) ) {
+		if ( ! in_array( $hook, array( 'post.php', 'post-new.php' ), true ) ) {
 			return;
 		}
 
@@ -232,7 +235,8 @@ class WSU_Content_Type_Newsletter {
 		if ( 'announcements' === $_POST['newsletter_type'] ) {
 			if ( isset( $_POST['post_date'] ) ) {
 				$post_date = $_POST['post_date'];
-			} else {              $post_date = false;
+			} else {
+				$post_date = false;
 			}
 
 			if ( $post_date ) {
@@ -241,7 +245,8 @@ class WSU_Content_Type_Newsletter {
 
 				if ( 3 === count( $post_date ) ) {
 					$post_date = $post_date[2] . zeroise( $post_date[0], 2 ) . zeroise( $post_date[1], 2 );
-				} else {                  $post_date = false;
+				} else {
+					$post_date = false;
 				}
 			}
 
@@ -249,7 +254,7 @@ class WSU_Content_Type_Newsletter {
 				$post_date = date( 'Ymd', current_time( 'timestamp' ) );
 			}
 
-			echo json_encode( $this->_build_announcements_newsletter_response( array(), $post_date ) );
+			echo wp_json_encode( $this->_build_announcements_newsletter_response( array(), $post_date ) );
 		} elseif ( 'news' === $_POST['newsletter_type'] ) {
 			echo 'news';
 		}
@@ -309,7 +314,8 @@ class WSU_Content_Type_Newsletter {
 			exit;
 		}
 
-		if ( ! $post_ids = get_post_meta( $post_id, '_newsletter_item_order', true ) ) {
+		$post_ids = get_post_meta( $post_id, '_newsletter_item_order', true );
+		if ( ! $post_ids ) {
 			echo '<br>No items to send...';
 			exit;
 		}

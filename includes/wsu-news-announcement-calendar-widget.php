@@ -33,15 +33,15 @@ class WSU_News_Announcement_Calendar_Widget extends WP_Widget {
 			$title = $instance['title'];
 		}
 
-		echo $args['before_widget'];
+		echo $args['before_widget']; // @codingStandardsIgnoreLine
 		if ( $title ) {
-			echo $args['before_title'] . $title . $args['after_title'];
+			echo $args['before_title'] . esc_html( $title ) . $args['after_title']; // @codingStandardsIgnoreLine
 		}
 
 		echo '<div id="calendar_wrap">';
 		$wsu_content_type_announcement->get_calendar();
 		echo '</div>';
-		echo $args['after_widget'];
+		echo $args['after_widget']; // @codingStandardsIgnoreLine
 	}
 
 	/**
@@ -72,8 +72,8 @@ class WSU_News_Announcement_Calendar_Widget extends WP_Widget {
 		);
 		$title = strip_tags( $instance['title'] );
 		?>
-		<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
-			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" /></p>
+		<p><label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>">Title</label>
+			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" /></p>
 	<?php
 	}
 }

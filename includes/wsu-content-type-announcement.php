@@ -174,17 +174,17 @@ class WSU_Content_Type_Announcement {
 
 		// Ensure we have 3 inputs listed. (This could be expandable...)
 		while ( $date_input_count <= 3 ) {
-			$date_input .= '<input type="text" id="announcement-form-date' . $date_input_count . '" class="announcement-form-input announcement-form-date-input" name="announcement-date[]" value="" />';
+			$date_input .= '<input type="text" id="announcement-form-date' . esc_attr( $date_input_count ) . '" class="announcement-form-input announcement-form-date-input" name="announcement-date[]" value="" />';
 			$date_input_count++;
 		}
 		?>
 		<label for="announcement-form-date">This announcement is assigned to the following date(s):</label><br /><br />
-		<?php echo $date_input; ?>
+		<?php echo $date_input; // @codingStandardsIgnoreLine ?>
 		<p>It will appear on the following announcement archive pages:</p>
 		<ul>
-			<li>Yearly: <?php echo implode( ', ', $archive_dates['yearly'] ); ?></li>
-			<li>Monthly: <?php echo implode( ', ', $archive_dates['monthly'] ); ?></li>
-			<li>Daily: <?php echo implode( ', ', $archive_dates['daily'] ); ?></li>
+			<li>Yearly: <?php echo esc_html( implode( ', ', $archive_dates['yearly'] ) ); ?></li>
+			<li>Monthly: <?php echo esc_html( implode( ', ', $archive_dates['monthly'] ) ); ?></li>
+			<li>Daily: <?php echo esc_html( implode( ', ', $archive_dates['daily'] ) ); ?></li>
 		</ul>
 		<?php
 	}
@@ -575,7 +575,8 @@ class WSU_Content_Type_Announcement {
 			return;
 		}
 
-		if ( $contact_email = get_post_meta( $post_id, '_announcement_contact_email', true ) ) {
+		$contact_email = get_post_meta( $post_id, '_announcement_contact_email', true );
+		if ( $contact_email ) {
 			echo esc_html( $contact_email );
 		}
 	}
@@ -598,7 +599,7 @@ class WSU_Content_Type_Announcement {
 
 			if ( 8 === strlen( $date ) ) {
 				$date_display = substr( $date, 4, 2 ) . '/' . substr( $date, 6, 2 ) . '/' . substr( $date, 0, 4 );
-				echo $date_display . '<br>';
+				echo esc_html( $date_display ) . '<br>';
 			}
 		}
 	}
@@ -617,6 +618,10 @@ class WSU_Content_Type_Announcement {
 	 * @return null|string  String when retrieving, null when displaying.
 	 */
 	public function get_calendar( $initial = true, $echo = true ) {
+		// @codingStandardsIgnoreStart
+		// This is code copied from WordPress core, so obviously it does not
+		// meet current WordPress core standards. /shrug
+
 		/**
 		 * @global WPDB      $wpdb
 		 * @global WP_Locale $wp_locale
@@ -798,6 +803,8 @@ class WSU_Content_Type_Announcement {
 			echo $calendar_output;
 		} else {          return $calendar_output;
 		}
+
+		// @codingStandardsIgnoreEnd
 
 		return null;
 	}
