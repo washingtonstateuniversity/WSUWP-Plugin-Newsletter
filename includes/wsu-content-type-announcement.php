@@ -152,8 +152,13 @@ class WSU_Content_Type_Announcement {
 		}
 
 		?>
-		<label for="announcement-form-url">Announcement URL:</label>
-		<input type="text" id="announcement-form-url" name="announcement_url" value="<?php echo $url; // @codingStandardsIgnoreLine ?>" />
+		<p>Enter the full URL of an announcement here if the posted elsewhere.</p>
+		<label for="announcement-form-url">URL:</label>
+		<input type="text"
+		       id="announcement-form-url"
+		       name="announcement_url"
+		       style="width: 575px; max-width: 100%;"
+		       value="<?php echo $url; // @codingStandardsIgnoreLine ?>" />
 		<?php
 	}
 
