@@ -82,7 +82,6 @@ class WSU_Content_Type_Newsletter {
 	 * of an email newsletter.
 	 *
 	 * @todo NEWS - add subheads, posts, text blurbs
-	 * @todo ANNOUNCEMENTS - options for ad-hoc adding of announcements and text blurbs
 	 *
 	 * @param WP_Post $post Object for the post currently being edited.
 	 */
