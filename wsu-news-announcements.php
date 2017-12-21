@@ -4,7 +4,7 @@ Plugin Name: WSU News & Announcements
 Plugin URI: https://news.wsu.edu/
 Description: Handles Announcement Newsletter functionality for WSU News.
 Author: washingtonstateuniversity, jeremyfelt
-Version: 1.9.0
+Version: 1.9.1
 */
 
 include( dirname( __FILE__ ) . '/includes/wsu-content-type-announcement.php' );
