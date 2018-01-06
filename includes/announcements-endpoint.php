@@ -5,10 +5,9 @@ namespace WSU\News\Internal\Announcements;
 add_action( 'rest_api_init', 'WSU\News\Internal\Announcements\register_rest_endpoint' );
 
 /**
- * Register a custom endpoint to handle lookups for featured
- * posts from the Customizer.
+ * Register a custom endpoint to handle lookups for announcements.
  *
- * @since 0.6.0
+ * @since 1.10.0
  */
 function register_rest_endpoint() {
 	\register_rest_route( 'insider/v1', '/announcements', array(
@@ -18,9 +17,9 @@ function register_rest_endpoint() {
 }
 
 /**
- * Return search results for featured posts.
+ * Return the day's announcements.
  *
- * @since 0.6.0
+ * @since 1.10.0
  *
  * @param \WP_REST_Request $request
  *
@@ -53,7 +52,7 @@ function rest_announcements() {
 			'title' => $post->post_title,
 			'url' => get_permalink( $post->ID ),
 			'date' => $post->post_date,
-			'excerpt' => $post->post_excerpt,
+			'excerpt' => $post->post_content,
 		);
 	}
 
